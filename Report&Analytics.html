@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantifyre Iris - Report & Analytics</title>
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/sidebar.css">
+    <link href="Css/fontstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="Css/dateflatpickr.min.css">
+    <link rel="stylesheet" href="Css/datestyle.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css">
+    <link rel="stylesheet" href="Css/bigsearchbtn.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        .custom-date-modal {
+            display: none;
+
+        }
+
+        .custom-date-modal.active {
+            display: block !important;
+        }
+
+        /* Selection Section Styling */
+        .report-selection-container {
+            background: rgba(11, 22, 21, 0.4);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .report-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        /* Cards - Normal State */
+        .report-select-card {
+            background: rgba(9, 35, 30, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            color: #888;
+        }
+
+        .report-select-card:hover {
+            background: linear-gradient(145deg, rgba(40, 122, 111, 0.4), rgba(8, 15, 12, 0.5));
+            border-color: #00ffaa;
+            transform: translateY(-2px);
+        }
+
+        /* Cards - Selected State (Mere site jesa Neon Green) */
+        .report-select-card.active {
+            border: 1px solid #00ff9d;
+            /* Glowing Green Border */
+            background: rgba(0, 255, 157, 0.05);
+            color: #00ff9d;
+            /* Text color green on selection */
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.15);
+        }
+
+        .select-icon {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: #555;
+            transition: 0.3s;
+        }
+
+        .report-select-card.active .select-icon {
+            color: #00ff9d;
+            /* Icon green on selection */
+        }
+
+        .check-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 1rem;
+            color: #00ff9d;
+            opacity: 0;
+            transform: scale(0);
+            transition: 0.3s;
+        }
+
+        .report-select-card.active .check-badge {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Download Buttons Styling */
+        .download-action-bar {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn-download-main {
+            padding: 12px 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            background: linear-gradient(180deg, rgba(9, 20, 18, 0.55), rgba(6, 12, 10, 0.45));
+            /* Dark theme compatible */
+            color: #fff;
+        }
+
+        /* PDF Hover - Reddish Glow */
+        .btn-download-main.pdf:hover {
+            border-color: #ff4d4d;
+            color: #ff4d4d;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.2);
+        }
+
+        /* CSV Hover - Bluish Glow */
+        .btn-download-main.csv:hover {
+            border-color: #3facfe;
+            color: #3facfe;
+            box-shadow: 0 0 15px rgba(63, 172, 254, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="close-sidebar-btn" id="closeSidebarBtn"><i class="fa-solid fa-xmark"></i></div>
+            <div class="logo-section">
+                <div class="logo-icon"><img src="Images/quantifirelogo.png" alt="Quantifyre"></div>
+            </div>
+            <div class="user-mini-profile">
+                <div class="avatar-circle"><img src="Images/ClientSlider.ico"></div>
+                <p>Agency Name</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li class="active"><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report &
+                            Analytics</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" id="mainWrapper">
+            <header class="top-bar">
+                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                </div>
+                <div class="top-profile-actions" style="position: relative;">
+                    <div class="notification-wrapper" style="position: relative;">
+                        <div class="icon-btn notification" onclick="toggleNotification(event)">
+                            <img src="Images/Notifications.ico">
+                            <span class="notif-count">3</span>
+                        </div>
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <h4>Notifications</h4><span class="mark-read">Mark all read</span>
+                            </div>
+                            <ul class="notif-list">
+                                <li class="notif-item unread">
+                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                    </div>
+                                    <span class="n-time">2m</span>
+                                </li>
+                                <li class="notif-item unread">
+                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                    </div>
+                                    <span class="n-time">1h</span>
+                                </li>
+                                <li class="notif-item">
+                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-text">
+                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                    </div>
+                                    <span class="n-time">1d</span>
+                                </li>
+                            </ul>
+                            <div class="notif-footer"><a href="#">View All Notifications</a></div>
+                        </div>
+                    </div>
+                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
+                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-small"><img src="Images/ClientHeader.ico"></div>
+                        <div class="text-info">
+                            <h4>Agency Name</h4>
+                            <p>Agency</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                    </div>
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header-info">
+                            <p class="d-name">Agency Name</p><span class="d-email">agency@quantifyre.com</span>
+                        </div>
+                        <ul class="dropdown-list">
+                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-header">
+                <div class="title-text">
+                    <div class="icon-square"><img src="Images/Report&Analytics50x50.ico"></div>
+                    <div>
+                        <h1>Reports & Analytics</h1>
+                        <p>View and analyze key marketing metrics</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="report-filter-bar" style="display: flex; gap: 15px; margin-bottom: 25px; align-items: center;">
+
+                <div class="custom-dropdown" style="flex: 1;">
+                    <select id="clientSearchSelect" class="search-input-field">
+                        <option value=""></option>
+                    </select>
+                    <span id="clientError" class="error-msg">* Select Client</span>
+                </div>
+
+                <div class="custom-dropdown">
+                    <div class="custom-dropdown" style="flex: 1;">
+                        <select id="locationSearchSelect" class="search-input-field">
+                            <option value=""></option>
+                        </select>
+                        <span id="locationError" class="error-msg">* Select Location</span>
+                    </div>
+                </div>
+
+                <div class="custom-dropdown">
+                    <div class="custom-dropdown" style="flex: 1;">
+                        <select id="campaignSearchSelect" class="search-input-field">
+                            <option value=""></option>
+                        </select>
+                        <span id="campaignError" class="error-msg">* Select Campaign</span>
+                    </div>
+                </div>
+
+                <button class="btn-search" id="smallSearchBtn" style="padding: 12px 15px; height: 46px;">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+            </div>
+
+            <div class="quick-filter-row" style="display: flex; gap: 10px; align-items: center; position: relative;">
+                <span id="selectedTimeText" style="display:none;">Last 30 Days</span>
+
+                <div style="position: relative; flex: 1;">
+                    <div class="qf-item" data-type="custom" style="width: 100%;" onclick="applyFilter(this, 'custom')">
+                        custom</div>
+
+                    <div class="custom-date-modal" id="customDateModal"
+                        style="top: 45px; left: 0; position: absolute; z-index: 1000;"
+                        onclick="event.stopPropagation()">
+                        <div class="date-inputs-row">
+                            <div class="date-box">
+                                <label>Start Date</label>
+                                <input type="text" id="customStartDate" placeholder="Select Date" readonly>
+                            </div>
+                            <div class="date-box">
+                                <label>End Date</label>
+                                <input type="text" id="customEndDate" placeholder="Select Date" readonly>
+                            </div>
+                        </div>
+                        <button class="btn-submit-date" onclick="submitCustomDate()">Submit Range</button>
+                    </div>
+                </div>
+
+                <div class="qf-item" style="flex: 1;" onclick="applyFilter(this, 'today')">Today</div>
+                <div class="qf-item active" style="flex: 1;" onclick="applyFilter(this, '1month')">Last 1 Month</div>
+                <div class="qf-item" style="flex: 1;" onclick="applyFilter(this, '3months')">Last 3 Months</div>
+                <div class="qf-item" style="flex: 1;" onclick="applyFilter(this, '7days')">Last 7 Days</div>
+            </div>
+
+            <div class="initial-search-container" id="largeSearchContainer">
+                <button class="btn-large-search" onclick="showResults()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Generate Reports & Analytics
+                </button>
+            </div>
+
+            <div id="backBtnWrapper">
+                <button class="btn-action" onclick="resetPage()"
+                    style="display: flex; align-items: center; gap: 8px; padding: 8px 15px; border-radius: 8px;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Search
+                </button>
+            </div>
+
+            <div class="analytics-content">
+                <div class="kpi-unified-card">
+                    <div class="kpi-stat"><span class="kpi-label">Total Leads</span><span class="kpi-value">2525</span>
+                    </div>
+                    <div class="kpi-stat"><span class="kpi-label">Conversion Rate</span><span
+                            class="kpi-value">20.4%</span></div>
+                    <div class="kpi-stat"><span class="kpi-label">Total Spend</span><span
+                            class="kpi-value">₹25,000</span></div>
+                    <div class="kpi-stat"><span class="kpi-label">ROI</span><span class="kpi-value">5.6</span></div>
+                </div>
+            </div>
+
+
+            <div class="analytics-content">
+                <div class="report-selection-container" style="margin-bottom: 30px;">
+                    <h3 style="color: #ccc; margin-bottom: 15px; font-size: 1rem;">Select Reports to Download</h3>
+                    <div class="report-selector-grid"
+                        style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+
+                        <div class="report-select-card active" onclick="toggleReportSelection(this, 'campaign')"
+                            data-report="campaign">
+                            <div class="select-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <span>Campaign Performance</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+
+                        <div class="report-select-card" onclick="toggleReportSelection(this, 'location')"
+                            data-report="location">
+                            <div class="select-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <span>Location Analytics</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+
+                        <div class="report-select-card" onclick="toggleReportSelection(this, 'client')"
+                            data-report="client">
+                            <div class="select-icon"><i class="fa-solid fa-users"></i></div>
+                            <span>Client Insights</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+
+                        <div class="report-select-card" onclick="toggleReportSelection(this, 'monthly')"
+                            data-report="monthly">
+                            <div class="select-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                            <span>Monthly Summary</span>
+                            <div class="check-badge"><i class="fa-solid fa-circle-check"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="download-action-bar"
+                        style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; background: rgba(9, 35, 30, 0.6); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                        <button class="btn-download-main pdf" onclick="downloadSelected('pdf')">
+                            <i class="fa-regular fa-file-pdf"></i> Download Selected PDF
+                        </button>
+                        <button class="btn-download-main csv" onclick="downloadSelected('csv')">
+                            <i class="fa-solid fa-file-csv"></i> Download Selected CSV
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay1" id="logoutModal">
+        <div class="modal-content1">
+            <div class="modal-icon-box2"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+            <h2>Ready to Leave?</h2>
+            <p>Are you sure you want to logout? You will need to login again to access your dashboard.</p>
+            <div class="modal-actions1">
+                <button class="btn-modal1 btn-modal-cancel1" onclick="closeLogoutModal()">Cancel</button>
+                <button class="btn-modal1 btn-modal-delete1" onclick="confirmLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js/jquery-3.7.1.min.js"></script>
+    <script src="Js/flatpickr.js"></script>
+    <script src="Js/allagency.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        var allReportsData = [];
+
+        $(document).ready(function () {
+            // 1. Initialize Select2
+            $('#clientSearchSelect').select2({
+                placeholder: "Select/Search Client",
+                allowClear: true,
+                width: '100%'
+            });
+
+            $('#locationSearchSelect').select2({
+                placeholder: "Select/Search Location",
+                allowClear: true,
+                width: '100%'
+            });
+
+            $('#campaignSearchSelect').select2({
+                placeholder: "Select/Search Campaign",
+                allowClear: true,
+                width: '100%'
+            });
+
+            // 2. Load Initial Data
+            loadReportsData();
+            initCustomPicker();
+
+            // 3. Validation Clear on Change
+            $('#clientSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#clientError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+                if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+            });
+
+            $('#locationSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#locationError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+                if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+            });
+
+            $('#campaignSearchSelect').on('change', function () {
+                if ($(this).val()) {
+                    $("#campaignError").fadeOut();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', '');
+                }
+                if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+            });
+        });
+
+        // --- Data Loading & Populating Dropdowns ---
+        function loadReportsData() {
+            $.ajax({
+                url: "http://localhost:8080/api/agency/campaigns/all",
+                type: "GET",
+                success: function (data) {
+                    allReportsData = data;
+                    populateDropdowns(data);
+                }
+            });
+        }
+
+        function populateDropdowns(data) {
+            let clients = [...new Set(data.map(item => item.clientName))];
+            let locations = [...new Set(data.map(item => item.targetLocation))];
+            let campaigns = [...new Set(data.map(item => item.campaignName))];
+
+            // Client Dropdown
+            let clientSelect = $('#clientSearchSelect').empty().append('<option value=""></option>');
+            clientSelect.append('<option value="all_clients">All Clients</option>');
+            clients.forEach(c => clientSelect.append(new Option(c, c)));
+
+            // Location Dropdown
+            let locSelect = $('#locationSearchSelect').empty().append('<option value=""></option>');
+            locSelect.append('<option value="all_locations">All Locations</option>');
+            locations.forEach(l => locSelect.append(new Option(l, l)));
+
+            // Campaign Dropdown
+            let campSelect = $('#campaignSearchSelect').empty().append('<option value=""></option>');
+            campSelect.append('<option value="all_campaigns">All Campaigns</option>');
+            campaigns.forEach(cp => campSelect.append(new Option(cp, cp)));
+
+            // Default set to Null (Placeholder dikhega)
+            clientSelect.val(null).trigger('change.select2');
+            locSelect.val(null).trigger('change.select2');
+            campSelect.val(null).trigger('change.select2');
+        }
+
+        // --- Validation & Show Results ---
+        function showResults() {
+            const selClient = $('#clientSearchSelect').val();
+            const selLoc = $('#locationSearchSelect').val();
+            const selCamp = $('#campaignSearchSelect').val();
+            let isValid = true;
+
+            // Validation Checks
+            if (!selClient) {
+                $("#clientError").fadeIn();
+                $('#clientSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                isValid = false;
+            }
+            if (!selLoc) {
+                $("#locationError").fadeIn();
+                $('#locationSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                isValid = false;
+            }
+            if (!selCamp) {
+                $("#campaignError").fadeIn();
+                $('#campaignSearchSelect').next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                isValid = false;
+            }
+
+            if (isValid) {
+                $("#mainWrapper").addClass("table-visible");
+                applyFilters();
+            }
+        }
+
+
+        // --- Baki functions (updateKPIs, initChart, resetPage, Download logic) same rahenge ---
+        function updateKPIs(data) {
+            let leads = 0, spend = 0, conversions = 0;
+            data.forEach(item => {
+                leads += (item.leads || 0);
+                spend += (item.budget || 0);
+                conversions += (item.totalConversions || 0);
+            });
+            let convRate = leads > 0 ? ((conversions / leads) * 100).toFixed(1) : "0.0";
+            let roi = spend > 0 ? (conversions / (spend / 1000)).toFixed(1) : "0.0";
+
+            $(".kpi-value:eq(0)").text(leads.toLocaleString());
+            $(".kpi-value:eq(1)").text(convRate + "%");
+            $(".kpi-value:eq(2)").text("₹" + spend.toLocaleString());
+            $(".kpi-value:eq(3)").text(roi);
+        }
+
+        function resetPage() {
+            $("#mainWrapper").removeClass("table-visible");
+            $('#clientSearchSelect, #locationSearchSelect, #campaignSearchSelect').val(null).trigger('change');
+            $("#clientError, #locationError, #campaignError").hide();
+            $('.select2-selection').css('border-color', '');
+            $("#selectedTimeText").text("Last 30 Days");
+        }
+
+        // Flatpickr & Dropdown Logic 
+        function initCustomPicker() {
+            flatpickr("#customStartDate", { dateFormat: "d M, Y", theme: "dark" });
+            flatpickr("#customEndDate", { dateFormat: "d M, Y", theme: "dark" });
+        }
+
+        function selectItem(dropdownId, text) {
+            $('#' + dropdownId + ' .selected-text').text(text);
+            $('#' + dropdownId).removeClass('active');
+            if ($("#mainWrapper").hasClass("table-visible")) applyFilters();
+        }
+
+        // Click outside to close modal
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.qf-item').length && !$(e.target).closest('#customDateModal').length) {
+                $('#customDateModal').removeClass('active');
+            }
+        });    </script>
+    <script>
+        // CSV Download Function
+        // --- 1. Filtered Data Helper: Sabhi dropdowns aur dates ke hisaab se data nikalta hai ---
+        function getFilteredDataForExport() {
+            const selClient = $('#clientSearchSelect').val();
+            const selLoc = $('#locationSearchSelect').val();
+            const selCamp = $('#campaignSearchSelect').val();
+            const selTime = $('#selectedTimeText').text().trim();
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            return allReportsData.filter(item => {
+                // Basic Filters
+                const matchClient = !selClient || item.clientName === selClient;
+                const matchLoc = !selLoc || item.targetLocation === selLoc;
+                const matchCamp = !selCamp || item.campaignName === selCamp;
+
+                // Date Logic
+                let matchDate = true;
+                if (item.startDate) {
+                    const campDate = new Date(item.startDate);
+                    campDate.setHours(0, 0, 0, 0);
+
+                    if (selTime === "Today") {
+                        matchDate = (campDate.getTime() === today.getTime());
+                    } else if (selTime === "Last 7 Days") {
+                        const limit = new Date(); limit.setDate(today.getDate() - 7);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime === "Last 30 Days") {
+                        const limit = new Date(); limit.setDate(today.getDate() - 30);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime.includes("-")) {
+                        const range = selTime.split(" - ");
+                        const startR = new Date(range[0]); const endR = new Date(range[1]);
+                        startR.setHours(0, 0, 0, 0); endR.setHours(23, 59, 59, 999);
+                        matchDate = (campDate >= startR && campDate <= endR);
+                    }
+                }
+                return matchClient && matchLoc && matchCamp && matchDate;
+            });
+        }
+
+        // --- 2. Dynamic PDF Generator ---
+        function downloadPDF(reportType) {
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('l', 'mm', 'a4'); // Landscape for better layout
+                const dataToExport = getFilteredDataForExport();
+
+                if (dataToExport.length === 0) { alert("No data found for selected filters!"); return; }
+
+                let reportTitle = "";
+                let tableHead = [];
+                let tableBody = [];
+
+                // Report Type wise Columns and Data Mapping
+                if (reportType === 'campaign') {
+                    reportTitle = "CAMPAIGN PERFORMANCE REPORT";
+                    tableHead = [['#', 'Campaign Name', 'Client', 'Location', 'Status', 'Leads', 'Conv.', 'Budget']];
+                    tableBody = dataToExport.map((item, i) => [i + 1, item.campaignName, item.clientName, item.targetLocation, item.status, item.leads || 0, item.totalConversions || 0, "Rs." + (item.budget || 0)]);
+                }
+                else if (reportType === 'location') {
+                    reportTitle = "LOCATION ANALYTICS REPORT";
+                    tableHead = [['#', 'Location', 'Active Campaigns', 'Total Leads', 'Total Conversions']];
+                    let locMap = {};
+                    dataToExport.forEach(item => {
+                        if (!locMap[item.targetLocation]) locMap[item.targetLocation] = { leads: 0, conv: 0, count: 0 };
+                        locMap[item.targetLocation].leads += (item.leads || 0);
+                        locMap[item.targetLocation].conv += (item.totalConversions || 0);
+                        locMap[item.targetLocation].count++;
+                    });
+                    tableBody = Object.keys(locMap).map((loc, i) => [i + 1, loc, locMap[loc].count, locMap[loc].leads, locMap[loc].conv]);
+                }
+                else if (reportType === 'client') {
+                    reportTitle = "CLIENT INSIGHTS REPORT";
+                    tableHead = [['#', 'Client Name', 'Total Leads', 'Total Conversions', 'Total Budget']];
+                    tableBody = dataToExport.map((item, i) => [i + 1, item.clientName, item.leads || 0, item.totalConversions || 0, "Rs." + (item.budget || 0)]);
+                }
+                else {
+                    reportTitle = "MONTHLY SUMMARY REPORT";
+                    tableHead = [['#', 'Start Date', 'Campaign Name', 'Location', 'Leads']];
+                    tableBody = dataToExport.map((item, i) => [i + 1, item.startDate, item.campaignName, item.targetLocation, item.leads || 0]);
+                }
+
+                // Header Design
+                doc.setFillColor(11, 22, 21);
+                doc.rect(0, 0, 297, 40, 'F');
+                doc.setTextColor(0, 255, 157);
+                doc.setFontSize(22);
+                doc.text(reportTitle, 14, 20);
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(10);
+                doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 30);
+                doc.text(`Filters: ${$('#selectedTimeText').text()}`, 200, 30);
+
+                doc.autoTable({
+                    head: tableHead,
+                    body: tableBody,
+                    startY: 45,
+                    theme: 'grid',
+                    headStyles: { fillColor: [0, 255, 157], textColor: [0, 0, 0] },
+                    alternateRowStyles: { fillColor: [245, 255, 250] }
+                });
+
+                doc.save(`Quantifyre_${reportType}_Report.pdf`);
+            } catch (e) { alert("PDF Error: " + e.message); }
+        }
+
+        // --- 3. Dynamic CSV Generator ---
+        function downloadCSV(reportType) {
+            const dataToExport = getFilteredDataForExport();
+            if (dataToExport.length === 0) { alert("No data found to export!"); return; }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            let headers = "No.,Name,Client/Info,Location,Status,Leads,Conversions,Budget\n";
+
+            let rows = dataToExport.map((item, i) => {
+                return `${i + 1},"${item.campaignName}","${item.clientName}","${item.targetLocation}","${item.status}",${item.leads || 0},${item.totalConversions || 0},${item.budget || 0}`;
+            });
+
+            csvContent += headers + rows.join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Quantifyre_${reportType}_Analytics.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+    <script>
+        function applyFilter(element, range) {
+            // 1. UI update: Saare buttons se active nikaalo aur current par lagaao
+            $('.qf-item').removeClass('active');
+            $(element).addClass('active');
+
+            if (range === 'custom') {
+                // Sirf modal toggle hoga
+                $('#customDateModal').toggleClass('active');
+                return; // Filter tab chalega jab user date select karke 'Submit' dabayega
+            } else {
+                // Agar dusra koi click kiya toh modal band kar do aur text reset karo
+                $('#customDateModal').removeClass('active');
+                $('[data-type="custom"]').text('custom');
+            }
+
+            let filterText = "Last 30 Days";
+            if (range === 'today') filterText = "Today";
+            else if (range === '1month') filterText = "Last 30 Days";
+            else if (range === '3months') filterText = "Last 90 Days";
+            else if (range === '7days') filterText = "Last 7 Days";
+
+            $('#selectedTimeText').text(filterText);
+
+            if ($("#mainWrapper").hasClass("table-visible")) {
+                applyFilters();
+            }
+        }
+
+        function applyFilters() {
+            const selClient = $('#clientSearchSelect').val();
+            const selLoc = $('#locationSearchSelect').val();
+            const selCamp = $('#campaignSearchSelect').val();
+            const selTime = $('#selectedTimeText').text().trim();
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let filtered = allReportsData.filter(item => {
+                const matchClient = (selClient === "all_clients" || !selClient) ? true : (item.clientName === selClient);
+                const matchLoc = (selLoc === "all_locations" || !selLoc) ? true : (item.targetLocation === selLoc);
+                const matchCamp = (selCamp === "all_campaigns" || !selCamp) ? true : (item.campaignName === selCamp);
+
+                let matchDate = true;
+                if (item.startDate) {
+                    const campDate = new Date(item.startDate);
+                    campDate.setHours(0, 0, 0, 0);
+
+                    if (selTime === "Today") {
+                        matchDate = (campDate.getTime() === today.getTime());
+                    } else if (selTime === "Last 7 Days") {
+                        const limit = new Date(); limit.setDate(today.getDate() - 7);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime === "Last 30 Days") {
+                        const limit = new Date(); limit.setDate(today.getDate() - 30);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime === "Last 90 Days") { // Yeh naya add kiya 3 months ke liye
+                        const limit = new Date(); limit.setDate(today.getDate() - 90);
+                        matchDate = (campDate >= limit && campDate <= today);
+                    } else if (selTime.includes("-")) { // Custom date range handle karne ke liye
+                        const range = selTime.split(" - ");
+                        const startR = new Date(range[0]); const endR = new Date(range[1]);
+                        matchDate = (campDate >= startR && campDate <= endR);
+                    }
+                }
+                return matchClient && matchLoc && matchCamp && matchDate;
+            });
+
+            updateKPIs(filtered);
+        }
+
+        function submitCustomDate() {
+            const start = $('#customStartDate').val();
+            const end = $('#customEndDate').val();
+
+            if (start && end) {
+                const rangeText = start + " - " + end;
+
+                // 1. Hidden span update karein filter logic ke liye
+                $('#selectedTimeText').text(rangeText);
+
+                // 2. Custom button ka text badlein aur usey active rakhein
+                $('.qf-item').removeClass('active'); // Baaki sab clean
+                $('[data-type="custom"]').text(rangeText).addClass('active'); // Custom active karein
+
+                // 3. Modal close karein
+                $('#customDateModal').removeClass('active');
+
+                // 4. Report trigger karein
+                if ($("#mainWrapper").hasClass("table-visible")) {
+                    applyFilters();
+                }
+            } else {
+                alert("Please select both dates.");
+            }
+        }
+
+    </script>
+    <script>
+        // Toggle Selection Logic
+        function toggleReportSelection(element, type) {
+            $(element).toggleClass('active');
+        }
+
+        // Bulk Download Logic
+        async function downloadSelected(format) {
+            const selectedReports = [];
+            $('.report-select-card.active').each(function () {
+                selectedReports.push($(this).data('report'));
+            });
+
+            if (selectedReports.length === 0) {
+                alert("Please select at least one report!");
+                return;
+            }
+
+            // Har selected report ke liye purana function call karein
+            for (const report of selectedReports) {
+                if (format === 'pdf') {
+                    await downloadPDF(report);
+                } else {
+                    downloadCSV(report);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
