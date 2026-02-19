@@ -472,7 +472,7 @@
                 $btn.text("Saving...").prop("disabled", true);
 
                 $.ajax({
-                    url: "http://localhost:8080/api/agency/campaigns/add",
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/add",
                     type: "POST",
                     data: formData,
                     contentType: false,
@@ -495,7 +495,7 @@
 
         function loadClientsList() {
             $.ajax({
-                url: "http://localhost:8080/api/agency/clients/all",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all",
                 type: "GET",
                 success: function (data) {
                     let dropdown = $('#clientName');

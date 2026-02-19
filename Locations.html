@@ -287,7 +287,7 @@
 
         function loadLocations() {
             $.ajax({
-                url: "http://localhost:8080/api/agency/locations/all",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/locations/all",
                 type: "GET",
                 success: function (data) {
                     allLocationsLocal = data;
@@ -302,7 +302,7 @@
 
         function loadClientsForSearch() {
             $.ajax({
-                url: "http://localhost:8080/api/agency/clients/all",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all",
                 type: "GET",
                 success: function (data) {
                     let clientSelect = $('#clientSearchSelect').empty().append('<option value=""></option>');

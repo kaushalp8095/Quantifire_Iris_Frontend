@@ -446,7 +446,7 @@
         // --- Data Loading & Populating Dropdowns ---
         function loadReportsData() {
             $.ajax({
-                url: "http://localhost:8080/api/agency/campaigns/all",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/all",
                 type: "GET",
                 success: function (data) {
                     allReportsData = data;

@@ -178,7 +178,7 @@
 
         function loadClients() {
     $.ajax({
-        url: "http://localhost:8080/api/agency/clients/all",
+        url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all",
         type: "GET",
         success: function (data) {
             let rows = "";
@@ -302,7 +302,7 @@
         function confirmDelete() {
             if (clientIdToDelete) {
                 $.ajax({
-                    url: `http://localhost:8080/api/agency/clients/delete/${clientIdToDelete}`,
+                    url: `https://quantifire-iris-backend.onrender.com/api/agency/clients/delete/${clientIdToDelete}`,
                     type: "DELETE",
                     success: function () {
                         closeDeleteModal();
