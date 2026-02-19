@@ -921,3 +921,10 @@ input:checked+.sys-slider:before { transform: translateX(20px); }
 .tfa-method-card.active { border-color: #00ff9d; background: rgba(0, 255, 157, 0.05); color: #00ff9d; }
 .tfa-check { position: absolute; top: 8px; right: 8px; font-size: 0.9rem; opacity: 0; transform: scale(0); transition: 0.3s; }
 .tfa-method-card.active .tfa-check { opacity: 1; transform: scale(1); }
+
+
+/* ---------------------------- Dashboard Geofence Map Tool Bar Responsive CSS ---------------------------- */ 
+@media (max-width: 768px) {
+    .map-toolbar-inner { display: flex !important; }
+    .btn-search { order: 2 !important; flex: 1 !important; min-width: 0 !important; }
+    #customSearchInput.map-input { order: 1 !important; width: 80% !important; } }

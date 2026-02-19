@@ -237,7 +237,7 @@
                         <label>Geo-Fence & Platform</label>
 
                         <div class="map-platform-container" style="display: flex; gap: 20px;">
-                            <div style="width: 70%;">
+                            <div>
 
                                 <div style="margin-bottom: 10px;">
                                     <div class="map-toolbar-overlay"
@@ -552,7 +552,7 @@
 
             drawingManager = new google.maps.drawing.DrawingManager({
                 drawingMode: null,
-                drawingControl: true,
+                drawingControl:false,
                 drawingControlOptions: {
                     position: google.maps.ControlPosition.TOP_CENTER,
                     drawingModes: ['circle', 'polygon', 'rectangle']
@@ -611,13 +611,11 @@
             }
         });
 
-        // Dropdown kholne aur band karne ke liye
         function toggleMapDropdown(event) {
             event.stopPropagation();
             $('#shapeDropdown').toggleClass('active');
         }
 
-        // Tool select karne ke liye (Circle, Rectangle, Polygon)
         function selectTool(toolType, toolName) {
             // Dropdown text update karein
             let iconClass = toolType === 'circle' ? 'far fa-circle' :
