@@ -301,7 +301,7 @@
 
         function loadClientsForSearch() {
             $.ajax({
-                url: "http://localhost:8080/api/agency/clients/all",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all",
                 type: "GET",
                 success: function (data) {
                     let dropdown = $('#clientSearchSelect');
@@ -345,7 +345,7 @@
 
         function loadCampaignsData(filter) {
             $.ajax({
-                url: "http://localhost:8080/api/agency/campaigns/all?filter=" + filter,
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/all?filter=" + filter,
                 type: "GET",
                 success: function (data) { allCampaignsLocal = data; }
             });
@@ -473,7 +473,7 @@
         function confirmDelete() {
             if (campaignIdToDelete) {
                 $.ajax({
-                    url: "http://localhost:8080/api/agency/campaigns/delete/" + campaignIdToDelete, type: "DELETE",
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/delete/" + campaignIdToDelete, type: "DELETE",
                     success: function () { loadCampaignsData('all'); setTimeout(() => performSearch(), 500); closeDeleteModal(); }
                 });
             }
