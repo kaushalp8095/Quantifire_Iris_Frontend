@@ -922,6 +922,19 @@ input:checked+.sys-slider:before { transform: translateX(20px); }
 .tfa-check { position: absolute; top: 8px; right: 8px; font-size: 0.9rem; opacity: 0; transform: scale(0); transition: 0.3s; }
 .tfa-method-card.active .tfa-check { opacity: 1; transform: scale(1); }
 
+/* ---------- Agency Setting Page MOBILE VIEW SCROLLBAR WITH HOVER EFFECT ------------- */
+@media (max-width: 991px) {
+.report-dd-options{background: #091815;}
+.sys-table-container::-webkit-scrollbar,
+.sys-tabs-nav::-webkit-scrollbar { height: 5px; width: 5px; }
+.sys-table-container::-webkit-scrollbar-button,
+.sys-tabs-nav::-webkit-scrollbar-button { display: none; }
+.sys-table-container::-webkit-scrollbar-track,
+.sys-tabs-nav::-webkit-scrollbar-track { background: rgba(11, 22, 21, 0.6); border-radius: 10px; }
+.sys-table-container::-webkit-scrollbar-thumb,
+.sys-tabs-nav::-webkit-scrollbar-thumb { background: rgba(0, 255, 157, 0.2); border-radius: 10px; transition: background 0.3s ease; }
+.sys-table-container::-webkit-scrollbar-thumb:hover,
+.sys-tabs-nav::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 157, 0.6) !important; box-shadow: 0 0 10px rgba(0, 255, 170, 0.6); cursor: pointer; } }
 
 /* ---------------------------- Dashboard Geofence Map Tool Bar Responsive CSS ---------------------------- */ 
 @media (max-width: 768px) {
