@@ -453,7 +453,7 @@
 
         function loadClientsThenCampaign() {
             $.ajax({
-                url: "https://quantifire-iris-frontend.onrender.com/api/agency/clients/all",
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all",
                 type: "GET",
                 success: function (clients) {
                     let dropdown = $('#clientName');
@@ -470,7 +470,7 @@
 
         function fetchCampaignData(id) {
             $.ajax({
-                url: "https://quantifire-iris-frontend.onrender.com/api/agency/campaigns/" + id,
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/" + id,
                 type: "GET",
                 success: function (data) {
                     $('#campaignName').val(data.campaignName);
@@ -605,7 +605,7 @@
             $btn.text("Updating...").prop("disabled", true);
 
             $.ajax({
-                url: "https://quantifire-iris-frontend.onrender.com/api/agency/campaigns/update/" + campaignId,
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/update/" + campaignId,
                 type: "PUT",
                 data: formData,
                 processData: false, contentType: false,
