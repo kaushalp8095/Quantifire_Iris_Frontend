@@ -514,6 +514,24 @@ textarea.form-input { resize: vertical; height: auto; }
 .btn-download-main.pdf:hover { border-color: #ff4d4d; color: #ff4d4d; box-shadow: 0 0 15px rgba(255, 77, 77, 0.2); }
 .btn-download-main.csv:hover { border-color: #3facfe; color: #3facfe; box-shadow: 0 0 15px rgba(63, 172, 254, 0.2); }
 
+@media (max-width: 992px) { .report-selector-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+
+@media (max-width: 768px) { 
+    .quick-filter-row { display: flex !important; flex-wrap: wrap !important; gap: 10px !important; overflow-x: visible !important; }
+    .quick-filter-row .qf-item, .quick-filter-row > div:has(.qf-item) { flex: 0 0 calc(50% - 5px) !important; min-width: unset !important; box-sizing: border-box; }
+    .quick-filter-row .qf-item:last-child { flex: 0 0 100% !important; }
+    .report-selector-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+    .download-action-bar { flex-direction: column; }
+    .custom-date-modal { width: 280px; left: 80% !important; transform: translateX(-50%); margin-top: 5px; }
+    .date-inputs-row { flex-direction: column; gap: 10px; }
+    .report-selector-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+    .report-select-card { padding: 15px !important; }
+    .download-action-bar { flex-direction: column; gap: 10px !important; }
+    .btn-download-main { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 480px) { .report-selector-grid { grid-template-columns: 1fr !important; } }
+
 /*------------------------ Custom Date Piker Dropdown In Report ---------------------*/
 .custom-date-modal { display: none; position: absolute; top: 100%; right: 0; background: #0b1615; border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 12px; padding: 15px; z-index: 1001; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); width: 250px; margin-top: 10px; }
 .custom-date-modal.active { display: block; }
@@ -915,6 +933,9 @@ input:checked+.sys-slider:before { transform: translateX(20px); }
 @media (max-width: 1100px) { .sys-int-grid, .sys-notif-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 992px) { .sys-grid { grid-template-columns: 1fr; } }
 @media (max-width: 768px) { .sys-int-grid, .sys-notif-grid { grid-template-columns: 1fr; } .sys-table-container { overflow-x: auto; } .sys-table { min-width: 600px; } }
+@media (max-width: 768px) { .sys-grid { display: flex !important; flex-direction: column !important; gap: 20px !important; } .sys-toggle-row { gap: 10px; justify-content: space-between; align-items: baseline; text-align: left; } #tfaMethodsWrapper div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; gap: 10px !important; } .tfa-method-card { padding: 12px 10px !important; font-size: 0.9rem; } .sys-box[style*="display: flex; justify-content: space-between"] { flex-direction: row !important; align-items: center !important; } }
+
+@media (max-width: 480px) { #tfaMethodsWrapper div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; } .sys-box { padding: 20px 15px !important; } .sys-box-title { font-size: 1.1rem !important; } .sys-table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; } }
 
 .tfa-method-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; position: relative; color: #888; }
 .tfa-method-card i { font-size: 1.5rem; }

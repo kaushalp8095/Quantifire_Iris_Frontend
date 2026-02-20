@@ -15,126 +15,7 @@
     <link rel="stylesheet" href="Css/bigsearchbtn.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    <style>
-        .custom-date-modal {
-            display: none;
-
-        }
-
-        .custom-date-modal.active {
-            display: block !important;
-        }
-
-        /* Selection Section Styling */
-        .report-selection-container {
-            background: rgba(11, 22, 21, 0.4);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .report-selector-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        /* Cards - Normal State */
-        .report-select-card {
-            background: rgba(9, 35, 30, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            color: #888;
-        }
-
-        .report-select-card:hover {
-            background: linear-gradient(145deg, rgba(40, 122, 111, 0.4), rgba(8, 15, 12, 0.5));
-            border-color: #00ffaa;
-            transform: translateY(-2px);
-        }
-
-        /* Cards - Selected State (Mere site jesa Neon Green) */
-        .report-select-card.active {
-            border: 1px solid #00ff9d;
-            /* Glowing Green Border */
-            background: rgba(0, 255, 157, 0.05);
-            color: #00ff9d;
-            /* Text color green on selection */
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.15);
-        }
-
-        .select-icon {
-            font-size: 1.8rem;
-            margin-bottom: 12px;
-            color: #555;
-            transition: 0.3s;
-        }
-
-        .report-select-card.active .select-icon {
-            color: #00ff9d;
-            /* Icon green on selection */
-        }
-
-        .check-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            font-size: 1rem;
-            color: #00ff9d;
-            opacity: 0;
-            transform: scale(0);
-            transition: 0.3s;
-        }
-
-        .report-select-card.active .check-badge {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Download Buttons Styling */
-        .download-action-bar {
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .btn-download-main {
-            padding: 12px 30px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
-            background: linear-gradient(180deg, rgba(9, 20, 18, 0.55), rgba(6, 12, 10, 0.45));
-            /* Dark theme compatible */
-            color: #fff;
-        }
-
-        /* PDF Hover - Reddish Glow */
-        .btn-download-main.pdf:hover {
-            border-color: #ff4d4d;
-            color: #ff4d4d;
-            box-shadow: 0 0 15px rgba(255, 77, 77, 0.2);
-        }
-
-        /* CSV Hover - Bluish Glow */
-        .btn-download-main.csv:hover {
-            border-color: #3facfe;
-            color: #3facfe;
-            box-shadow: 0 0 15px rgba(63, 172, 254, 0.2);
-        }
-    </style>
 </head>
-
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
@@ -306,7 +187,7 @@
 
             <div id="backBtnWrapper">
                 <button class="btn-action" onclick="resetPage()"
-                    style="display: flex; align-items: center; gap: 8px; padding: 8px 15px; border-radius: 8px;">
+                    style="display: flex; align-items: center;justify-content: center; gap: 8px; padding: 8px 15px; border-radius: 8px;">
                     <i class="fa-solid fa-arrow-left"></i> Back to Search
                 </button>
             </div>
@@ -446,7 +327,7 @@
         // --- Data Loading & Populating Dropdowns ---
         function loadReportsData() {
             $.ajax({
-                url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/all",
+                url: "http://localhost:8080/api/agency/campaigns/all",
                 type: "GET",
                 success: function (data) {
                     allReportsData = data;
