@@ -312,7 +312,7 @@
                 const $btn = $(this);
                 $btn.text("Saving...").prop("disabled", true);
                 $.ajax({
-                    url: "https://quantifire-iris-frontend.onrender.com/api/agency/clients/add",
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/add",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(clientData),
