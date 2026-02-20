@@ -232,7 +232,7 @@
 
     // 1. Fetch Client Profile (Single Client)
     $.ajax({
-        url: `https://quantifire-iris-frontend.onrender.com/api/agency/clients/${clientId}`,
+        url: `https://quantifire-iris-backend.onrender.com/api/agency/clients/${clientId}`,
         type: "GET",
         success: function (client) {
             // Case-Safe Mapping for Supabase/Postgres
@@ -253,7 +253,7 @@
     // 2. Fetch Associated Campaigns & Calculate Performance
     function loadClientCampaigns(clientName) {
         $.ajax({
-            url: `https://quantifire-iris-frontend.onrender.com/api/agency/campaigns/client/${clientName}`,
+            url: `https://quantifire-iris-backend.onrender.com/api/agency/campaigns/client/${clientName}`,
             type: "GET",
             success: function (campaigns) {
                 let rows = "";
