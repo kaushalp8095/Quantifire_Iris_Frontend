@@ -234,7 +234,7 @@
 
         // AJAX: Backend se details aur campaigns mangwayein
         $.ajax({
-            url: "https://quantifire-iris-frontend.onrender.com/api/agency/locations/details?name=" + encodeURIComponent(locationName),
+            url: "https://quantifire-iris-backend.onrender.com/api/agency/locations/details?name=" + encodeURIComponent(locationName),
             type: "GET",
             success: function (data) {
                 console.log("Location details loaded:", data);
