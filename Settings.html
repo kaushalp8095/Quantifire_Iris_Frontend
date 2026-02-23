@@ -7,7 +7,7 @@
     <title>Quantifyre Iris - Agency Setting</title>
     <link rel="stylesheet" href="Css/style.css">
     <link rel="stylesheet" href="Css/sidebar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">    
 </head>
 
 <body>
@@ -307,12 +307,22 @@
                                     <div class="sys-box"
                                         style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05); padding: 20px;">
                                         <div class="sys-toggle-row">
-                                            <div style="color: #fff; font-size: 0.95rem;">Two-Factor Authentication
+                                            <div style="text-align: left;">
+                                                <span
+                                                    style="color: #fff; font-size: 1rem; font-weight: 500; display: block; margin-bottom: 5px;">Two-Factor Authentication
+                                                   </span>
+                                                <p
+                                                    style="font-size: 0.85rem; color: #5a6a6e; margin: 0; line-height: 1.4;">
+                                                    Allow you two-factor authentication
+                                                </p>
                                             </div>
-                                            <label class="sys-switch">
-                                                <input type="checkbox" id="tfaToggle" onchange="toggleTFASettings()">
-                                                <span class="sys-slider"></span>
-                                            </label>
+                        
+                                            <div style="flex-shrink: 0;">
+                                                <label class="sys-switch">
+                                                    <input type="checkbox" id="tfaToggle" onchange="toggleTFASettings()">
+                                                    <span class="sys-slider"></span>
+                                                </label>
+                                            </div>
                                             
                                         </div>
 
@@ -693,14 +703,14 @@
         });
 
         function toggleTFASettings() {
-            // Console check ke liye taaki pata chale function trigger ho raha hai
+          
             console.log("Toggle Clicked");
 
             const isChecked = document.getElementById('tfaToggle').checked;
             const wrapper = $('#tfaMethodsWrapper');
 
             if (isChecked) {
-                wrapper.show(); // SlideDown ki jagah simple show use karke dekho
+                wrapper.show(); 
             } else {
                 wrapper.hide();
                 $('#tfaInputSection').hide();
