@@ -34,24 +34,20 @@
 
             <nav>
                 <ul>
-                    <li>
-                        <a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a>
-                    </li>
-                    <li>
-                        <a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a>
-                    </li>
-                    <li class="active">
-                        <a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a>
-                    </li>
-                    <li>
-                        <a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a>
-                    </li>
-                    <li>
-                        <a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
-                    </li>
+                    <li><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li class="active"><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a></li>
+                
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
                 </ul>
             </nav>
         </aside>
@@ -60,13 +56,8 @@
 
             <header class="top-bar">
                 <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
-
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search campaigns, leads, locations...">
-                </div>
+                
                 <div class="top-profile-actions" style="position: relative;">
-
                     <div class="notification-wrapper" style="position: relative;">
                         <div class="icon-btn notification" onclick="toggleNotification(event)">
                             <img src="Images/Notifications.ico">
@@ -104,16 +95,13 @@
                     </div>
                     <div class="profile-info" onclick="toggleProfileDropdown(event)"
                         style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
-                        <div class="avatar-small">
-                            <img src="Images/ClientHeader.ico">
-                        </div>
+                        <div class="avatar-small"><img src="Images/ClientHeader.ico"></div>
                         <div class="text-info">
                             <h4>Agency Name</h4>
                             <p>Agency</p>
                         </div>
                         <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
                     </div>
-
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="dropdown-header-info">
                             <p class="d-name">Agency Name</p><span class="d-email">agency@quantifyre.com</span>
@@ -121,7 +109,7 @@
                         <ul class="dropdown-list">
                             <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" return false;><i
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
                                         class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                         </ul>
                     </div>

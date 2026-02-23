@@ -974,5 +974,24 @@ input:checked+.sys-slider:before { transform: translateX(20px); }
     .btn-search { order: 2 !important; flex: 1 !important; min-width: 0 !important; }
     #customSearchInput.map-input { order: 1 !important; width: 80% !important; } }
 
-
+/* ----------------------- Logout & Setting Mobile View Responsive CSS --------------- */
+.mobile-only-menu { display: none; }
+@media (max-width: 768px) {
+.mobile-only-menu { display: block; }
+.profile-info { display: none !important; }
+.top-profile-actions { flex: 1; justify-content: flex-end; gap: 0; }
+.notification-wrapper { margin-left: auto; } }
     
+ /*------------------------ Search Suggestion Styles CSS --------------------------------*/
+.search-bar { position: relative; }
+.suggestion-box { position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10, 25, 25, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(0, 255, 170, 0.2); border-radius: 10px; z-index: 1000; max-height: 300px; overflow-y: auto; display: none; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+.suggestion-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; }
+.suggestion-item:hover { background: rgba(0, 255, 170, 0.1); }
+.suggestion-item .type-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; background: rgba(255,255,255,0.1); }
+.type-client { color: #00ffaa; border: 1px solid #00ffaa; }
+.type-campaign { color: #ffcc00; border: 1px solid #ffcc00; }
+
+/*-------------- Chrome, Safari, Edge, aur Opera browser up-down arrow remove CSS -------------- */
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button { -webkit-appearance: none;margin: 0;}
+/* Firefox browser up-down arrow remove CSS */
+input[type=number] {-moz-appearance: textfield;}
