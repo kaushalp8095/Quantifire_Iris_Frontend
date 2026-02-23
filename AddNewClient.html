@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="Css/dateflatpickr.min.css">
     <link rel="stylesheet" href="Css/datestyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.2/css/flag-icons.min.css" />
-
+    
 </head>
 
 <body>
@@ -36,19 +36,22 @@
                     <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
                     </li>
                 </ul>
+
+                <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
             </nav>
         </aside>
 
         <main class="main-content">
             <header class="top-bar">
                 <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
-
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search campaigns, leads, locations...">
-                </div>
+                
                 <div class="top-profile-actions" style="position: relative;">
-
                     <div class="notification-wrapper" style="position: relative;">
                         <div class="icon-btn notification" onclick="toggleNotification(event)">
                             <img src="Images/Notifications.ico">
@@ -86,16 +89,13 @@
                     </div>
                     <div class="profile-info" onclick="toggleProfileDropdown(event)"
                         style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
-                        <div class="avatar-small">
-                            <img src="Images/ClientHeader.ico">
-                        </div>
+                        <div class="avatar-small"><img src="Images/ClientHeader.ico"></div>
                         <div class="text-info">
                             <h4>Agency Name</h4>
                             <p>Agency</p>
                         </div>
                         <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
                     </div>
-
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="dropdown-header-info">
                             <p class="d-name">Agency Name</p><span class="d-email">agency@quantifyre.com</span>
@@ -103,7 +103,7 @@
                         <ul class="dropdown-list">
                             <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" return false;><i
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
                                         class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                         </ul>
                     </div>
@@ -237,7 +237,7 @@
             $('#' + id + ' .selected-text').html(`<span class="fi ${flagClass} flag-icon-span"></span> ${name} (${code})`);
             $('#' + id + ' .dropdown-selected').attr('data-iso', iso);
             $('.custom-dropdown').removeClass('active');
-            $("#contactNumber").val(""); 
+            $("#contactNumber").val("");
         }
 
         function filterCountries(input) {
@@ -273,7 +273,7 @@
                     isValid = false;
                 } else {
                     if (iso === "IN") {
-                        // India Rule: Must start with 6-9 and be exactly 10 digits
+                        
                         const indiaRegex = /^[6-9]\d{9}$/;
                         if (!indiaRegex.test(num)) {
                             $("#contactNumber").addClass("error-border");
@@ -281,7 +281,7 @@
                             isValid = false;
                         }
                     } else if (phoneUtil) {
-                        // Other Countries: Use Google Library
+                        
                         try {
                             const pNum = phoneUtil.parseAndKeepRawInput(num, iso);
                             if (!phoneUtil.isValidNumberForRegion(pNum, iso)) {
@@ -312,7 +312,7 @@
                 const $btn = $(this);
                 $btn.text("Saving...").prop("disabled", true);
                 $.ajax({
-                    url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/add",
+                    url: "http://localhost:8080/api/agency/clients/add",
                     type: "POST",
                     contentType: "application/json",
                     data: JSON.stringify(clientData),

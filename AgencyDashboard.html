@@ -10,7 +10,8 @@
     <link href="Css/fontstyle.css" rel="stylesheet">
     <link rel="stylesheet" href="Css/all.css">
     <script src="Js/chart.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing"></script>
 
 </head>
 
@@ -37,24 +38,22 @@
 
             <nav>
                 <ul>
-                    <li class="active">
-                        <a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a>
+                    <li class="active"><a href="AgencyDashboard.html"><img src="Images/Dashboard30x30.ico">
+                            Dashboard</a></li>
+                    <li><a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a></li>
+                    <li><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
+                    <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
+                    <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
                     </li>
-                    <li>
-                        <a href="Clients.html"><img src="Images/Clients30x30.ico"> Client</a>
-                    </li>
-                    <li>
-                        <a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a>
-                    </li>
-                    <li>
-                        <a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a>
-                    </li>
-                    <li>
-                        <a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a>
-                    </li>
-                    <li>
-                        <a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
-                    </li>
+
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
                 </ul>
             </nav>
         </aside>
@@ -63,10 +62,14 @@
 
             <header class="top-bar">
                 <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
+
                 <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                    <input type="text" id="globalSearchInput" placeholder="Search campaigns, clients..."
+                        autocomplete="off">
+                    <ul class="suggestion-box" id="globalSuggestionList"></ul>
                 </div>
+
                 <div class="top-profile-actions" style="position: relative;">
                     <div class="notification-wrapper" style="position: relative;">
                         <div class="icon-btn notification" onclick="toggleNotification(event)">
@@ -214,50 +217,50 @@
 
             </section>
 
-                <div class="glass-card ">
-                    <h3 class="card-heading" style="margin-left: 10px;">Client Insights</h3>
-                    <table class="simple-table">
-                        <thead>
-                            <tr>
-                                <th>Client</th>
-                                <th>Campaigns</th>
-                                <th>Leads</th>
-                                <th>Conv. Rate</th>
-                                <th>Location</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Acme corp</td>
-                                <td>5</td>
-                                <td>500</td>
-                                <td>12.50%</td>
-                                <td>Mehsana</td>
-                            </tr>
-                            <tr>
-                                <td>TechStart Inc</td>
-                                <td>34</td>
-                                <td>450</td>
-                                <td>15.30%</td>
-                                <td>Patan</td>
-                            </tr>
-                            <tr>
-                                <td>FitLife Gym</td>
-                                <td>45</td>
-                                <td>650</td>
-                                <td>10.40%</td>
-                                <td>Ahmedabad</td>
-                            </tr>
-                            <tr>
-                                <td>Luxury Stays</td>
-                                <td>26</td>
-                                <td>310</td>
-                                <td>11.34%</td>
-                                <td>Gandhinagar</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="glass-card ">
+                <h3 class="card-heading" style="margin-left: 10px;">Client Insights</h3>
+                <table class="simple-table">
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Campaigns</th>
+                            <th>Leads</th>
+                            <th>Conv. Rate</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Acme corp</td>
+                            <td>5</td>
+                            <td>500</td>
+                            <td>12.50%</td>
+                            <td>Mehsana</td>
+                        </tr>
+                        <tr>
+                            <td>TechStart Inc</td>
+                            <td>34</td>
+                            <td>450</td>
+                            <td>15.30%</td>
+                            <td>Patan</td>
+                        </tr>
+                        <tr>
+                            <td>FitLife Gym</td>
+                            <td>45</td>
+                            <td>650</td>
+                            <td>10.40%</td>
+                            <td>Ahmedabad</td>
+                        </tr>
+                        <tr>
+                            <td>Luxury Stays</td>
+                            <td>26</td>
+                            <td>310</td>
+                            <td>11.34%</td>
+                            <td>Gandhinagar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
         </main>
     </div>
@@ -304,157 +307,231 @@
 
 
         let map;
-let autocomplete;
-let drawingManager;
-let currentMarker;
+        let autocomplete;
+        let drawingManager;
+        let currentMarker;
 
-function initMap() {
-    // 1. Google Map Initialize karein
-    map = new google.maps.Map(document.getElementById("geofenceMap"), {
-        center: { lat: 20.5937, lng: 78.9629 },
-        zoom: 5,
-        styles: [
-           { elementType: "geometry", stylers: [{ color: "#091815" }] },
-            { elementType: "labels.text.stroke", stylers: [{ color: "#091815" }] },
-            { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
-            {
-                featureType: "administrative.locality",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#d59563" }],
-            },
-            {
-                featureType: "poi",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#d59563" }],
-            },
-            {
-                featureType: "poi.park",
-                elementType: "geometry",
-                stylers: [{ color: "#263c3f" }],
-            },
-            {
-                featureType: "poi.park",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#6b9a76" }],
-            },
-            {
-                featureType: "road",
-                elementType: "geometry",
-                stylers: [{ color: "#38414e" }],
-            },
-            {
-                featureType: "road",
-                elementType: "geometry.stroke",
-                stylers: [{ color: "#212a37" }],
-            },
-            {
-                featureType: "road",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#9ca5b3" }],
-            },
-            {
-                featureType: "road.highway",
-                elementType: "geometry",
-                stylers: [{ color: "#746855" }],
-            },
-            {
-                featureType: "road.highway",
-                elementType: "geometry.stroke",
-                stylers: [{ color: "#1f2835" }],
-            },
-            {
-                featureType: "road.highway",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#f3d19c" }],
-            },
-            {
-                featureType: "transit",
-                elementType: "geometry",
-                stylers: [{ color: "#2f3948" }],
-            },
-            {
-                featureType: "transit.station",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#d59563" }],
-            },
-            {
-                featureType: "water",
-                elementType: "geometry",
-                stylers: [{ color: "#17263c" }],
-            },
-            {
-                featureType: "water",
-                elementType: "labels.text.fill",
-                stylers: [{ color: "#515c6d" }],
-            },
-            {
-                featureType: "water",
-                elementType: "labels.text.stroke",
-                stylers: [{ color: "#17263c" }],
-            },
-        ]
-        
-    });
+        function initMap() {
+            // 1. Google Map Initialize karein
+            map = new google.maps.Map(document.getElementById("geofenceMap"), {
+                center: { lat: 20.5937, lng: 78.9629 },
+                zoom: 5,
+                styles: [
+                    { elementType: "geometry", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.stroke", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+                    {
+                        featureType: "administrative.locality",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#d59563" }],
+                    },
+                    {
+                        featureType: "poi",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#d59563" }],
+                    },
+                    {
+                        featureType: "poi.park",
+                        elementType: "geometry",
+                        stylers: [{ color: "#263c3f" }],
+                    },
+                    {
+                        featureType: "poi.park",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#6b9a76" }],
+                    },
+                    {
+                        featureType: "road",
+                        elementType: "geometry",
+                        stylers: [{ color: "#38414e" }],
+                    },
+                    {
+                        featureType: "road",
+                        elementType: "geometry.stroke",
+                        stylers: [{ color: "#212a37" }],
+                    },
+                    {
+                        featureType: "road",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#9ca5b3" }],
+                    },
+                    {
+                        featureType: "road.highway",
+                        elementType: "geometry",
+                        stylers: [{ color: "#746855" }],
+                    },
+                    {
+                        featureType: "road.highway",
+                        elementType: "geometry.stroke",
+                        stylers: [{ color: "#1f2835" }],
+                    },
+                    {
+                        featureType: "road.highway",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#f3d19c" }],
+                    },
+                    {
+                        featureType: "transit",
+                        elementType: "geometry",
+                        stylers: [{ color: "#2f3948" }],
+                    },
+                    {
+                        featureType: "transit.station",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#d59563" }],
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "geometry",
+                        stylers: [{ color: "#17263c" }],
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "labels.text.fill",
+                        stylers: [{ color: "#515c6d" }],
+                    },
+                    {
+                        featureType: "water",
+                        elementType: "labels.text.stroke",
+                        stylers: [{ color: "#17263c" }],
+                    },
+                ]
 
-    // 2. Google Search (Autocomplete) Setup
-    const input = document.getElementById("customSearchInput");
-    autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.bindTo("bounds", map);
+            });
 
-    autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-        if (!place.geometry || !place.geometry.location) {
-            alert("Location nahi mili!");
-            return;
+            // 2. Google Search (Autocomplete) Setup
+            const input = document.getElementById("customSearchInput");
+            autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo("bounds", map);
+
+            autocomplete.addListener("place_changed", () => {
+                const place = autocomplete.getPlace();
+                if (!place.geometry || !place.geometry.location) {
+                    alert("Location nahi mili!");
+                    return;
+                }
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+                if (currentMarker) currentMarker.setMap(null);
+                currentMarker = new google.maps.Marker({
+                    position: place.geometry.location,
+                    map: map,
+                    title: place.name
+                });
+            });
+
+            // 3. Drawing Manager (Geofence tools)
+            drawingManager = new google.maps.drawing.DrawingManager({
+                drawingMode: null,
+                drawingControl: false,
+                drawingControlOptions: {
+                    position: google.maps.ControlPosition.TOP_CENTER,
+                    drawingModes: [
+                        google.maps.drawing.OverlayType.CIRCLE,
+                        google.maps.drawing.OverlayType.POLYGON,
+                        google.maps.drawing.OverlayType.RECTANGLE,
+                    ],
+                },
+                circleOptions: {
+                    fillColor: "#00ffaa",
+                    fillOpacity: 0.2,
+                    strokeWeight: 2,
+                    strokeColor: "#00ffaa",
+                    clickable: true,
+                    editable: true,
+                    zIndex: 1,
+                },
+            });
+            drawingManager.setMap(map);
         }
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);
+
+        window.onload = initMap;
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') {
+
+            }
         }
-        if (currentMarker) currentMarker.setMap(null);
-        currentMarker = new google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name
+
+
+        $(document).ready(function () {
+            let clientsData = [];
+            let campaignsData = [];
+
+            // 1. Backend se data load karein
+            function loadGlobalData() {
+                $.get("http://localhost:8080/api/agency/clients/all", function (data) {
+                    clientsData = data;
+                });
+                $.get("http://localhost:8080/api/agency/campaigns/all?filter=all", function (data) {
+                    campaignsData = data;
+                });
+            }
+            loadGlobalData();
+
+            // 2. Search Input Event
+            $("#globalSearchInput").on("input", function () {
+                let query = $(this).val().toLowerCase().trim();
+                let suggestionBox = $("#globalSuggestionList");
+                suggestionBox.empty();
+
+                if (query.length < 1) {
+                    suggestionBox.hide();
+                    return;
+                }
+
+                // Filter Clients
+                let filteredClients = clientsData.filter(c =>
+                    (c.clientName || "").toLowerCase().includes(query)
+                );
+
+                // Filter Campaigns
+                let filteredCampaigns = campaignsData.filter(cp =>
+                    (cp.campaignName || "").toLowerCase().includes(query)
+                );
+
+                // UI mein add karein
+                if (filteredClients.length > 0 || filteredCampaigns.length > 0) {
+
+                    // Clients dikhayein
+                    filteredClients.forEach(c => {
+                        suggestionBox.append(`
+                    <li class="suggestion-item" onclick="location.href='ClientDetails.html?id=${c.id}'">
+                        <span><i class="fa-solid fa-user" style="margin-right:8px"></i> ${c.clientName}</span>
+                        <span class="type-badge type-client">Client</span>
+                    </li>
+                `);
+                    });
+
+                    // Campaigns dikhayein
+                    filteredCampaigns.forEach(cp => {
+                        suggestionBox.append(`
+                    <li class="suggestion-item" onclick="location.href='CampaignDetails.html?id=${cp.id}'">
+                        <span><i class="fa-solid fa-bullhorn" style="margin-right:8px"></i> ${cp.campaignName}</span>
+                        <span class="type-badge type-campaign">Campaign</span>
+                    </li>
+                `);
+                    });
+
+                    suggestionBox.show();
+                } else {
+                    suggestionBox.hide();
+                }
+            });
+
+            // Suggestion box ke bahar click karne par hide karein
+            $(document).on("click", function (e) {
+                if (!$(e.target).closest('.search-bar').length) {
+                    $("#globalSuggestionList").hide();
+                }
+            });
         });
-    });
 
-    // 3. Drawing Manager (Geofence tools)
-    drawingManager = new google.maps.drawing.DrawingManager({
-        drawingMode: null,
-        drawingControl: false,
-        drawingControlOptions: {
-            position: google.maps.ControlPosition.TOP_CENTER,
-            drawingModes: [
-                google.maps.drawing.OverlayType.CIRCLE,
-                google.maps.drawing.OverlayType.POLYGON,
-                google.maps.drawing.OverlayType.RECTANGLE,
-            ],
-        },
-        circleOptions: {
-            fillColor: "#00ffaa",
-            fillOpacity: 0.2,
-            strokeWeight: 2,
-            strokeColor: "#00ffaa",
-            clickable: true,
-            editable: true,
-            zIndex: 1,
-        },
-    });
-    drawingManager.setMap(map);
-}
-
-window.onload = initMap;
-
-function handleEnter(e) {
-    if (e.key === 'Enter') {
-    
-    }
-}
     </script>
-
 </body>
 
 </html>

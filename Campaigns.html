@@ -36,6 +36,14 @@
                     <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
                     <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
                     </li>
+
+                    <div class="mobile-only-menu">
+                        <li><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
                 </ul>
             </nav>
         </aside>
@@ -43,10 +51,7 @@
         <main class="main-content" id="mainWrapper">
             <header class="top-bar">
                 <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search campaigns, leads, locations...">
-                </div>
+                
                 <div class="top-profile-actions" style="position: relative;">
                     <div class="notification-wrapper" style="position: relative;">
                         <div class="icon-btn notification" onclick="toggleNotification(event)">
@@ -170,7 +175,6 @@
                 <button class="btn-search" id="smallSearchBtn" style="padding: 12px 15px; height: 46px;">
                     <i class="fa-solid fa-check"></i>
                 </button>
-
             </div>
 
             <div class="quick-filter-row">
@@ -188,7 +192,7 @@
             </div>
 
             <div id="backBtnWrapper">
-                <button class="btn-action" onclick="resetPage()" style="display: flex; align-items: center;justify-content: center; gap: 8px;">
+                <button class="btn-action" onclick="resetPage()" style="display: flex; align-items: center; justify-content: center; gap: 8px;">
                     <i class="fa-solid fa-arrow-left"></i> Back to Search
                 </button>
             </div>
@@ -301,7 +305,7 @@
 
         function loadClientsForSearch() {
             $.ajax({
-                url: "https://quantifire-iris-backend.onrender.com/api/agency/clients/all",
+                url: "http://localhost:8080/api/agency/clients/all",
                 type: "GET",
                 success: function (data) {
                     let dropdown = $('#clientSearchSelect');
@@ -345,7 +349,7 @@
 
         function loadCampaignsData(filter) {
             $.ajax({
-                url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/all?filter=" + filter,
+                url: "http://localhost:8080/api/agency/campaigns/all?filter=" + filter,
                 type: "GET",
                 success: function (data) { allCampaignsLocal = data; }
             });
@@ -473,7 +477,7 @@
         function confirmDelete() {
             if (campaignIdToDelete) {
                 $.ajax({
-                    url: "https://quantifire-iris-backend.onrender.com/api/agency/campaigns/delete/" + campaignIdToDelete, type: "DELETE",
+                    url: "http://localhost:8080/api/agency/campaigns/delete/" + campaignIdToDelete, type: "DELETE",
                     success: function () { loadCampaignsData('all'); setTimeout(() => performSearch(), 500); closeDeleteModal(); }
                 });
             }
