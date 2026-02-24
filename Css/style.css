@@ -995,3 +995,19 @@ input:checked+.sys-slider:before { transform: translateX(20px); }
 input::-webkit-outer-spin-button,input::-webkit-inner-spin-button { -webkit-appearance: none;margin: 0;}
 /* Firefox browser up-down arrow remove CSS */
 input[type=number] {-moz-appearance: textfield;}
+
+
+/* ------------------------Setting Page Input Edit Cursor CSS    --------------------------------------*/
+.select2-container--disabled .select2-selection { background-color: transparent !important; border-color: rgba(255, 255, 255, 0.1) !important; cursor: not-allowed !important; box-shadow: none !important; }
+.select2-container--disabled .select2-selection:hover { background-color: transparent !important; border-color: rgba(255, 255, 255, 0.1) !important; }
+.personal-group[readonly]:hover, .address-group[readonly]:hover { border-color: rgba(255, 255, 255, 0.1) !important; background: transparent !important; }
+
+
+/*-----------------Add New Camapign/edit Campaign Page location search CSS -------------------------*/
+.pac-container { background-color: rgba(10, 25, 25, 0.95) !important; backdrop-filter: blur(10px); border: 1px solid rgba(0, 255, 170, 0.2) !important; border-radius: 0 0 10px 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5) !important; font-family: inherit !important; margin-top: 5px; z-index: 9999 !important; }
+.pac-item { background: transparent !important; border-top: 1px solid rgba(255, 255, 255, 0.05) !important; padding: 10px 15px !important; color: #fff !important; cursor: pointer; font-size: 14px !important; line-height: 30px !important; }
+.pac-item:hover { background-color: rgba(0, 255, 170, 0.1) !important; }
+.pac-item-query { color: #00ffaa !important; font-size: 15px !important; padding-right: 5px; }
+.pac-matched, .pac-item-query + span { color: #888 !important; }
+.pac-logo:after { display: none !important; }
+.pac-icon { filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%); margin-top: 7px !important; }

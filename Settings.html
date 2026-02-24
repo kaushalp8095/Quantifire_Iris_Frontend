@@ -7,7 +7,9 @@
     <title>Quantifyre Iris - Agency Setting</title>
     <link rel="stylesheet" href="Css/style.css">
     <link rel="stylesheet" href="Css/sidebar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css">
+
 </head>
 
 <body>
@@ -38,7 +40,14 @@
                     <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
                     <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
                     </li>
-                    <li class="active"><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+
+                    <div class="mobile-only-menu">
+                        <li class="active"><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
                 </ul>
             </nav>
         </aside>
@@ -181,7 +190,7 @@
                             </div>
 
                             <div class="profile-right-col">
-                                <div class="glass-card form-container">
+                                <div class="glass-card form-container" style="padding: 20px 20px 0 20px;">
                                     <div class="form-header-row"
                                         style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px;">
                                         <h3 style="margin: 0;">Edit Personal Details</h3>
@@ -196,11 +205,13 @@
                                                 <label>First Name</label>
                                                 <input type="text" class="form-input personal-group" value="Alex"
                                                     readonly>
+                                                    <span class="error-msg">* Required</span>
                                             </div>
                                             <div class="form-group">
                                                 <label>Last Name</label>
                                                 <input type="text" class="form-input personal-group" value="Morgan"
                                                     readonly>
+                                                    <span class="error-msg">* Required</span>
                                             </div>
                                         </div>
 
@@ -209,11 +220,13 @@
                                                 <label>Email Address</label>
                                                 <input type="email" class="form-input personal-group"
                                                     value="alex@quantifyre.com" readonly>
+                                                    <span class="error-msg">* Required</span>
                                             </div>
                                             <div class="form-group">
                                                 <label>Phone Number</label>
                                                 <input type="tel" class="form-input personal-group"
                                                     value="+91 98765 43210" readonly>
+                                                    <span class="error-msg">* Required</span>
                                             </div>
                                         </div>
 
@@ -226,59 +239,55 @@
                                                 style="color: #00ff9d; cursor: pointer; font-size: 0.9rem;"
                                                 title="Edit Address"></i>
                                         </div>
-                                         <div class="form-group">
-                                            <label>Street Address</label>
+                                        <div class="form-group">
+                                            <label>Street Address Line 1</label>
                                             <input type="text" class="form-input address-group"
                                                 value="1204, Quantifyre Tower, SG Highway" readonly>
+                                                <span class="error-msg">* Required</span>
                                         </div>
                                         <div class="form-group">
                                             <label>Street Address Line 2</label>
                                             <input type="text" class="form-input address-group"
-                                                readonly>
+                                            value="1204, Quantifyre Tower, SG Highway" readonly>
+                                            <span class="error-msg">* Required</span>
                                         </div>
                                         <div class="form-grid-2">
-                                             <div class="form-group">
-                                                <label>City</label>
-                                                <input type="text" class="form-input address-group" value="Mehsana"
-                                                    readonly>
-                                            </div>
-                                             <div class="form-group">
-                                                <label>Pin Code</label>
-                                                <input type="number" class="form-input address-group" value="384002"
-                                                    readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-grid-2"> 
-                                            <div class="form-group">
-                                                <label>State</label>
-                                                <input type="text" class="form-input address-group" value="Gujrat"
-                                                    readonly>
-                                            </div>
-
                                             <div class="form-group">
                                                 <label>Country</label>
-                                                <div class="custom-dropdown address-group disabled-dropdown"
-                                                    id="countryDropdown" style="pointer-events: none; opacity: 0.8;">
-                                                    <div class="dropdown-selected"
-                                                        onclick="toggleCustomDropdown('countryDropdown', event)">
-                                                        <span id="selectedCountry">India</span>
-                                                        <i class="fas fa-chevron-down"></i>
-                                                    </div>
-                                                    <ul class="dropdown-options">
-                                                        <li class="dropdown-item"
-                                                            onclick="selectOption('countryDropdown', 'India', 'selectedCountry')">
-                                                            India</li>
-                                                        <li class="dropdown-item"
-                                                            onclick="selectOption('countryDropdown', 'USA', 'selectedCountry')">
-                                                            USA</li>
-                                                    </ul>
+                                                <div class="filter-item filter-wide">
+                                                    <select id="countrySearchSelect" class="search-input-field">
+                                                        <option></option>
+                                                    </select>
+                                                    <span id="countryError" class="error-msg">* Select Country</span>
                                                 </div>
                                             </div>
-                                           
+                                            <div class="form-group">
+                                                <label>State</label>
+                                                <div class="filter-item filter-wide">
+                                                    <select id="stateSearchSelect" class="search-input-field">
+                                                        <option></option>
+                                                    </select>
+                                                    <span id="stateError" class="error-msg">* Select State</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                       
-
-
+                                        <div class="form-grid-2">
+                                            <div class="form-group">
+                                                <label>City</label>
+                                                <div class="filter-item filter-wide">
+                                                    <select id="citySearchSelect" class="search-input-field">
+                                                        <option></option>
+                                                    </select>
+                                                    <span id="cityError" class="error-msg">* Select City</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Pin Code</label>
+                                                <input type="number" class="form-input address-group" value="384002" style="height: 40px;"
+                                                    readonly>
+                                                    <span class="error-msg">* Required</span>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
 
@@ -318,28 +327,30 @@
                             <div class="sys-box" style="text-align: center;">
                                 <span class="sys-box-title" style="text-align: left;">Two-Factor Authentication
                                     (2FA)</span>
-                                    
+
                                 <div class="sys-box" style="display: flex; flex-direction: column; gap: 20px;">
                                     <div class="sys-box"
                                         style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05); padding: 20px;">
                                         <div class="sys-toggle-row">
                                             <div style="text-align: left;">
                                                 <span
-                                                    style="color: #fff; font-size: 1rem; font-weight: 500; display: block; margin-bottom: 5px;">Two-Factor Authentication
-                                                   </span>
+                                                    style="color: #fff; font-size: 1rem; font-weight: 500; display: block; margin-bottom: 5px;">Two-Factor
+                                                    Authentication
+                                                </span>
                                                 <p
                                                     style="font-size: 0.85rem; color: #5a6a6e; margin: 0; line-height: 1.4;">
                                                     Allow you two-factor authentication
                                                 </p>
                                             </div>
-                        
+
                                             <div style="flex-shrink: 0;">
                                                 <label class="sys-switch">
-                                                    <input type="checkbox" id="tfaToggle" onchange="toggleTFASettings()">
+                                                    <input type="checkbox" id="tfaToggle"
+                                                        onchange="toggleTFASettings()">
                                                     <span class="sys-slider"></span>
                                                 </label>
                                             </div>
-                                            
+
                                         </div>
 
                                         <div id="tfaMethodsWrapper"
@@ -400,7 +411,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -612,7 +623,11 @@
 
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/allagency.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+
+
+
         // Tab Functionality
         function openSysTab(evt, tabName) {
             $(".sys-tab-content").hide();
@@ -651,6 +666,8 @@
                 $('.report-dropdown').removeClass('active');
             }
         });
+
+        
     </script>
     <script>
         // --- Profile CUSTOM FORM DROPDOWN LOGIC ---
@@ -680,46 +697,64 @@
         });
 
         $(document).ready(function () {
-            // Pencil icon click event
+            // 1. Initial State: Sabhi groups (.personal-group aur .address-group) ko target karein
+            const allInputs = $('.personal-group, .address-group');
+            const select2Elements = $('#countrySearchSelect, #stateSearchSelect, #citySearchSelect');
+
+            $('.address-group').next('.select2-container').find('.select2-selection').css({
+                'cursor': 'not-allowed',
+                'pointer-events': 'auto' // Taaki cursor dikhe lekin click na ho
+            });
+
+            // Sabhi ko initially readonly aur lock cursor dein
+            allInputs.attr('readonly', true).css('cursor', 'not-allowed');
+
+            // Select2 dropdowns ko initially disable rakhein
+            select2Elements.prop('disabled', true).trigger('change.select2');
+
+            // 2. Pencil icon click event (Ye logic sabhi pencils ke liye kaam karega)
             $('.edit-trigger').on('click', function () {
                 const targetClass = $(this).data('target');
                 const inputs = $('.' + targetClass);
 
-                // Toggle readonly attribute
                 if (inputs.attr('readonly')) {
+                    // --- UNLOCK MODE ---
                     inputs.removeAttr('readonly');
                     inputs.css({
                         'border-color': 'rgba(0, 255, 157, 0.5)',
-                        'background': 'rgba(255, 255, 255, 0.05)'
+                        'background': 'rgba(255, 255, 255, 0.05)',
+                        'cursor': 'text' 
                     });
 
-                    // For custom dropdown
+                    // Agar address-group unlock ho raha hai toh Select2 bhi enable karo
                     if (targetClass === 'address-group') {
-                        $('#countryDropdown').css({
-                            'pointer-events': 'auto',
-                            'opacity': '1'
-                        });
+                        select2Elements.prop('disabled', false).trigger('change.select2');
+                        inputs.next('.select2-container').find('.select2-selection').css('cursor', 'pointer');
                     }
 
-                    // Focus on the first input of the group
                     inputs.first().focus();
-
-                    // Icon feedback (optional: change icon to checkmark)
                     $(this).removeClass('fa-pencil').addClass('fa-check').css('color', '#fff');
+
                 } else {
-                    // Re-lock if clicked again
+                    // --- LOCK MODE ---
                     inputs.attr('readonly', true);
                     inputs.css({
                         'border-color': '',
-                        'background': ''
+                        'background': '',
+                        'cursor': 'not-allowed' 
                     });
+
+                    // Agar address-group lock ho raha hai toh Select2 disable karo
+                    if (targetClass === 'address-group') {
+                        select2Elements.prop('disabled', true).trigger('change.select2');
+                        inputs.next('.select2-container').find('.select2-selection').css('cursor', 'not-allowed');
+                    }
+
                     $(this).removeClass('fa-check').addClass('fa-pencil').css('color', '#00ff9d');
                 }
             });
         });
-
         function toggleTFASettings() {
-          
             console.log("Toggle Clicked");
 
             const isChecked = document.getElementById('tfaToggle').checked;
@@ -736,7 +771,6 @@
         }
 
         function selectTFAMethod(method) {
-            // Reset borders
             $('.tfa-method-card').css({ 'border-color': 'rgba(255,255,255,0.1)', 'color': '#888', 'background': 'transparent' });
 
             $('#tfaInputSection').show();
@@ -753,6 +787,193 @@
             }
         }
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            const countrySelect = $('#countrySearchSelect');
+            const stateSelect = $('#stateSearchSelect');
+            const citySelect = $('#citySearchSelect');
+
+            // Select2 base options
+            const select2Config = {
+                width: '100%',
+                dropdownParent: $('.sys-main-container'),
+                allowClear: true
+            };
+
+            // Initialize all as Select2
+            countrySelect.select2({ ...select2Config, placeholder: "Searching Countries..." });
+            stateSelect.select2({ ...select2Config, placeholder: "Select Country First" });
+            citySelect.select2({ ...select2Config, placeholder: "Select State First" });
+
+            // 1. Fetch All Countries
+            fetch("https://countriesnow.space/api/v0.1/countries/positions")
+                .then(response => response.json())
+                .then(res => {
+                    const countryOptions = res.data.map(c => ({ id: c.name, text: c.name }));
+                    countrySelect.select2({ ...select2Config, placeholder: "Select Country", data: countryOptions });
+                })
+                .catch(err => console.error("Country API Error:", err));
+
+            // 2. Fetch States when Country changes
+            countrySelect.on('change', function () {
+                const countryName = $(this).val();
+
+                // Reset State and City
+                stateSelect.empty().append('<option></option>').trigger('change');
+                citySelect.empty().append('<option></option>').trigger('change');
+
+                if (!countryName) return;
+
+                stateSelect.select2({ ...select2Config, placeholder: "Loading States..." });
+
+                fetch("https://countriesnow.space/api/v0.1/countries/states", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ country: countryName })
+                })
+                    .then(response => response.json())
+                    .then(res => {
+                        const states = res.data.states.map(s => ({ id: s.name, text: s.name }));
+                        stateSelect.select2({ ...select2Config, placeholder: "Select State", data: states });
+                    })
+                    .catch(err => stateSelect.select2({ ...select2Config, placeholder: "No States Found" }));
+            });
+
+            // 3. Fetch Cities when State changes
+            stateSelect.on('change', function () {
+                const countryName = countrySelect.val();
+                const stateName = $(this).val();
+
+                // Reset City
+                citySelect.empty().append('<option></option>').trigger('change');
+
+                if (!stateName) return;
+
+                citySelect.select2({ ...select2Config, placeholder: "Loading Cities..." });
+
+                fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ country: countryName, state: stateName })
+                })
+                    .then(response => response.json())
+                    .then(res => {
+                        const cities = res.data.map(city => ({ id: city, text: city }));
+                        citySelect.select2({ ...select2Config, placeholder: "Select City", data: cities });
+                    })
+                    .catch(err => citySelect.select2({ ...select2Config, placeholder: "No Cities Found" }));
+            });
+        });
+
+
+        $(document).ready(function () {
+    // 1. Initial State: Sabhi ko lock rakhein
+    $('.personal-group, .address-group').attr('readonly', true).css('cursor', 'not-allowed');
+    $('#countrySearchSelect, #stateSearchSelect, #citySearchSelect').prop('disabled', true).trigger('change.select2');
+
+    // --- 2. VALIDATION FUNCTION ---
+    function validateSection(targetClass) {
+        let isValid = true;
+        
+        // Input fields check karein jo sirf us class group mein hain
+        $('.' + targetClass).each(function () {
+            let val = $(this).val().trim();
+            if (val === "") {
+                $(this).css("border-color", "#ff4d4d");
+                $(this).siblings(".error-msg").fadeIn();
+                isValid = false;
+            } else {
+                $(this).css("border-color", "rgba(255,255,255,0.1)");
+                $(this).siblings(".error-msg").hide();
+            }
+        });
+
+        // Select2 check (Sirf Address Group ke liye)
+        if (targetClass === 'address-group') {
+            const selects = ['#countrySearchSelect', '#stateSearchSelect', '#citySearchSelect'];
+            selects.forEach(id => {
+                let val = $(id).val();
+                if (!$(id).prop('disabled') && (!val || val === "")) {
+                    $(id).next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                    $(id).parent().find('.error-msg').fadeIn();
+                    isValid = false;
+                } else {
+                    $(id).next('.select2-container').find('.select2-selection').css('border-color', 'rgba(255,255,255,0.1)');
+                    $(id).parent().find('.error-msg').hide();
+                }
+            });
+        }
+        return isValid;
+    }
+
+    // --- 3. PENCIL / RIGHT SIGN CLICK LOGIC ---
+    $('.edit-trigger').on('click', function (e) {
+        e.stopPropagation();
+        const $icon = $(this);
+        const targetClass = $icon.data('target');
+        const $inputs = $('.' + targetClass);
+
+        if ($icon.hasClass('fa-pencil')) {
+            // --- EDIT MODE ACTIVATE (Unlock) ---
+            $inputs.removeAttr('readonly').css({
+                'border-color': 'rgba(0, 255, 157, 0.5)',
+                'background': 'rgba(255, 255, 255, 0.05)',
+                'cursor': 'text'
+            });
+
+            if (targetClass === 'address-group') {
+                $('#countrySearchSelect, #stateSearchSelect, #citySearchSelect').prop('disabled', false).trigger('change.select2');
+            }
+            $icon.removeClass('fa-pencil').addClass('fa-check').css('color', '#fff');
+            
+        } else {
+            // --- SAVE/LOCK MODE (Right Sign Click) ---
+            // Yahan validation check hoga lock karne se pehle
+            if (validateSection(targetClass)) {
+                $inputs.attr('readonly', true).css({
+                    'border-color': '',
+                    'background': '',
+                    'cursor': 'not-allowed'
+                });
+
+                if (targetClass === 'address-group') {
+                    $('#countrySearchSelect, #stateSearchSelect, #citySearchSelect').prop('disabled', true).trigger('change.select2');
+                }
+                $icon.removeClass('fa-check').addClass('fa-pencil').css('color', '#00ff9d');
+            } else {
+                // Agar validation fail hua toh alert ya focus de sakte hain
+                console.log("Validation failed for: " + targetClass);
+            }
+        }
+    });
+
+    // --- 4. MAIN SAVE CHANGES BUTTON ---
+    $('.btn-update').on('click', function (e) {
+        e.preventDefault();
+        
+        // Dono groups ko validate karein
+        let isPValid = validateSection('personal-group');
+        let isAValid = validateSection('address-group');
+
+        if (isPValid && isAValid) {
+            alert("Success! Profile updated.");
+            // Submit form via AJAX
+        } else {
+            alert("Please fill all mandatory fields.");
+        }
+    });
+
+    // Real-time cleanup: typing karte hi error hatana
+    $(document).on('input change', '.form-input, select', function() {
+        if ($(this).val().trim() !== "") {
+            $(this).css("border-color", "rgba(255,255,255,0.1)");
+            $(this).siblings(".error-msg").hide();
+            $(this).next('.select2-container').find('.select2-selection').css('border-color', 'rgba(255,255,255,0.1)');
+        }
+    });
+});
+        
     </script>
 </body>
 

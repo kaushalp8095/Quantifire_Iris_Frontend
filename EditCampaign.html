@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="Css/dateflatpickr.min.css">
     <link rel="stylesheet" href="Css/datestyle.css">
     <link rel="stylesheet" href="Css/clientnamedropdown.css" />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing"></script>
 </head>
 
 <body>
@@ -43,8 +44,9 @@
                     <li class="active"><a href="Campaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
                     <li><a href="Leads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
                     <li><a href="Locations.html"><img src="Images/Locations30x30.ico"> Locations</a></li>
-                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a></li>
-                
+                    <li><a href="Report&Analytics.html"><img src="Images/Report&Analytics.ico"> Report & Analytics</a>
+                    </li>
+
                     <div class="mobile-only-menu">
                         <li class="active"><a href="Settings.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
                         <div class="dropdown-divider"
@@ -157,7 +159,8 @@
 
                     <div class="form-group">
                         <label>Target Location</label>
-                        <textarea id="targetLocation" class="form-input" rows="3"></textarea>
+                        <input type="text" id="targetLocation" class="form-input" style="line-height: 2;"
+                            placeholder="Search city..." autocomplete="off">
                         <span id="targetLocationErr" class="error-msg">* This field is required</span>
                     </div>
 
@@ -424,6 +427,22 @@
                 ]
             });
 
+            const locInput = document.getElementById("targetLocation");
+            const locAutocomplete = new google.maps.places.Autocomplete(locInput, {
+                types: ['(cities)']
+            });
+
+            locAutocomplete.addListener("place_changed", () => {
+                const place = locAutocomplete.getPlace();
+                if (!place.geometry) {
+                    locInput.value = "";
+                    return;
+                }
+                
+                if (place.geometry.viewport) map.fitBounds(place.geometry.viewport);
+                else { map.setCenter(place.geometry.location); map.setZoom(12); }
+            });
+
             const input = document.getElementById("customSearchInput");
             const autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.bindTo("bounds", map);
@@ -504,8 +523,48 @@
                     if (data.geoData) {
                         try {
                             var geoInfo = JSON.parse(data.geoData);
-                            drawSavedGoogleShape(geoInfo);
-                        } catch (e) { console.error("Geo JSON parse error", e); }
+
+                            if (geoInfo.lat && geoInfo.lng && !geoInfo.radius) {
+                                const pos = { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) };
+                                if (currentMarker) currentMarker.setMap(null);
+                                currentMarker = new google.maps.Marker({
+                                    position: pos,
+                                    map: map,
+                                    title: data.targetLocation
+                                });
+                                map.setCenter(pos);
+                                map.setZoom(12);
+                            }
+
+                            if (geoInfo.type === "Circle") {
+                                const circlePos = { lat: parseFloat(geoInfo.lat), lng: parseFloat(geoInfo.lng) };
+                                let shape = new google.maps.Circle({
+                                    center: circlePos,
+                                    radius: parseFloat(geoInfo.radius),
+                                    map: map,
+                                    fillColor: "#00ffaa",
+                                    fillOpacity: 0.2,
+                                    strokeColor: "#00ffaa",
+                                    editable: true
+                                });
+                                map.setCenter(circlePos);
+                                map.fitBounds(shape.getBounds());
+                                overlays.push(shape);
+                            }
+
+                            // 3. Agar Rectangle tha
+                            else if (geoInfo.type === "Rectangle") {
+                                let shape = new google.maps.Rectangle({
+                                    bounds: geoInfo.bounds,
+                                    map: map,
+                                    fillColor: "#00ffaa", fillOpacity: 0.2, strokeColor: "#00ffaa", editable: true
+                                });
+                                map.fitBounds(shape.getBounds());
+                                overlays.push(shape);
+                            }
+                        } catch (e) {
+                            console.error("GeoData render error:", e);
+                        }
                     }
                 }
             });
