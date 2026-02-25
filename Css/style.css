@@ -1011,3 +1011,11 @@ input[type=number] {-moz-appearance: textfield;}
 .pac-matched, .pac-item-query + span { color: #888 !important; }
 .pac-logo:after { display: none !important; }
 .pac-icon { filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%); margin-top: 7px !important; }
+
+
+/*---------------------Pagination entry dropdown CSS ------------------------------*/
+   @media (max-width: 600px) {
+    .pagination-wrapper { justify-content: center !important; flex-direction: column !important; gap: 10px !important; }
+    .pagination-left { font-size: 0.8rem; }
+    .pagination-controls { margin-top: 5px; }
+}
