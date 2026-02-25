@@ -189,15 +189,33 @@
             </div>
 
             <div class="pagination-wrapper">
-                <div class="pagination-info">
-                    Showing <span id="start-row">0</span> to <span id="end-row">0</span> of <span
-                        id="total-rows">0</span> entries
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="pagination-info">
+                        Showing <span id="start-row">0</span> to <span id="end-row">0</span> of
+                        <span id="total-rows">0</span> entries
+                    </div>
+
+                    <div class="custom-dropdown" id="rowsPerPageDropdown" style="width: 60px;min-width: 60px;">
+                        <div class="dropdown-selected" style="height: 32px; padding: 5px 10px; font-size: 0.8rem;"
+                            onclick="toggleDropdown('rowsPerPageDropdown')">
+                            <span class="selected-text">4</span>
+                            <i class="fa-solid fa-chevron-down" style="font-size: 0.7rem;"></i>
+                        </div>
+                        <ul class="dropdown-options" style="bottom: 100%; top: auto; margin-bottom: 5px;">
+                            <li class="dropdown-item" onclick="changeRowsPerPage(4)">4</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(10)">10</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(25)">25</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(50)">50</li>
+                            <li class="dropdown-item" onclick="changeRowsPerPage(100)">100</li>
+                        </ul>
+                    </div>
                 </div>
+
                 <div class="pagination-controls">
-                    <button class="page-btn prev-btn" onclick="prevPage()"><i
+                    <button class="page-btn prev-btn" onclick="prevPage(event)"><i
                             class="fa-solid fa-chevron-left"></i></button>
                     <div id="page-numbers" class="page-numbers"></div>
-                    <button class="page-btn next-btn" onclick="nextPage()"><i
+                    <button class="page-btn next-btn" onclick="nextPage(event)"><i
                             class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
@@ -227,7 +245,7 @@
         var allLocationsLocal = [];
         var filteredLocations = [];
         var currentPage = 1;
-        const rowsPerPage = 4;
+        var rowsPerPage = 4;
 
         $(document).ready(function () {
             // 1. Initialize Select2
@@ -361,6 +379,14 @@
             currentPage = 1;
             displayLocations(filteredLocations);
         }
+
+        function changeRowsPerPage(val) {
+    rowsPerPage = parseInt(val);
+    $('#rowsPerPageDropdown .selected-text').text(val);
+    $('#rowsPerPageDropdown').removeClass('active');
+    currentPage = 1; // Page 1 par reset karein
+    displayLocations(filteredLocations); // Table refresh karein
+}
 
         function displayLocations(dataList) {
             let tbody = $("#locationTableBody").empty();
