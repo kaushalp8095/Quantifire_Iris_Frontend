@@ -20,6 +20,47 @@ $.ajaxPrefilter(function(options) {
 
 
 
+// Har page load par Header aur Sidebar ka logo sync karne ke liye
+function syncGlobalAgencyLogos() {
+    const agencyEmail = localStorage.getItem("agencyEmail");
+    
+    if (!agencyEmail) return;
+
+    $.ajax({
+        url: "http://localhost:8080/api/agency/profile", // 👈 Live URL (Render link) yahan dalein
+        type: "GET",
+        data: { email: agencyEmail },
+        success: function (data) {
+            if (data.agencyLogo) {
+                let finalPath;
+                // Supabase S3 URL check (Live project logic)
+                if (data.agencyLogo.startsWith('http')) {
+                    finalPath = data.agencyLogo;
+                } else {
+                    // Local fallback logic
+                    finalPath = "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
+                }
+                
+                // --- Dono Logo sync karein ---
+                // Sidebar Logo ID: sidebarAgencyLogo
+                // Header Logo ID: headerAgencyLogo
+                $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", finalPath);
+                
+                // Bonus: Agar koi generic avatar classes use ho rahi hain toh unhe bhi cover kar lega
+                $(".avatar-circle img, .avatar-small img").attr("src", finalPath);
+            }
+        },
+        error: function (err) {
+            console.error("Global Logo Sync Error:", err);
+        }
+    });
+}
+
+// Page ready hote hi logo fetch karein
+$(document).ready(function() {
+    syncGlobalAgencyLogos();
+});
+
 
 function openLogoutModal() {
     console.log("Opening Logout Modal...");
