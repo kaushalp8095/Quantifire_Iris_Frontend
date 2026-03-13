@@ -623,10 +623,14 @@
                     }
 
                     if (data.creativePath) {
-                        $('#placeholderIcon').hide();
-                        var imageUrl = "http://localhost:8080/uploads/" + data.creativePath;
-                        $('#existingImagePreview').attr('src', imageUrl).show();
-                    }
+                $('#placeholderIcon').hide();
+                // Agar creativePath khud ek full URL hai (Supabase link), toh direct set karein
+                let imageUrl = data.creativePath.startsWith('http') ? 
+                               data.creativePath : 
+                               "https://your-render-app-url.onrender.com/uploads/" + data.creativePath;
+                
+                $('#existingImagePreview').attr('src', imageUrl).show();
+            }
 
                     if (data.geoData) {
                         try {

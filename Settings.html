@@ -855,9 +855,22 @@
                         $("#leftAgencyPhone").text(data.phoneNumber || "");
 
                         if (data.agencyLogo) {
-                            let finalPath = "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
-                            $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo").attr("src", finalPath);
-                        }
+                let finalPath;
+                // Check agar link 'http' se start ho raha hai (Naya Supabase URL)
+                if (data.agencyLogo.startsWith('http')) {
+                    finalPath = data.agencyLogo;
+                } else {
+                    // Purana data handle karne ke liye (Local)
+                    finalPath = "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
+                }
+                
+                // Sabhi places par logo set karein
+                $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo").attr("src", finalPath);
+            } else {
+                // Default image agar logo nahi hai
+                $("#leftAgencyLogo").attr("src", "Images/default-avatar.png");
+            }
+
                         if (data.status) {
                             let statusColor = data.status.toLowerCase() === 'active' ? "#00ff9d" : "#ff4d4d";
                             $("#leftAgencyStatus").html(`<i class="fa-solid fa-circle-check"></i> ${data.status}`).css({ "color": statusColor, "border-color": statusColor });
@@ -924,6 +937,9 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
+                        if (response.logoUrl) {
+                $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo").attr("src", response.logoUrl);
+            }
                         showCustomAlert("Profile Updated", response.message || "Your profile has been updated successfully!", "success");
                         $('.btn-alert-ok').off('click').on('click', function () {
                             closeCustomAlert();
