@@ -855,7 +855,7 @@
                         $("#leftAgencyPhone").text(data.phoneNumber || "");
 
                         if (data.agencyLogo) {
-                            let finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + encodeURIComponent(data.agencyLogo);
+                            let finalPath = "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
                             $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo").attr("src", finalPath);
                         }
                         if (data.status) {
