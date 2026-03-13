@@ -24,41 +24,44 @@ function syncGlobalAgencyLogos() {
     const agencyEmail = localStorage.getItem("agencyEmail");
     if (!agencyEmail) return;
 
-    // 1. Pehle check karein agar localStorage mein pehle se URL hai (Fast loading ke liye)
-    const cachedLogo = localStorage.getItem("currentAgencyLogo");
-    if (cachedLogo) {
-        $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", cachedLogo);
-    }
-
     $.ajax({
-        url: "http://localhost:8080/api/agency/profile", // 👈 Render URL update karein
+        url: "https://quantifire-iris-backend.onrender.com/api/agency/profile", // 👈 Hamesha live backend use karein
         type: "GET",
         data: { email: agencyEmail },
         success: function (data) {
             if (data.agencyLogo) {
-                let finalPath = data.agencyLogo.startsWith('http') 
-                    ? data.agencyLogo 
-                    : "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
+                let finalPath = "";
 
-                // 2. LocalStorage mein save karein taaki overwrite na ho sake
-                localStorage.setItem("currentAgencyLogo", finalPath);
+                // CHECK: Agar logo link pehle se hi 'http' se start hota hai, toh usey DIRECT use karo
+                if (data.agencyLogo.includes('http')) {
+                    finalPath = data.agencyLogo;
+                } else {
+                    // Agar sirf file name hai, toh hi path lagao (local testing ke liye)
+                    finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + data.agencyLogo;
+                }
 
-                // 3. Thoda delay dekar apply karein taaki agar koi doosri script 
-                // ise reset karne ki koshish kare toh hamara code last mein chale
-                setTimeout(() => {
-                    $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", finalPath);
-                    // Double check - agar image blank ho jaye toh dubara set karein
-                    console.log("Global Logos Synced");
-                }, 500); 
+                // URL clean-up: Agar galti se localhost ka prefix aa gaya ho toh usey remove karo
+                if (finalPath.includes("localhost:8080") && finalPath.includes("https://")) {
+                    finalPath = finalPath.split("uploads/logos/")[1]; 
+                    finalPath = decodeURIComponent(finalPath);
+                }
+
+                // UI Update
+                $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", finalPath);
+                console.log("Logo fixed path:", finalPath);
             }
+        },
+        error: function(xhr) {
+            console.error("Logo fetch failed", xhr);
         }
     });
 }
 
-// Page load hone par aur 1 second baad phir se check karein (Overwrite safety)
 $(document).ready(function() {
     syncGlobalAgencyLogos();
 });
+
+
 
 function openLogoutModal() {
     console.log("Opening Logout Modal...");
