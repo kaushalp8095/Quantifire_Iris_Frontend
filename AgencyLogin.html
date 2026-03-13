@@ -95,7 +95,7 @@
                             now.setTime(now.getTime() + (24 * 60 * 60 * 1000));
                             document.cookie = "isAgencyLoggedIn=true; expires=" + now.toUTCString() + "; path=/; SameSite=Lax";
 
-                            window.location.href = "index.html";
+                            window.location.href = "AgencyDashboard.html";
                         }
                     },
                     error: function (xhr) {
