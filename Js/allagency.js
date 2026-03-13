@@ -245,3 +245,29 @@ $(document).on('click', '.mark-read', function(e) {
         }
     });
 });
+
+
+document.getElementById('checkStatusBtn').addEventListener('click', async () => {
+    const statusText = document.getElementById('statusMessage');
+    statusText.innerText = "Checking...";
+    statusText.style.color = "blue";
+
+    try {
+        // Yahan apna Render wala actual URL daalna mat bhoolna
+        const response = await fetch('https://YOUR_BACKEND_URL.onrender.com/api/health');
+        
+        if (response.ok) {
+            const data = await response.text();
+            statusText.innerText = "✅ " + data;
+            statusText.style.color = "green";
+        } else {
+            statusText.innerText = "❌ Server is down or throwing an error!";
+            statusText.style.color = "red";
+        }
+    } catch (error) {
+        // Agar server sleep mode mein hai aur respond nahi kar raha, toh error aayega
+        statusText.innerText = "❌ Server offline or waking up (Cold Start)...";
+        statusText.style.color = "orange";
+        console.error("Health check failed:", error);
+    }
+});
