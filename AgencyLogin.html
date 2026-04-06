@@ -70,15 +70,24 @@
             $("#loginbtn").click(function (e) {
                 e.preventDefault();
 
-                // 1. Pehle input se value lein
+                // 1. Inputs aur Button select karein
                 var userEmail = $("#email").val().trim();
                 var userPassword = $("#password").val().trim();
+                var $btn = $(this); // 🌟 Button ko variable mein liya
+
+                // Simple validation check
+                if (userEmail === "" || userPassword === "") {
+                    $("#loginError").text("Please fill all fields").show();
+                    return;
+                }
+
+                // 2. Button ko "Verifying..." par set karein aur disable karein
+                $btn.text("Verifying...").prop("disabled", true);
 
                 $.ajax({
                     url: "https://quantifire-iris-backend.onrender.com/api/agency/login",
                     type: "POST",
                     contentType: "application/json",
-                    // 🌟 YE LINE ADD KARNA SABSE ZAROORI HAI CORS KE LIYE
                     xhrFields: {
                         withCredentials: true
                     },
@@ -86,27 +95,32 @@
                     success: function (response) {
                         if (response.status === "success") {
 
+                            // 3. Button Text Update on Success
+                            $btn.text("Login Successful!");
+
                             localStorage.setItem("isAgencyLoggedIn", "true");
                             localStorage.setItem("agencyId", response.agencyId);
                             localStorage.setItem("agencyName", response.agencyName);
                             localStorage.setItem("agencyEmail", response.agencyEmail);
-                            
-                            setTimeout(function (){
+
+                            setTimeout(function () {
                                 window.location.href = "AgencyDashboard.html";
                             }, 500);
-                            
                         }
                     },
                     error: function (xhr) {
+                        // 4. Error aane par button ko wapas normal karein
+                        $btn.text("Login").prop("disabled", false);
+
                         if (xhr.status === 401 || xhr.status === 400) {
                             $("#loginError").text("Invalid Credentials").show();
                         } else {
-                            $("#loginError").text("Server is not responding. Please try again later.").show();
+                            $("#loginError").text("Server error. Please try again later.").show();
                         }
                     }
                 });
             });
-
+            
             $("input").on("input", function () {
                 $(this).removeClass("input-error");
                 $("#loginError").hide();
