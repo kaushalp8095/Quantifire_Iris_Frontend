@@ -22,6 +22,9 @@ function syncGlobalAgencyUI() {
         url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
         type: "GET",
         data: { email: agencyEmail },
+        xhrFields: {
+            withCredentials: true // 🔴 Ye line yahan bhi honi chahiye!
+        },
         success: function (data) {
             if (data.agencyLogo) {
                 let finalPath = data.agencyLogo;
