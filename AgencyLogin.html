@@ -89,7 +89,7 @@
                             localStorage.setItem("isAgencyLoggedIn", "true");
                             localStorage.setItem("agencyId", response.agencyId);
                             localStorage.setItem("agencyName", response.agencyName);
-                            localStorage.setItem("agencyEmail", userEmail);
+                            localStorage.setItem("agencyEmail", response.agencyEmail);
                             
                             setTimeout(function (){
                                 window.location.href = "AgencyDashboard.html";
