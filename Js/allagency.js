@@ -141,55 +141,82 @@ $(document).ready(function () {
 });
 
 // ==========================================
-// 5. NOTIFICATIONS & HELPERS
+// 5. NOTIFICATIONS & HELPERS (UPDATED)
 // ==========================================
+
 function timeAgo(dateString) {
     if (!dateString) return "Just now";
-    
     const date = new Date(dateString);
     const now = new Date();
     const seconds = Math.floor((now - date) / 1000);
-    
     if (seconds < 60) return "Just now";
-    
     const minutes = Math.floor(seconds / 60);
     if (minutes < 60) return minutes + "m ago";
-    
     const hours = Math.floor(minutes / 60);
     if (hours < 24) return hours + "h ago";
-    
     const days = Math.floor(hours / 24);
     if (days < 7) return days + "d ago";
-    
     return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
 }
+
 function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
+
     $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
-        $('.notif-count').text(res.unreadCount).toggle(res.unreadCount > 0);
+        // Badge count update
+        if (res.unreadCount > 0) {
+            $('.notif-count').text(res.unreadCount).show();
+        } else {
+            $('.notif-count').hide();
+        }
+
         const list = $('.notif-list').empty();
         if (res.notifications.length === 0) {
             list.append('<li style="padding:15px; text-align:center; color:#888;">No notifications</li>');
             return;
         }
-        res.notifications.slice(0, 3).forEach(log => {
-            list.append(`<li class="notif-item ${log.read ? '' : 'unread'}">
-                <div class="n-icon ${log.type.toLowerCase()}"><i class="fa-solid fa-bell"></i></div>
-                <div class="n-text"><p><strong>${log.title}</strong></p><span>${log.message}</span></div>
-                <span class="n-time">${timeAgo(log.createdAt)}</span>
-            </li>`);
+
+        // 🟢 CHANGE 1: Slice badhakar 10 kar diya taki scrollbar use ho sake
+        res.notifications.slice(0, 10).forEach(log => {
+            let iconClass = log.type.toLowerCase();
+            let iconHtml = '<i class="fa-solid fa-bell"></i>';
+            
+            // Icon logic according to type
+            if (log.type === "SUCCESS") iconHtml = '<i class="fa-solid fa-check"></i>';
+            else if (log.type === "WARNING" || log.type === "ERROR") iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
+
+            list.append(`
+                <li class="notif-item ${log.read ? '' : 'unread'}">
+                    <div class="n-icon ${iconClass}">${iconHtml}</div>
+                    <div class="n-text">
+                        <p><strong>${log.title}</strong></p>
+                        <span>${log.message}</span>
+                    </div>
+                    <span class="n-time">${timeAgo(log.createdAt)}</span>
+                </li>`);
         });
     });
 }
 
-$(document).on('click', '.mark-read', function () {
+// 🟢 CHANGE 2: Unified Mark All Read (Header + Page Sync)
+$(document).on('click', '.mark-read, #markAllReadBtn', function () {
     const email = localStorage.getItem("agencyEmail");
-    $('.notif-item').removeClass('unread');
+    if (!email) return;
+
+    // 1. UI updates instantly
+    $('.notif-item').removeClass('unread');      // Header Dropdown sync
+    $('.full-notif-item').removeClass('unread'); // Main Notifications Page sync
     $('.notif-count').fadeOut();
+
+    // 2. Local array sync (agar main page par use ho raha hai)
+    if (typeof allNotifications !== 'undefined') {
+        allNotifications.forEach(n => n.read = true);
+    }
+
+    // 3. API Call
     $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
 });
-
 async function handleHealthCheck() {
     const statusText = document.getElementById('statusMessage');
     if (!statusText) return;
