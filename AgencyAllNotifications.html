@@ -14,7 +14,7 @@
 
 <body>
     <div class="dashboard-container">
-         <aside class="sidebar">
+        <aside class="sidebar">
             <div class="close-sidebar-btn" id="closeSidebarBtn"><i class="fa-solid fa-xmark"></i></div>
             <div class="logo-section">
                 <div class="logo-icon"><img src="Images/quantifirelogo.png" alt="Quantifyre"></div>
@@ -48,7 +48,7 @@
         </aside>
 
         <main class="main-content">
-           <header class="top-bar">
+            <header class="top-bar">
                 <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
 
                 <div class="top-profile-actions" style="position: relative;">
@@ -62,11 +62,12 @@
                                 <h4>Notifications</h4><span class="mark-read">Mark all read</span>
                             </div>
                             <ul class="notif-list" id="headerNotifList">
-    <div style="text-align: center; padding: 20px; color: #8b9c9c;">
-        <i class="fa-solid fa-spinner fa-spin"></i>
-    </div>
-</ul>
-                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a></div>
+                                <div style="text-align: center; padding: 20px; color: #8b9c9c;">
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                </div>
+                            </ul>
+                            <div class="notif-footer"><a href="AgencyAllNotifications.html">View All Notifications</a>
+                            </div>
                         </div>
                     </div>
                     <div class="profile-info" onclick="toggleProfileDropdown(event)"
@@ -107,12 +108,12 @@
                     <a href="AgencyDashboard.html" class="btn-action" style="background: #031414;"><i
                             class="fa-solid fa-arrow-left"></i> Back</a>
                 </div>
-                
+
             </div>
 
             <div class="sys-main-container">
                 <div class="sys-box glass-card" style="background: rgba(11, 22, 21, 0.4); padding: 30px;">
-                    
+
                     <div class="notif-page-header">
                         <div class="notif-filters">
                             <button class="filter-chip active" data-type="ALL">All</button>
@@ -120,7 +121,8 @@
                             <button class="filter-chip" data-type="SUCCESS">Success</button>
                             <button class="filter-chip" data-type="WARNING">Alerts</button>
                         </div>
-                        <button class="sys-btn-outline" id="markAllReadBtn" style="font-size: 0.8rem; padding: 6px 15px;">
+                        <button class="sys-btn-outline" id="markAllReadBtn"
+                            style="font-size: 0.8rem; padding: 6px 15px;">
                             <i class="fa-solid fa-check-double"></i> Mark All as Read
                         </button>
                     </div>
@@ -153,13 +155,13 @@
 
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/allagency.js"></script>
-     <script src="Js/flatpickr.js"></script> 
+    <script src="Js/flatpickr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const email = localStorage.getItem("agencyEmail");
-            if(!email) window.location.href = "AgencyLogin.html";
+            if (!email) window.location.href = "AgencyLogin.html";
 
             let allNotifications = []; // Frontend filtering ke liye data save karenge
 
@@ -170,7 +172,7 @@
                     type: "GET",
                     success: function (res) {
                         allNotifications = res.notifications;
-                        
+
                         // Top bar bell icon update
                         if (res.unreadCount > 0) {
                             $('.notif-count').text(res.unreadCount).show();
@@ -180,7 +182,7 @@
 
                         renderNotifications("ALL"); // Default All render karo
                     },
-                    error: function() {
+                    error: function () {
                         $('#pageNotifList').html('<div style="color:#ff4d4d; padding:20px;">Failed to load data. Please try again.</div>');
                     }
                 });
@@ -193,9 +195,9 @@
 
                 // Filter logic
                 let filteredList = allNotifications;
-                if(filterType === "UNREAD") {
+                if (filterType === "UNREAD") {
                     filteredList = allNotifications.filter(n => !n.read);
-                } else if(filterType !== "ALL") {
+                } else if (filterType !== "ALL") {
                     filteredList = allNotifications.filter(n => n.type === filterType);
                 }
 
@@ -214,8 +216,8 @@
                     let iconClass = "info";
                     let iconHtml = '<i class="fa-solid fa-bell"></i>';
 
-                    if (log.type === "SUCCESS") { iconClass = "success"; iconHtml = '<i class="fa-solid fa-check"></i>'; } 
-                    else if (log.type === "INFO") { iconClass = "info"; iconHtml = '<i class="fa-solid fa-user-plus"></i>'; } 
+                    if (log.type === "SUCCESS") { iconClass = "success"; iconHtml = '<i class="fa-solid fa-check"></i>'; }
+                    else if (log.type === "INFO") { iconClass = "info"; iconHtml = '<i class="fa-solid fa-user-plus"></i>'; }
                     else if (log.type === "WARNING" || log.type === "ERROR") { iconClass = "warning"; iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>'; }
 
                     let readClass = log.read ? "" : "unread";
@@ -235,29 +237,29 @@
             }
 
             // 3. Filter Buttons Click Event
-            $('.filter-chip').on('click', function() {
+            $('.filter-chip').on('click', function () {
                 $('.filter-chip').removeClass('active');
                 $(this).addClass('active');
-                
+
                 const type = $(this).data('type');
                 renderNotifications(type);
             });
 
             // 4. Mark All Read Button
-            $('#markAllReadBtn').on('click', function() {
+            $('#markAllReadBtn').on('click', function () {
                 $.ajax({
                     url: `http://localhost:8080/api/top-notifications/mark-read?email=${email}`,
                     type: "POST",
-                    success: function() {
+                    success: function () {
                         // Update UI instantly
                         $('.full-notif-item').removeClass('unread');
                         $('.notif-count').hide();
-                        
+
                         // Update local array logic
                         allNotifications.forEach(n => n.read = true);
-                        
+
                         // Agar "Unread" tab par the, toh list khali ho jayegi
-                        if($('.filter-chip.active').data('type') === "UNREAD") {
+                        if ($('.filter-chip.active').data('type') === "UNREAD") {
                             renderNotifications("UNREAD");
                         }
                     }
@@ -266,30 +268,30 @@
 
             // Initial Call
             fetchAllNotifications();
-            
 
-           // ==========================================
+
+            // ==========================================
             // Basic Profile Load (Sidebar & Header UI)
             // ==========================================
-            $.get(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${email}`, function(data) {
-                
+            $.get(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${email}`, function (data) {
+
                 // 1. Agency Name set karna
-                if(data.agencyName) {
+                if (data.agencyName) {
                     $('.display-agency-name').text(data.agencyName);
                 }
-                
+
                 // 2. Logo set karna (Smart Logic ke sath)
-                if(data.agencyLogo) {
+                if (data.agencyLogo) {
                     let finalPath;
-                    
+
                     // Agar logo Supabase S3 ka direct URL hai (http se start hota hai)
                     if (data.agencyLogo.startsWith('http')) {
-                        finalPath = data.agencyLogo; 
+                        finalPath = data.agencyLogo;
                     } else {
                         // Agar purana local image name hai, toh live server se uthao
-                        finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + encodeURIComponent(data.agencyLogo); 
+                        finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + encodeURIComponent(data.agencyLogo);
                     }
-                    
+
                     $("#sidebarAgencyLogo, #headerAgencyLogo").attr("src", finalPath);
                 } else {
                     // Agar database mein koi logo nahi hai toh default image lagao
@@ -300,4 +302,5 @@
         });
     </script>
 </body>
+
 </html>
