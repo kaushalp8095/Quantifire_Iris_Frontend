@@ -969,24 +969,3 @@ body { overflow-x: hidden !important; max-width: 100% !important; }
             margin-top: 10px;
         }
 
-
-/* =========================================  Settings Page Dropdown CSS ========================================= */        
-        #securitySelectContainer {
-            width: 100%;
-        }
-        #securitySelectContainer .dropdown-selected {
-            height: 48px;
-            background: rgba(14, 40, 35, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        #securitySelectContainer.active .dropdown-selected {
-            border-color: #00ffaa;
-        }
-        #securitySelectContainer .dropdown-item:hover {
-            background: rgba(14, 78, 56, 0.8);
-            color: #ffffff;
-            border-left: 3px solid #00ffaa;
-        }
-
-
-
