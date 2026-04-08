@@ -7,7 +7,7 @@ $.ajaxPrefilter(function (options) {
 
     if (options.url.indexOf(oldBase) !== -1) {
         options.url = options.url.replace(oldBase, liveBase);
-        
+
     }
 });
 
@@ -41,7 +41,7 @@ function syncGlobalAgencyUI() {
                 }
 
                 $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo, .avatar-circle img").attr("src", finalPath);
-               
+
             }
 
             const aName = data.agencyName || "Agency User";
@@ -100,10 +100,10 @@ $(document).ready(function () {
     // DROPDOWN TOGGLES
     window.toggleNotification = function (event) {
         event.stopPropagation();
-        $sidebar.removeClass('collapsed'); 
+        $sidebar.removeClass('collapsed');
         $profileDropdown.removeClass('active');
         $profileChevron.css("transform", "rotate(0deg)");
-        
+
         $notifDropdown.toggleClass('active');
     };
 
@@ -111,7 +111,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $sidebar.removeClass('collapsed');
         $notifDropdown.removeClass('active');
-        
+
         const isActive = $profileDropdown.toggleClass('active').hasClass('active');
         $profileChevron.css("transform", isActive ? "rotate(180deg)" : "rotate(0deg)");
     };
@@ -181,7 +181,7 @@ function loadTopBarNotifications() {
         res.notifications.slice(0, 10).forEach(log => {
             let iconClass = log.type.toLowerCase();
             let iconHtml = '<i class="fa-solid fa-bell"></i>';
-            
+
             // Icon logic according to type
             if (log.type === "SUCCESS") iconHtml = '<i class="fa-solid fa-check"></i>';
             else if (log.type === "WARNING" || log.type === "ERROR") iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
@@ -213,6 +213,7 @@ $(document).on('click', '.mark-read, #markAllReadBtn', function () {
     if (typeof allNotifications !== 'undefined') {
         allNotifications.forEach(n => n.read = true);
     }
+    
 
     // 3. API Call
     $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
@@ -234,49 +235,49 @@ async function handleHealthCheck() {
 
 
 // ==========================================
-        // GLOBAL KEYBOARD SHORTCUTS (ENTER & ESCAPE KEYS)
-        // ==========================================
-        $(document).on('keydown', function (e) {
-            
-            // --- 1. ENTER KEY LOGIC (For OK / Submit / Confirm) ---
-            if (e.key === "Enter" || e.keyCode === 13) {
-                
-                // Agar Custom Alert (Success/Error) open hai
-                if ($('#customAlertOverlay').hasClass('active')) {
-                    e.preventDefault(); // Default form submit roke
-                    $('.btn-alert-ok').click(); // OK button click kare
-                }
-                
-                // Agar Logout Confirmation open hai
-                else if ($('#logoutModal').hasClass('active') || $('#logoutModal').css('display') === 'block') {
-                    e.preventDefault();
-                    confirmLogout(); 
-                }
+// GLOBAL KEYBOARD SHORTCUTS (ENTER & ESCAPE KEYS)
+// ==========================================
+$(document).on('keydown', function (e) {
 
-                // Agar Disconnect Confirmation open hai
-                else if ($('#disconnectConfirmOverlay').hasClass('active')) {
-                    e.preventDefault();
-                    $('#confirmDisconnectBtn').click(); 
-                }
+    // --- 1. ENTER KEY LOGIC (For OK / Submit / Confirm) ---
+    if (e.key === "Enter" || e.keyCode === 13) {
 
-                // Agar OTP box dikh raha hai aur user OTP type kar raha hai
-                else if ($('#otpVerificationBox').is(':visible') && $('#tfaOtpInput').is(':focus')) {
-                    e.preventDefault();
-                    $('#tfaVerifyBtn').click(); // OTP Verify button dabaye
-                }
-            }
+        // Agar Custom Alert (Success/Error) open hai
+        if ($('#customAlertOverlay').hasClass('active')) {
+            e.preventDefault(); // Default form submit roke
+            $('.btn-alert-ok').click(); // OK button click kare
+        }
 
-            // --- 2. ESCAPE (ESC) KEY LOGIC (For Cancel / Close) ---
-            if (e.key === "Escape" || e.keyCode === 27) {
-                
-                if ($('#customAlertOverlay').hasClass('active')) {
-                    closeCustomAlert();
-                }
-                if ($('#logoutModal').hasClass('active') || $('#logoutModal').css('display') === 'block') {
-                    closeLogoutModal();
-                }
-                if ($('#disconnectConfirmOverlay').hasClass('active')) {
-                    closeDisconnectModal();
-                }
-            }
-        });
+        // Agar Logout Confirmation open hai
+        else if ($('#logoutModal').hasClass('active') || $('#logoutModal').css('display') === 'block') {
+            e.preventDefault();
+            confirmLogout();
+        }
+
+        // Agar Disconnect Confirmation open hai
+        else if ($('#disconnectConfirmOverlay').hasClass('active')) {
+            e.preventDefault();
+            $('#confirmDisconnectBtn').click();
+        }
+
+        // Agar OTP box dikh raha hai aur user OTP type kar raha hai
+        else if ($('#otpVerificationBox').is(':visible') && $('#tfaOtpInput').is(':focus')) {
+            e.preventDefault();
+            $('#tfaVerifyBtn').click(); // OTP Verify button dabaye
+        }
+    }
+
+    // --- 2. ESCAPE (ESC) KEY LOGIC (For Cancel / Close) ---
+    if (e.key === "Escape" || e.keyCode === 27) {
+
+        if ($('#customAlertOverlay').hasClass('active')) {
+            closeCustomAlert();
+        }
+        if ($('#logoutModal').hasClass('active') || $('#logoutModal').css('display') === 'block') {
+            closeLogoutModal();
+        }
+        if ($('#disconnectConfirmOverlay').hasClass('active')) {
+            closeDisconnectModal();
+        }
+    }
+});
