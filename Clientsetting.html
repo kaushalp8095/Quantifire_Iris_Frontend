@@ -4,15 +4,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings | Quantifyre Iris</title>
+    <title>Quantifyre Iris - Client Setting</title>
 
     <link rel="stylesheet" href="Css/client_style.css">
     <link rel="stylesheet" href="Css/client_sidebar.css">
 
     <link rel="stylesheet" href="Css/fontstyle.css">
     <link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="Css/clientnamedropdown.css">
     <style>
-       
+        /* ========================================= ADMIN SYSTEM SETTING PAGE STYLES ========================================= */
+
+/* ---AGENCY PROFILE PAGE CSS --- */
+
+.profile-layout-grid { display: grid; grid-template-columns: 350px 1fr; gap: 25px; align-items: start; }
+.profile-card-main { padding: 0 !important; overflow: hidden; text-align: center; position: relative; box-shadow: inset 0 0 50px rgba(0,0,0,0.5); }
+.profile-banner-bg { height: 130px; background: linear-gradient(135deg, rgba(0, 255, 157, 0.15), rgba(0, 77, 64, 0.4)); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.profile-avatar-wrapper { position: relative; width: 120px; height: 120px; margin: -60px auto 15px; }
+.profile-avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 5px solid #0b1615; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5); background: #000; }
+.camera-btn { position: absolute; bottom: 5px; right: 5px; background: #00ff9d; color: #000; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); transition: 0.3s; border: 2px solid #0b1615; }
+.camera-btn:hover { transform: scale(1.1); background: #fff; }
+.profile-identity h2 { color: #fff; font-size: 1.5rem; font-weight: 600; margin-bottom: 5px; }
+.profile-identity p { color: #8b9c9c; font-size: 0.9rem; margin-bottom: 15px; }
+.status-badge { background: rgba(0, 255, 170, 0.1); color: #00ffaa; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; border: 1px solid rgba(0, 255, 170, 0.2); display: inline-flex; align-items: center; gap: 5px; }
+.profile-contact-list { padding: 0px 20px 0px 20px; text-align: left; }
+.pc-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent); margin: 20px 0; }
+.pc-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding: 10px; border-radius: 10px; transition: 0.3s; }
+.pc-item:hover { background: rgba(255, 255, 255, 0.03); }
+.pc-icon { width: 38px; height: 38px; background: rgba(0, 255, 157, 0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #00ff9d; font-size: 0.9rem; border: 1px solid rgba(0, 255, 157, 0.1); }
+.pc-text { display: flex; flex-direction: column; }
+.pc-text span { font-size: 0.75rem; color: #666; margin-bottom: 2px; }
+.pc-text p { font-size: 0.9rem; color: #e0e0e0; font-weight: 500; margin: 0; }
+.form-header-row h3 { color: #fff; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+.form-section-title { color: #00ff9d; font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+.form-divider { height: 1px; background: rgba(255, 255, 255, 0.05); margin: 15px 0; }
+.form-actions-bottom { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+.btn-update { background: radial-gradient(circle at 50% 70%, rgba(41, 171, 226, 0.2), transparent 50%), radial-gradient(circle at 30% 30%, rgba(57, 181, 74, 0.2), transparent 60%); background-color: #004d40; border: 1px solid #00ff9d; color: #fff; padding: 12px 30px; }
+.btn-update:hover { box-shadow: 0 0 20px rgba(0, 255, 157, 0.3); background-color: #00ff9d; color: #000; }
+@media (max-width: 991px) { .profile-layout-grid { grid-template-columns: 1fr; } .profile-contact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; } .pc-divider { grid-column: 1 / -1; margin: 15px 0; } }
+@media (max-width: 600px) { .profile-contact-list { grid-template-columns: 1fr; } .form-actions-bottom { flex-direction: column-reverse; } .btn { width: 100%; } }
+.error-text { color: #ff3333; font-size: 15px; margin-top: 5px; display: none; font-weight: 500; }
+.input-error { border: 1px solid #ff3333 !important; }
+.form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
+@media (max-width: 768px) { .form-grid-3 { grid-template-columns: 1fr; } }
+.status-pill.st-completed { background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+/*------------------------------------- Other Setting Tab Pages CSS --------------------*/
+
+.sys-tabs-nav { display: flex; gap: 12px; margin-bottom: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; overflow-x: auto; white-space: nowrap; }
+.sys-tab-btn { background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: #8b9c9c; padding: 10px 25px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; flex-shrink: 0; }
+.sys-tab-btn.active, .sys-tab-btn:hover { background: rgba(0, 255, 157, 0.15); border-color: #00ff9d; color: #00ff9d; }
+.sys-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.sys-box { background: rgba(9, 35, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 25px; position: relative; }
+.sys-box-title { color: #8b9c9c; font-size: 0.95rem; margin-bottom: 20px; display: block; }
+.sys-input-group { margin-bottom: 20px; position: relative; }
+.sys-input-group label { display: block; color: #8b9c9c; font-size: 0.85rem; margin-bottom: 8px; }
+.sys-input-wrapper { position: relative; display: flex; align-items: center; }
+.sys-input { width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 12px 40px 12px 15px; border-radius: 8px; outline: none; transition: 0.3s; font-size: 0.9rem; }
+.sys-input:focus { border-color: #00ff9d; box-shadow: 0 0 10px rgba(0, 255, 157, 0.1); }
+.sys-input-icon { position: absolute; right: 15px; color: #8b9c9c; cursor: pointer; transition: 0.3s; }
+.sys-input-icon:hover { color: #00ff9d; }
+.sys-btn-primary { width: 100%; background: linear-gradient(90deg, #00ff9d, #00b871); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: capitalize; }
+.sys-btn-primary:hover { box-shadow: 0 0 15px rgba(0, 255, 157, 0.2); transform: translateY(-2px); }
+.sys-btn-outline { background: transparent; border: 1px solid #00ff9d; color: #00ff9d; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: 500; }
+.sys-btn-outline:hover { background: rgba(0, 255, 157, 0.1); }
+.sys-toggle-row { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; }
+.sys-toggle-row:last-child { border: none; }
+.sys-switch { position: relative; display: inline-block; width: 42px; height: 22px; }
+.sys-switch input { opacity: 0; width: 0; height: 0; }
+.sys-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+.sys-slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked+.sys-slider { background-color: #00ff9d; }
+input:checked+.sys-slider:before { transform: translateX(20px); }
+.sys-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.sys-table th { text-align: left; padding: 15px; color: #00ff9d; font-weight: 500; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.85rem; }
+.sys-table td { padding: 15px; color: #d1d5db; border-bottom: 1px solid rgba(255, 255, 255, 0.03); font-size: 0.85rem; }
+
+.sys-notif-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+.report-dropdown { position: relative; width: 100%; cursor: pointer; }
+.report-dd-selected { display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 15px; border-radius: 8px; color: #fff; font-size: 0.85rem; transition: 0.3s; }
+.report-dropdown.active .report-dd-selected { border-color: #00ff9d; }
+.report-dd-options { display: none; position: absolute; top: 110%; left: 0; width: 100%; border: 1px solid rgba(0, 255, 157, 0.2); border-radius: 8px; list-style: none; padding: 5px 0; margin: 0; z-index: 999; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+.report-dropdown.active .report-dd-options { display: block; }
+.report-dd-item { padding: 10px 15px; color: #8b9c9c; font-size: 0.85rem; transition: 0.2s; }
+.report-dd-item:hover { background: rgba(0, 255, 157, 0.1); color: #00ff9d; }
+.report-dropdown.active .fa-chevron-down { transform: rotate(180deg); transition: 0.3s; }
+.btn-download-action { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 15px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; transition: 0.3s; }
+.btn-download-action:hover { border-color: #00ff9d; color: #00ff9d; background: rgba(0,255,157,0.05); }
+
+.sys-int-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.sys-int-card { background: rgba(9, 35, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 30px 20px; text-align: center; transition: 0.3s; }
+.sys-int-card:hover { border-color: #00ff9d; background: rgba(0, 255, 157, 0.03); }
+.sys-int-card img { width: 45px; height: 45px; margin-bottom: 15px; object-fit: contain; }
+.sys-int-card h4 { color: #fff; margin: 0 0 10px 0; font-weight: 500; }
+.sys-int-card p { color: #8b9c9c; font-size: 0.8rem; margin-bottom: 20px; line-height: 1.4; }
+
+@media (max-width: 1100px) { .sys-int-grid, .sys-notif-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 992px) { .sys-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .sys-int-grid, .sys-notif-grid { grid-template-columns: 1fr; } .sys-table-container { overflow-x: auto; } .sys-table { min-width: 600px; } }
+
+.tfa-method-card { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; position: relative; color: #888; }
+.tfa-method-card i { font-size: 1.5rem; }
+.tfa-method-card.active { border-color: #00ff9d; background: rgba(0, 255, 157, 0.05); color: #00ff9d; }
+.tfa-check { position: absolute; top: 8px; right: 8px; font-size: 0.9rem; opacity: 0; transform: scale(0); transition: 0.3s; }
+.tfa-method-card.active .tfa-check { opacity: 1; transform: scale(1); }
+
+@media (max-width: 768px) { .sys-grid { display: flex !important; flex-direction: column !important; gap: 20px !important; } .sys-toggle-row { gap: 10px; justify-content: space-between; align-items: baseline; text-align: left; } #tfaMethodsWrapper div[style*="grid-template-columns"] { grid-template-columns: 1fr 1fr !important; gap: 10px !important; } .tfa-method-card { padding: 12px 10px !important; font-size: 0.9rem; } .sys-box[style*="display: flex; justify-content: space-between"] { flex-direction: row !important; align-items: center !important; } }
+@media (max-width: 480px) { #tfaMethodsWrapper div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; } .sys-box { padding: 20px 15px !important; } .sys-box-title { font-size: 1.1rem !important; } .sys-table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; } }
+
+
+/* ============================================================
+   MISSING CSS FOR AGENCY PROFILE TAB (FIXED FOR STRUCTURE)
+   ============================================================ */
+
+/* 1. Profile Tab Layout Adjustment */
+#profile .profile-layout-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 25px;
+    align-items: start;
+    margin-top: 10px;
+}
+
+/* 2. Glass Card for Profile Forms */
+#profile .glass-card.form-container {
+    background: linear-gradient(180deg, rgba(9, 35, 30, 0.4), rgba(5, 15, 12, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 25px !important; /* Proper padding for internal forms */
+    backdrop-filter: blur(10px);
+}
+
+/* 3. Form Grid for Profile Fields (2 Columns) */
+#profile .form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* 4. Individual Form Inputs (Profile Specific) */
+#profile .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+#profile .form-group label {
+    font-size: 0.85rem;
+    color: #8b9c9c;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+#profile .form-input {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* 5. Readonly State Styling */
+#profile .form-input[readonly] {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    color: #8b9c9c;
+    cursor: not-allowed;
+}
+
+/* 6. Focus State */
+#profile .form-input:focus:not([readonly]) {
+    border-color: #00ff9d;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.1);
+}
+
+/* 7. Action Buttons Alignment */
+#profile .form-actions-bottom {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 8. Responsive Fix for Profile Tab */
+@media (max-width: 1100px) {
+    #profile .profile-layout-grid {
+        grid-template-columns: 1fr; /* Stack sidebar on top of form */
+    }
+    
+    #profile .form-grid-2 {
+        grid-template-columns: 1fr; /* Stack inputs vertically */
+    }
+}
+
+/* 9. Pencil Icon Consistency */
+.edit-trigger {
+    transition: 0.3s;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.edit-trigger:hover {
+    background: rgba(0, 255, 157, 0.1);
+    color: #fff !important;
+}
     </style>
 </head>
 
@@ -54,40 +257,41 @@
         <main class="main-content">
 
             <header class="top-bar">
-                <div class="menu-toggle" id="sidebarToggle"><img src="Images/Slide.ico"></div>
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search campaigns, leads, locations...">
+                <div class="menu-toggle" id="sidebarToggle">
+                    <img src="Images/Slide.ico" alt="Toggle Menu">
                 </div>
-                <div class="top-profile-actions" style="position: relative;">
-                    <div class="notification-wrapper" style="position: relative;">
+
+                <div class="top-profile-actions">
+
+                    <div class="notification-wrapper" onclick="toggleNavDropdown(event, 'notifDropdown')">
                         <div class="icon-btn notification" onclick="toggleNotification(event)">
-                            <img src="Images/Notifications.ico">
+                            <img src="Images/Notifications.ico" alt="Notifications">
                             <span class="notif-count">3</span>
                         </div>
+
                         <div class="notif-dropdown" id="notifDropdown">
                             <div class="notif-header">
                                 <h4>Notifications</h4><span class="mark-read">Mark all read</span>
                             </div>
                             <ul class="notif-list">
                                 <li class="notif-item unread">
-                                    <div class="n-icon success"><i class="fa-solid fa-check"></i></div>
+                                    <div class="n-icon success"><i class="fa-solid fa-user-plus"></i></div>
                                     <div class="n-text">
-                                        <p><strong>Campaign Approved</strong></p><span>"Summer Sale" is live.</span>
+                                        <p><strong>New Lead</strong></p><span>registered in Ahmadabad.</span>
                                     </div>
                                     <span class="n-time">2m</span>
                                 </li>
                                 <li class="notif-item unread">
-                                    <div class="n-icon info"><i class="fa-solid fa-user-plus"></i></div>
+                                    <div class="n-icon info"><i class="fa-solid fa-bullhorn"></i></div>
                                     <div class="n-text">
-                                        <p><strong>New Lead</strong></p><span>John Doe from Ahmedabad.</span>
+                                        <p><strong>Campaign</strong></p><span>"Summer Sale Started"</span>
                                     </div>
                                     <span class="n-time">1h</span>
                                 </li>
                                 <li class="notif-item">
-                                    <div class="n-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="n-icon warning"><i class="fa-solid fa-file-invoice-dollar"></i></div>
                                     <div class="n-text">
-                                        <p><strong>Budget Alert</strong></p><span>90% budget used.</span>
+                                        <p><strong>Payment</strong></p><span>received from Acme Corp.</span>
                                     </div>
                                     <span class="n-time">1d</span>
                                 </li>
@@ -95,24 +299,30 @@
                             <div class="notif-footer"><a href="#">View All Notifications</a></div>
                         </div>
                     </div>
-                    <div class="profile-info" onclick="toggleProfileDropdown(event)"
-                        style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
-                        <div class="avatar-small"><img src="Images/ClientHeader.ico"></div>
-                        <div class="text-info">
-                            <h4>Agency Name</h4>
-                            <p>Agency</p>
+
+                    <div class="profile-info" onclick="toggleNavDropdown(event, 'profileDropdown')">
+                        <div class="avatar-small">
+                            <img src="Images/ClientHeader.ico" alt="Profile">
                         </div>
-                        <i class="fa-solid fa-chevron-down" id="profileChevron" style="transition: 0.3s;"></i>
+                        <div class="text-info">
+                            <h4>Adam Smith</h4>
+                            <p>Client</p>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="profileChevron"></i>
                     </div>
+
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="dropdown-header-info">
-                            <p class="d-name">Agency Name</p><span class="d-email">agency@quantifyre.com</span>
+                            <p class="d-name">Adam Smith</p>
+                            <span class="d-email">adam@quantifyre.com</span>
                         </div>
                         <ul class="dropdown-list">
-                            <li><a href="Settings.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <li><a href="Clientsetting.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                            <li><a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
-                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" ><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -124,94 +334,485 @@
                         <img src="Images/Setting50x50.ico">
                     </div>
                     <div>
-                        <h1>Settings</h1>
+                        <h1>Client Setting</h1>
                         <p>Manage your account settings and preferences</p>
                     </div>
                 </div>
             </div>
 
-            <div class="settings-card">
-                <form>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" class="form-control" value="Adam" placeholder="First Name">
-                        </div>
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input type="text" class="form-control" value="Smith" placeholder="Last Name">
-                        </div>
+            <div class="sys-main-container">
+                <div class="sys-box" style="background: rgba(11, 22, 21, 0.4); padding: 30px;">
+                    <div class="sys-tabs-nav">
+                        <button class="sys-tab-btn active" onclick="openSysTab(event, 'profile')">Agency
+                            Profile</button>
+                        <button class="sys-tab-btn" onclick="openSysTab(event, 'security')">Security</button>
+                        <button class="sys-tab-btn" onclick="openSysTab(event, 'billing')">Billing</button>
+                        <button class="sys-tab-btn" onclick="openSysTab(event, 'integrations')">Integrations</button>
+                        <button class="sys-tab-btn" onclick="openSysTab(event, 'notifications')">Notifications</button>
+                    </div>
 
-                        <div class="form-group full-width">
-                            <label>Email Address</label>
-                            <input type="email" class="form-control" value="Adam.smith@gmail.com"
-                                placeholder="Email Address">
-                        </div>
+                    <div id="profile" class="sys-tab-content">
 
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" class="form-control" value="+91 9924623605" placeholder="Phone Number">
-                        </div>
+                        <div class="profile-layout-grid">
+                            <div class="profile-left-col">
+                                <div class="glass-card profile-card-main">
+                                    <div class="profile-banner-bg"></div>
 
-                        <div class="form-group">
-                            <label>Security Question / Options</label>
-                            <div class="custom-dropdown" id="securitySelectContainer">
-                                <div class="dropdown-selected" onclick="toggleSettingsDropdown()">
-                                    <span class="selected-text">Forgot Password</span>
-                                    <i class="fa-solid fa-chevron-down" style="font-size: 0.8rem;"></i>
+                                    <div class="profile-avatar-wrapper">
+                                        <img src="" id="leftAgencyLogo" alt="Profile"
+                                            style="width: 100%; height: 100%; object-fit: cover;">
+                                        <label for="profileUpload" class="camera-btn">
+                                            <i class="fa-solid fa-camera"></i>
+                                        </label>
+                                        <input type="file" id="profileUpload" hidden accept="image/*">
+                                    </div>
+
+                                    <div class="profile-identity">
+                                        <h2 id="leftAgencyNameDisplay"></h2>
+                                        <!-- <p>Quantifyre Iris</p> -->
+                                        <span style="margin-top: 20px;" class="status-badge" id="leftAgencyStatus"><i
+                                                class="fa-solid fa-circle-check"></i>
+                                            Active</span>
+                                    </div>
+
+                                    <div class="profile-contact-list">
+                                        <div class="pc-divider"></div>
+
+                                        <div class="pc-item">
+                                            <div class="pc-icon"><i class="fa-regular fa-envelope"></i></div>
+                                            <div class="pc-text">
+                                                <span>Email</span>
+                                                <p id="leftAgencyEmail">alex@quantifyre.com</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="pc-item">
+                                            <div class="pc-icon"><i class="fa-solid fa-phone"></i></div>
+                                            <div class="pc-text">
+                                                <span>Phone</span>
+                                                <p id="leftAgencyPhone">+91 98765 43210</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="pc-item">
+                                            <div class="pc-icon"><i class="fa-solid fa-globe"></i></div>
+                                            <div class="pc-text">
+                                                <span>Website</span>
+                                                <p>www.quantifyre.com</p>
+                                            </div>
+                                        </div> -->
+                                    </div>
                                 </div>
-                                <ul class="dropdown-options">
-                                    <li class="dropdown-item" data-value="forgot"
-                                        onclick="selectSettingsItem('Forgot Password', 'forgot')">Forgot Password</li>
-                                    <li class="dropdown-item" data-value="resetkey"
-                                        onclick="selectSettingsItem('Reset Security Key', 'resetkey')">Reset Security
-                                        Key</li>
-                                </ul>
                             </div>
-                            <input type="hidden" id="securitySelectValue" value="forgot">
-                        </div>
 
-                        <div class="form-group" id="resetKeyContent" style="display: none;">
-                            <label>Enter New Security Key</label>
-                            <input type="text" class="form-control" placeholder="Enter your new key here">
-                        </div>
+                            <div class="profile-right-col">
+                                <div class="glass-card form-container" style="padding: 20px 20px 0 20px;">
+                                    <div class="form-header-row"
+                                        style="border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px;">
+                                        <h3 style="margin: 0;">Edit Personal Details</h3>
+                                        <i class="fa-solid fa-pencil edit-trigger" data-target="personal-group"
+                                            style="color: #00ff9d; cursor: pointer; font-size: 0.9rem;"
+                                            title="Edit Personal Details"></i>
+                                    </div>
 
-                        <div class="form-group" id="forgotPassContent">
-                            <label>Recovery Email</label>
-                            <input type="text" class="form-control" value="Adam.smith@gmail.com" disabled>
-                        </div>
+                                    <form id="agencyProfileForm" autocomplete="off">
+                                        <div class="form-grid-2">
+                                            <div class="form-group">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-input personal-group"
+                                                    id="agencyFirstNameInput" autocomplete="off" readonly>
+                                                <span class="error-msg">* Required</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <input type="text" class="form-input personal-group"
+                                                    id="agencyLastNameInput" autocomplete="off" readonly>
+                                                <span class="error-msg">* Required</span>
+                                            </div>
+                                        </div>
 
+                                        <div class="form-grid-2">
+                                            <div class="form-group">
+                                                <label>Email Address</label>
+                                                <input type="email" class="form-input personal-group"
+                                                    id="agencyEmailInput" autocomplete="off" readonly>
+                                                <span class="error-msg">* Required</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Phone Number</label>
+                                                <input type="tel" class="form-input personal-group"
+                                                    id="agencyPhoneInput" autocomplete="off" readonly>
+                                                <span class="error-msg">* Required</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-divider"></div>
+
+                                        <div class="form-section-title"
+                                            style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px;">
+                                            <div><i class="fa-solid fa-location-dot"></i> Address & Location</div>
+                                            <i class="fa-solid fa-pencil edit-trigger" data-target="address-group"
+                                                style="color: #00ff9d; cursor: pointer; font-size: 0.9rem;"
+                                                title="Edit Address"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Street Address Line 1</label>
+                                            <input type="text" class="form-input address-group" id="agencyAddress1"
+                                                autocomplete="one-time-code" readonly>
+                                            <span class="error-msg">* Required</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Street Address Line 2</label>
+                                            <input type="text" class="form-input address-group" id="agencyAddress2"
+                                                autocomplete="one-time-code" readonly>
+                                            <span class="error-msg">* Required</span>
+                                        </div>
+                                        <div class="form-grid-2">
+                                            <div class="form-group">
+                                                <label>Country</label>
+                                                <div class="filter-item filter-wide">
+                                                    <select id="countrySearchSelect" class="search-input-field">
+                                                        <option></option>
+                                                    </select>
+                                                    <span id="countryError" class="error-msg">* Select Country</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>State</label>
+                                                <div class="filter-item filter-wide">
+                                                    <select id="stateSearchSelect" class="search-input-field">
+                                                        <option></option>
+                                                    </select>
+                                                    <span id="stateError" class="error-msg">* Select State</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-grid-2">
+                                            <div class="form-group">
+                                                <label>City</label>
+                                                <div class="filter-item filter-wide">
+                                                    <select id="citySearchSelect" class="search-input-field">
+                                                        <option></option>
+                                                    </select>
+                                                    <span id="cityError" class="error-msg">* Select City</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Pin Code</label>
+                                                <input type="number" class="form-input address-group" id="agencyPincode"
+                                                    autocomplete="off" style="height: 40px;" readonly>
+                                                <span class="error-msg">* Required</span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="form-actions-bottom" style="border-top: none; margin-top: 30px;">
+                                    <button type="button" class="btn btn-cancel"
+                                        onclick="window.location.href='AgencyDashboard.html'">Cancel</button>
+                                    <button type="button" class="btn btn-update">Save Changes</button>
+                                </div>
+
+                                
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-actions">
-                        <button type="button" class="btn-save" id="btn-savechanges">Save Changes</button>
-                    </div>
-                </form>
-            </div>
 
-            <div class="settings-card" id="passwordCardSection">
-                <h3 class="card-title">Password</h3>
-                <form>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Current Password</label>
-                            <input type="password" class="form-control" value="********" placeholder="Current Password">
-                        </div>
-                        <div class="form-group">
-                            <label>New Password</label>
-                            <input type="password" class="form-control" placeholder="New Password">
-                        </div>
+                    <div id="security" class="sys-tab-content" style="display:none;">
+                        <div class="sys-grid">
+                            <div class="sys-box">
+                                <span class="sys-box-title">Change Password</span>
+                                <div class="sys-input-group"><label>Current Password</label>
+                                    <div class="sys-input-wrapper"><input type="password" class="sys-input"
+                                            placeholder="Current Password"><i class="fa-regular fa-eye sys-input-icon"
+                                            onclick="togglePass(this)"></i></div>
+                                </div>
+                                <div class="sys-input-group"><label>New Password</label>
+                                    <div class="sys-input-wrapper"><input type="password" class="sys-input"
+                                            placeholder="New Password"><i class="fa-regular fa-eye sys-input-icon"
+                                            onclick="togglePass(this)"></i></div>
+                                </div>
+                                <div class="sys-input-group"><label>Confirm Password</label>
+                                    <div class="sys-input-wrapper"><input type="password" class="sys-input"
+                                            placeholder="Confirm Password"><i class="fa-regular fa-eye sys-input-icon"
+                                            onclick="togglePass(this)"></i></div>
+                                </div>
+                                <button class="sys-btn-primary">Update Password</button>
+                            </div>
+                            <div class="sys-box" style="text-align: center;">
+                                <span class="sys-box-title" style="text-align: left;">Two-Factor Authentication
+                                    (2FA)</span>
 
-                        <div class="form-group full-width">
-                            <label>Confirm Password</label>
-                            <input type="password" class="form-control" placeholder="Confirm Password">
+                                <div class="sys-box" style="display: flex; flex-direction: column; gap: 20px;">
+                                    <div class="sys-box"
+                                        style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05); padding: 20px;">
+                                        <div class="sys-toggle-row">
+                                            <div style="text-align: left;">
+                                                <span
+                                                    style="color: #fff; font-size: 1rem; font-weight: 500; display: block; margin-bottom: 5px;">Two-Factor
+                                                    Authentication
+                                                </span>
+                                                <p
+                                                    style="font-size: 0.85rem; color: #5a6a6e; margin: 0; line-height: 1.4;">
+                                                    Allow you two-factor authentication
+                                                </p>
+                                            </div>
+
+                                            <div style="flex-shrink: 0;">
+                                                <label class="sys-switch">
+                                                    <input type="checkbox" id="tfaToggle">
+                                                    <span class="sys-slider"></span>
+                                                </label>
+                                            </div>
+
+                                        </div>
+
+                                        <div id="tfaMethodsWrapper"
+                                            style="display: none; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                                            <p
+                                                style="color: #00ff9d; font-size: 0.8rem; margin-bottom: 15px; text-align: left;">
+                                                Choose Verification Method:</p>
+
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                                <div class="tfa-method-card" onclick="selectTFAMethod('mobile')"
+                                                    id="tfaMobileCard"
+                                                    style="border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; cursor: pointer; text-align: center; color: #888;">
+                                                    <i class="fa-solid fa-mobile-screen-button"
+                                                        style="display: block; margin-bottom: 5px;"></i>
+                                                    <span>SMS</span>
+                                                </div>
+                                                <div class="tfa-method-card" onclick="selectTFAMethod('email')"
+                                                    id="tfaEmailCard"
+                                                    style="border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; cursor: pointer; text-align: center; color: #888;">
+                                                    <i class="fa-solid fa-envelope"
+                                                        style="display: block; margin-bottom: 5px;"></i>
+                                                    <span>Email</span>
+                                                </div>
+                                            </div>
+
+                                            <div id="tfaInputSection"
+                                                style="display: none; margin-top: 20px; text-align: left;">
+                                                <label id="tfaInputLabel"
+                                                    style="font-size: 0.8rem; color: #00ff9d; display: block; margin-bottom: 8px;"></label>
+                                                <input type="text" id="tfaUserInput" class="sys-input"
+                                                    style="width: 100%;" placeholder="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button class="sys-btn-primary" id="tfaSubmitBtn" onclick="sendOtp()"
+                                        style="display:none; background: #00ff9d; color: #000; margin-top: 15px;">Send
+                                        OTP</button>
+
+                                    <div id="otpVerificationBox"
+                                        style="display: none; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: left;">
+                                        <label
+                                            style="font-size: 0.8rem; color: #00ff9d; display: block; margin-bottom: 8px;">Enter
+                                            6-Digit OTP</label>
+                                        <div style="display: flex; gap: 10px;">
+                                            <input type="text" id="tfaOtpInput" class="sys-input" style="flex: 1;"
+                                                placeholder="000000" maxlength="6">
+                                            <button class="sys-btn-primary" id="tfaVerifyBtn" onclick="verifyOtp()"
+                                                style="background: #00ff9d; color: #000; width: auto; padding: 0 20px;">Verify</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="sys-box"
+                                        style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 12px; margin-top: 20px; clear: both;">
+                                        <div
+                                            style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+                                            <div style="text-align: left;">
+                                                <span
+                                                    style="color: #fff; font-size: 1rem; font-weight: 500; display: block; margin-bottom: 5px;">Login
+                                                    Alerts</span>
+                                                <p
+                                                    style="font-size: 0.85rem; color: #5a6a6e; margin: 0; line-height: 1.4;">
+                                                    Receive alerts when someone logs into your account.
+                                                </p>
+                                            </div>
+                                            <div style="flex-shrink: 0;">
+                                                <label class="sys-switch">
+                                                    <input type="checkbox" id="loginAlertToggle" checked>
+                                                    <span class="sys-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sys-box" style="margin-top: 25px;">
+                            <span class="sys-box-title">Recent Login Activity</span>
+                            <div class="sys-table-container">
+                                <table class="sys-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Device</th>
+                                            <th>Location</th>
+                                            <th>Ip Address</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Chrome On Windows</td>
+                                            <td>Ahmedabad, Gujarat</td>
+                                            <td>168.110.231.1</td>
+                                            <td>12-Nov-2025 02:30:50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Safari on iPhone 15 Pro</td>
+                                            <td>Mehsana, Gujarat</td>
+                                            <td>172.16.254.1</td>
+                                            <td>30-Nov-2025 01:20:12</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-actions">
-                        <button type="button" class="btn-save" id="btn-changepass">Change Password</button>
+                    <div id="billing" class="sys-tab-content" style="display:none;">
+                        <div class="sys-box"
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 20px;">
+                            <div>
+                                <h3 style="color: #fff; margin: 0;">Pro Plan - Yearly</h3>
+                                <p style="color: #8b9c9c; font-size: 0.8rem;">Next Billing: 12-Oct-2026</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <p style="color: #8b9c9c; font-size: 0.8rem; margin: 0;">Amount</p>
+                                <h3 style="color: #fff; margin: 0;">₹ 20,000</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="sys-box">
+                            <span class="sys-box-title">Billing History</span>
+                            <div class="sys-table-container">
+                                <table class="sys-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice Id</th>
+                                            <th>Date</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>20254111659</td>
+                                            <td>22-Oct-2025</td>
+                                            <td>₹ 20000</td>
+                                            <td><span
+                                                    style="color:#00ff9d; background: rgba(0,255,157,0.1); padding: 4px 10px; border-radius: 20px;">Paid</span>
+                                            </td>
+                                            <td><button class="btn-download-action"><i class="fa-solid fa-download"></i>
+                                                    Download</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </form>
+
+
+                    <div id="integrations" class="sys-tab-content" style="display:none;">
+                        <span class="sys-box-title">Integrations</span>
+                        <div class="sys-int-grid">
+                            <div class="sys-int-card">
+                                <img src="Images/Google-Ads.png">
+                                <h4>Google Ads</h4>
+                                <p>Connect your Google account for seamless data sync.</p>
+                                <button class="sys-btn-outline" style="width: 100%;" id="googleBtn">Connect</button>
+                            </div>
+
+                            <div class="sys-int-card">
+                                <img src="Images/meta.png">
+                                <h4>Facebook </h4>
+                                <p>Connect your Meta account for seamless data sync.</p>
+                                <button class="sys-btn-outline" style="width: 100%;" id="fbBtn">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="notifications" class="sys-tab-content" style="display:none;">
+                        <span class="sys-box-title">Notifications</span>
+                        <div class="sys-notif-grid">
+                            <div class="sys-box">
+                                <span class="sys-box-title" style="color: #00ff9d; font-size: 0.85rem;">Email
+                                    Notifications</span>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">New Agency Registration</div>
+                                    <label class="sys-switch"><input type="checkbox" id="emailNotifNewReg"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">Billing Alert</div>
+                                    <label class="sys-switch"><input type="checkbox" id="emailNotifBilling"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.9rem;">Email Alerts</div>
+                                    <label class="sys-switch"><input type="checkbox" id="emailNotifAlerts"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">System Failure Alert</div>
+                                    <label class="sys-switch"><input type="checkbox" id="emailNotifSysFail"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">System Report Alert</div>
+                                    <label class="sys-switch"><input type="checkbox" id="emailNotifSysReport"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">New Agency Alert</div>
+                                    <label class="sys-switch"><input type="checkbox" id="emailNotifNewAgency"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                            </div>
+                            <div class="sys-box">
+                                <span class="sys-box-title" style="color: #00ff9d; font-size: 0.85rem;">In-App
+                                    Notifications</span>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">New Message</div>
+                                    <label class="sys-switch"><input type="checkbox" id="inAppNotifNewMsg"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">Campaign status change</div>
+                                    <label class="sys-switch"><input type="checkbox" id="inAppNotifCampStatus"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.9rem;">Push Notifications</div>
+                                    <label class="sys-switch"><input type="checkbox" id="inAppNotifPush"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">Mention in Comments</div>
+                                    <label class="sys-switch"><input type="checkbox" id="inAppNotifMention"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">Message Comments</div>
+                                    <label class="sys-switch"><input type="checkbox" id="inAppNotifMsgCom"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                                <div class="sys-toggle-row">
+                                    <div style="color: #fff; font-size: 0.8rem;">Direction in Messages</div>
+                                    <label class="sys-switch"><input type="checkbox" id="inAppNotifDir"><span
+                                            class="sys-slider"></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </main>
@@ -235,37 +836,917 @@
     <script src="Js/jquery-3.7.1.min.js"></script>
     <script src="Js/allclient.js"></script>
 
-    <script>
-        // Settings Dropdown Toggle
-        function toggleSettingsDropdown() {
-            $('#securitySelectContainer').toggleClass('active');
+     <script>
+
+        // ==========================================
+        // 1. BASIC UI TOGGLES & DROPDOWNS
+        // ==========================================
+        function openSysTab(evt, tabName) {
+            $(".sys-tab-content").hide();
+            $(".sys-tab-btn").removeClass("active");
+            $("#" + tabName).fadeIn();
+            $(evt.currentTarget).addClass("active");
         }
 
-        // Select Item Logic
-        function selectSettingsItem(text, value) {
-            const container = $('#securitySelectContainer');
-            container.find('.selected-text').text(text);
-            $('#securitySelectValue').val(value); // Value update
-            container.removeClass('active');
-
-            // Show/Hide content based on selection
-            if (value === 'resetkey') {
-                $('#forgotPassContent').hide();
-                $('#resetKeyContent').show();
-                $('#passwordCardSection').hide();
+        function togglePass(icon) {
+            let input = $(icon).siblings('input');
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                $(icon).removeClass('fa-eye').addClass('fa-eye-slash');
             } else {
-                $('#resetKeyContent').hide();
-                $('#forgotPassContent').show();
-                $('#passwordCardSection').show();
+                input.attr('type', 'password');
+                $(icon).removeClass('fa-eye-slash').addClass('fa-eye');
             }
         }
 
-        // Close dropdown when clicking outside
-        $(document).on('click', function (e) {
-            if (!$(e.target).closest('#securitySelectContainer').length) {
-                $('#securitySelectContainer').removeClass('active');
+        function toggleDropdown(id, event) {
+            if (event) event.stopPropagation();
+            $('.report-dropdown, .custom-dropdown').not('#' + id).removeClass('active');
+            $('#' + id).toggleClass('active');
+        }
+
+        function selectItem(dropdownId, text) {
+            let dropdown = $('#' + dropdownId);
+            dropdown.find('.selected-text').text(text).css('color', '#fff');
+            dropdown.removeClass('active');
+        }
+
+        $(document).click(function (e) {
+            if (!$(e.target).closest('.report-dropdown, .custom-dropdown').length) {
+                $('.report-dropdown, .custom-dropdown').removeClass('active');
             }
         });
+
+        // Toggle TFASettings ko hata diya gaya hai aur iska logic niche 2FA Toggle listener mein merge kar diya hai.
+
+        function selectTFAMethod(method) {
+            // Current logged-in user ka email localStorage se nikal lein
+            let loggedInEmail = localStorage.getItem("agencyEmail") || "";
+
+            $('.tfa-method-card').css({ 'border-color': 'rgba(255,255,255,0.1)', 'color': '#888', 'background': 'transparent' });
+            $('#tfaInputSection').show();
+            $('#tfaSubmitBtn').show();
+
+            if (method === 'mobile') {
+                $('#tfaMobileCard').css({ 'border-color': '#00ff9d', 'color': '#00ff9d', 'background': 'rgba(0,255,157,0.05)' });
+                $('#tfaInputLabel').text('Enter Mobile Number');
+                $('#tfaUserInput').attr('placeholder', '+91 XXXXX XXXXX').val('');
+            } else {
+                $('#tfaEmailCard').css({ 'border-color': '#00ff9d', 'color': '#00ff9d', 'background': 'rgba(0,255,157,0.05)' });
+                $('#tfaInputLabel').text('Verify Email Address');
+
+                // 🔴 YAHAN FIX KIYA HAI: 'agency@quantifyre.com' hata kar asli email set kiya
+                $('#tfaUserInput').attr('placeholder', 'agency@mail.com').val(loggedInEmail);
+            }
+        }
+
+        // ==========================================
+        // 2. MAIN DOCUMENT READY (Select2, API & Form Edit)
+        // ==========================================
+        $(document).ready(function () {
+
+            // --- SELECT2 INITIALIZATION ---
+            const countrySelect = $('#countrySearchSelect');
+            const stateSelect = $('#stateSearchSelect');
+            const citySelect = $('#citySearchSelect');
+
+            const select2Config = { width: '100%', dropdownParent: $('.sys-main-container'), allowClear: true };
+            countrySelect.select2({ ...select2Config, placeholder: "Searching Countries..." });
+            stateSelect.select2({ ...select2Config, placeholder: "Select Country First" });
+            citySelect.select2({ ...select2Config, placeholder: "Select State First" });
+
+            // Initially Lock Dropdowns & Form
+            $('.personal-group, .address-group').attr('readonly', true).css('cursor', 'not-allowed');
+            countrySelect.prop('disabled', true);
+            stateSelect.prop('disabled', true);
+            citySelect.prop('disabled', true);
+
+            // --- VALIDATION LOGIC ---
+            function validateSection(targetClass) {
+                let isValid = true;
+
+                // Check normal inputs
+                $('.' + targetClass).each(function () {
+                    if ($(this).val().trim() === "") {
+                        $(this).css("border-color", "#ff4d4d");
+                        $(this).siblings(".error-msg").fadeIn();
+                        isValid = false;
+                    } else {
+                        $(this).css("border-color", "rgba(0, 255, 157, 0.5)");
+                        $(this).siblings(".error-msg").hide();
+                    }
+                });
+
+                // Check Select2
+                if (targetClass === 'address-group') {
+                    const selects = ['#countrySearchSelect', '#stateSearchSelect', '#citySearchSelect'];
+                    selects.forEach(id => {
+                        let val = $(id).val();
+                        if (!$(id).prop('disabled') && (!val || val === "")) {
+                            $(id).next('.select2-container').find('.select2-selection').css('border-color', '#ff4d4d');
+                            $(id).closest('.form-group').find('.error-msg').fadeIn();
+                            isValid = false;
+                        } else {
+                            $(id).next('.select2-container').find('.select2-selection').css('border-color', 'rgba(0, 255, 157, 0.5)');
+                            $(id).closest('.form-group').find('.error-msg').hide();
+                        }
+                    });
+                }
+                return isValid;
+            }
+
+            // --- PENCIL ICON EDIT TOGGLE ---
+            $('.edit-trigger').off('click').on('click', function (e) {
+                e.stopPropagation();
+                const $icon = $(this);
+                const targetClass = $icon.data('target');
+                const $inputs = $('.' + targetClass);
+
+                if ($icon.hasClass('fa-pencil')) {
+                    // Unlock Form
+                    $inputs.removeAttr('readonly').css({
+                        'border-color': 'rgba(0, 255, 157, 0.5)',
+                        'background': 'rgba(255, 255, 255, 0.05)',
+                        'cursor': 'text'
+                    });
+
+                    if (targetClass === 'address-group') {
+                        $('#countrySearchSelect, #stateSearchSelect, #citySearchSelect').prop('disabled', false);
+                    }
+
+                    $icon.removeClass('fa-pencil').addClass('fa-check').css('color', '#fff');
+                    $inputs.first().focus();
+                } else {
+                    // Validate & Lock Form
+                    if (validateSection(targetClass)) {
+                        $inputs.attr('readonly', true).css({
+                            'border-color': '',
+                            'background': '',
+                            'cursor': 'not-allowed'
+                        });
+
+                        if (targetClass === 'address-group') {
+                            $('#countrySearchSelect, #stateSearchSelect, #citySearchSelect').prop('disabled', true);
+                        }
+                        $icon.removeClass('fa-check').addClass('fa-pencil').css('color', '#00ff9d');
+                    } else {
+                        console.log("Validation failed - stay in edit mode");
+                    }
+                }
+            });
+
+            // --- COUNTRY/STATE/CITY APIS ---
+            fetch("https://countriesnow.space/api/v0.1/countries/positions")
+                .then(response => response.json())
+                .then(res => {
+                    const countryOptions = res.data.map(c => ({ id: c.name, text: c.name }));
+                    countrySelect.select2({ ...select2Config, placeholder: "Select Country", data: countryOptions });
+                }).catch(err => console.error(err));
+
+            countrySelect.on('change', function () {
+                const countryName = $(this).val();
+                stateSelect.empty().append('<option></option>');
+                citySelect.empty().append('<option></option>');
+
+                if (!countryName) return;
+                stateSelect.select2({ ...select2Config, placeholder: "Loading States..." });
+
+                fetch("https://countriesnow.space/api/v0.1/countries/states", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ country: countryName })
+                }).then(response => response.json()).then(res => {
+                    if (!res.error) {
+                        const states = res.data.states.map(s => ({ id: s.name, text: s.name }));
+                        stateSelect.select2({ ...select2Config, placeholder: "Select State", data: states });
+                        if (window.savedState) { stateSelect.val(window.savedState).trigger('change'); window.savedState = null; }
+                    }
+                });
+            });
+
+            stateSelect.on('change', function () {
+                const countryName = countrySelect.val();
+                const stateName = $(this).val();
+                citySelect.empty().append('<option></option>');
+
+                if (!stateName || !countryName) return;
+                citySelect.select2({ ...select2Config, placeholder: "Loading Cities..." });
+
+                fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ country: countryName, state: stateName })
+                }).then(response => response.json()).then(res => {
+                    if (!res.error) {
+                        const cities = res.data.map(city => ({ id: city, text: city }));
+                        citySelect.select2({ ...select2Config, placeholder: "Select City", data: cities });
+                        if (window.savedCity) { citySelect.val(window.savedCity).trigger('change'); window.savedCity = null; }
+                    }
+                });
+            });
+
+            // --- LOGO INSTANT PREVIEW ---
+            $('#profileUpload').on('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) { $('#leftAgencyLogo').attr('src', e.target.result); };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // --- LOAD AGENCY PROFILE ---
+            const agencyEmail = localStorage.getItem("agencyEmail");
+            if (agencyEmail) {
+                $.ajax({
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
+                    type: "GET",
+                    data: { email: agencyEmail },
+                    success: function (data) {
+                        $("#leftAgencyNameDisplay").text(data.agencyName || "Agency Name");
+                        $("#leftAgencyEmail").text(data.email || "");
+                        $("#leftAgencyPhone").text(data.phoneNumber || "");
+
+                        if (data.agencyLogo) {
+                            let finalPath;
+                            // Check agar link 'http' se start ho raha hai (Naya Supabase URL)
+                            if (data.agencyLogo.startsWith('http')) {
+                                finalPath = data.agencyLogo;
+                            } else {
+                                // Purana data handle karne ke liye (Local)
+                                finalPath = "http://localhost:8080/uploads/logos/" + encodeURIComponent(data.agencyLogo);
+                            }
+
+                            // Sabhi places par logo set karein
+                            $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo").attr("src", finalPath);
+                        } else {
+                            // Default image agar logo nahi hai
+                            $("#leftAgencyLogo").attr("src", "Images/default-avatar.png");
+                        }
+
+                        if (data.status) {
+                            let statusColor = data.status.toLowerCase() === 'active' ? "#00ff9d" : "#ff4d4d";
+                            $("#leftAgencyStatus").html(`<i class="fa-solid fa-circle-check"></i> ${data.status}`).css({ "color": statusColor, "border-color": statusColor });
+                        }
+
+                        let nameParts = (data.ownerName || "").split(' ');
+                        $("#agencyFirstNameInput").val(nameParts[0] || "");
+                        $("#agencyLastNameInput").val(nameParts.slice(1).join(' ') || "");
+                        $("#agencyEmailInput").val(data.email || "");
+                        $("#agencyPhoneInput").val(data.phoneNumber || "");
+                        $("#agencyPincode").val(data.pincode || "");
+
+                        let fullAddr = data.address || "";
+                        if (fullAddr.includes(",")) {
+                            let parts = fullAddr.split(",");
+                            $("#agencyAddress1").val(parts[0].trim());
+                            $("#agencyAddress2").val(parts.slice(1).join(", ").trim());
+                        } else {
+                            $("#agencyAddress1").val(fullAddr);
+                        }
+
+                        if (data.country) {
+                            window.savedState = data.state;
+                            window.savedCity = data.city;
+                            if ($('#countrySearchSelect').find("option[value='" + data.country + "']").length === 0) {
+                                $('#countrySearchSelect').append(new Option(data.country, data.country, true, true));
+                            }
+                            $('#countrySearchSelect').val(data.country).trigger('change');
+                        }
+                    }
+                });
+            } else {
+                window.location.href = "AgencyLogin.html";
+            }
+
+            // --- SAVE CHANGES BUTTON ---
+
+            $('.btn-update').on('click', function (e) {
+                e.preventDefault();
+
+                // 🔴 Validation Check: Agar koi field khali hai toh aage mat badho
+                let isPersonalValid = validateSection('personal-group');
+                let isAddressValid = validateSection('address-group');
+
+                if (!isPersonalValid || !isAddressValid) {
+                    showCustomAlert("Validation Error", "Please fill all required fields before saving.", "error");
+                    return; // AJAX call nahi hogi
+                }
+
+                // Agar valid hai toh hi data collect karo
+                let address2Val = $('#agencyAddress2').val() ? ", " + $('#agencyAddress2').val() : "";
+                const updateData = {
+                    id: localStorage.getItem("agencyId"),
+                    email: $('#agencyEmailInput').val().trim(),
+                    ownerName: $('#agencyFirstNameInput').val().trim() + " " + $('#agencyLastNameInput').val().trim(),
+                    phoneNumber: $('#agencyPhoneInput').val().trim(),
+                    address: $('#agencyAddress1').val().trim() + address2Val,
+                    country: $('#countrySearchSelect').val(),
+                    state: $('#stateSearchSelect').val(),
+                    city: $('#citySearchSelect').val(),
+                    pincode: $('#agencyPincode').val()
+                };
+
+                let formData = new FormData();
+                formData.append("agencyData", JSON.stringify(updateData));
+
+                let logoFile = $('#profileUpload')[0].files[0];
+                if (logoFile) formData.append("agencyLogo", logoFile);
+
+                const $btn = $(this);
+                $btn.text('Saving...').prop('disabled', true);
+
+                $.ajax({
+                    url: "https://quantifire-iris-backend.onrender.com/api/agency/update-profile",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        // 🔴 SMART CHECK: Purana email local storage se uthao
+                        const oldEmail = localStorage.getItem("agencyEmail");
+                        const updatedEmail = response.newEmail; // Backend se aaya naya email
+
+                        // Agar email sach mein change hua hai (Purane wale se different hai)
+                        if (updatedEmail && updatedEmail.toLowerCase() !== oldEmail.toLowerCase()) {
+
+                            localStorage.clear();
+                            document.cookie.split(";").forEach(function (c) {
+                                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                            });
+
+                            showCustomAlert(
+                                "Email Updated",
+                                "Your login email has been changed. Please login again with your new email.",
+                                "success"
+                            );
+
+                            $('.btn-alert-ok').off('click').on('click', function () {
+                                window.location.href = "AgencyLogin.html";
+                            });
+
+                        } else {
+                            // 🟢 Agar email wahi hai, sirf baaki details badli hain
+                            showCustomAlert("Profile Updated", "Success!", "success");
+
+                            $('.btn-alert-ok').off('click').on('click', function () {
+                                location.reload(); // Page reload karo taaki naya data dikhe
+                            });
+                        }
+                    },
+                    error: function () {
+                        showCustomAlert("Error", "Server error updating profile.", "error");
+                        $btn.text('Save Changes').prop('disabled', false);
+                    }
+                });
+            });
+
+            // Clear errors on typing
+            $(document).on('input change', '.form-input, select', function () {
+                if ($(this).val()) {
+                    $(this).css("border-color", "rgba(0, 255, 157, 0.5)").siblings(".error-msg").hide();
+                    $(this).next('.select2-container').find('.select2-selection').css('border-color', 'rgba(0, 255, 157, 0.5)');
+                }
+            });
+        });
+
+
+        // --------------------------    SECURITY TAB SCRIPT  ------------------------------------- //
+
+        // --- CHANGE PASSWORD LOGIC ---
+        $('.sys-btn-primary:contains("Update Password")').on('click', function (e) {
+            e.preventDefault();
+
+            const currentPassword = $('input[placeholder="Current Password"]').val();
+            const newPassword = $('input[placeholder="New Password"]').val();
+            const confirmPassword = $('input[placeholder="Confirm Password"]').val();
+
+            // Basic Validation using Custom Alert Modal
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                showCustomAlert("Error", "Please fill all password fields.", "error");
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                showCustomAlert("Error", "New Password and Confirm Password do not match!", "error");
+                return;
+            }
+            if (newPassword.length < 8) {
+                showCustomAlert("Error", "Password must be at least 8 characters long.", "error");
+                return;
+            }
+
+            const btn = $(this);
+            btn.text('Updating...').prop('disabled', true);
+
+            $.ajax({
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/change-password",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    email: localStorage.getItem("agencyEmail"),
+                    currentPassword: currentPassword,
+                    newPassword: newPassword
+                }),
+                success: function (response) {
+                    // 1. Password fields clear karein aur button reset karein
+                    $('input[type="password"]').val('');
+                    btn.text('Update Password').prop('disabled', false);
+
+                    // 2. Session data clear karein (logout backend prep)
+                    document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "agencyEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    localStorage.removeItem("agencyEmail");
+
+                    // 3. Custom Alert Show karein with Redirect URL
+                    showCustomAlert(
+                        "Password Updated",
+                        "Password updated successfully! Please login again with your new password.",
+                        "success",
+                        "AgencyLogin.html"
+                    );
+                },
+                error: function (xhr) {
+                    let errorMsg = "Invalid current password.";
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    } else if (xhr.responseText) {
+                        errorMsg = xhr.responseText;
+                    }
+
+                    // Custom Alert for backend errors
+                    showCustomAlert("Update Failed", "Error: " + errorMsg, "error");
+                    btn.text('Update Password').prop('disabled', false);
+                }
+            });
+        });
+
+        // --- LOAD SECURITY DATA ---
+        function loadSecurityData() {
+            const email = localStorage.getItem("agencyEmail");
+
+            // 1. Fetch Preferences (2FA & Alerts)
+            $.get(`https://quantifire-iris-backend.onrender.com/api/agency/security/preferences?email=${email}`, function (data) {
+                // Set 2FA Toggle
+                if (data.is2faEnabled) {
+                    $('#tfaToggle').prop('checked', true);
+                    $('#tfaMethodsWrapper').hide();
+                    $('#tfaSubmitBtn').hide();
+                }
+
+                // Set Login Alerts Toggle (Fixed ID selection)
+                $('#loginAlertToggle').prop('checked', data.loginAlertsEnabled);
+            });
+
+            // 2. Fetch Login Activity
+            $.get(`https://quantifire-iris-backend.onrender.com/api/agency/security/login-history?email=${email}`, function (history) {
+                const tbody = $('#security .sys-table tbody');
+                tbody.empty(); // Clear static HTML data
+
+                if (!history || history.length === 0) {
+                    tbody.append('<tr><td colspan="4" style="text-align:center;">No recent activity found.</td></tr>');
+                    return;
+                }
+
+                history.forEach(record => {
+                    // Safety check if date exists
+                    let formattedTime = "N/A";
+                    if (record.loginTime) {
+                        let dateObj = new Date(record.loginTime);
+                        formattedTime = dateObj.toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    }
+
+                    tbody.append(`
+                        <tr>
+                            <td>${record.deviceInfo || 'Unknown Device'}</td>
+                            <td>${record.location || 'Unknown Location'}</td>
+                            <td>${record.ipAddress || 'Unknown IP'}</td>
+                            <td>${formattedTime}</td>
+                        </tr>
+                    `);
+                });
+            });
+        }
+
+        // Security tab par click hone par data load karein
+        $('button:contains("Security")').on('click', function () {
+            loadSecurityData();
+        });
+
+
+        // --- UPDATE PREFERENCES ---
+        function updateSecurityPreferences(is2fa, method, alerts) {
+            const email = localStorage.getItem("agencyEmail");
+            $.ajax({
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/update-preferences",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    email: email,
+                    is2faEnabled: is2fa,
+                    tfaMethod: method,
+                    loginAlertsEnabled: alerts
+                }),
+                success: function () {
+
+                }
+            });
+        }
+
+        //  FIX: 2FA Toggle listener (Smart Logic)
+        $('#tfaToggle').on('change', function () {
+            const isEnabled = $(this).is(':checked');
+            const alertsEnabled = $('#loginAlertToggle').is(':checked');
+            const wrapper = $('#tfaMethodsWrapper');
+
+            let currentMethod = 'email';
+            if ($('#tfaMobileCard').css('color') === 'rgb(0, 255, 157)') {
+                currentMethod = 'mobile';
+            }
+
+            if (isEnabled) {
+                // Agar ON kiya hai -> Setup Box kholo, par DB me abhi update mat karo (verify ke baad hoga)
+                wrapper.slideDown();
+                // Pehle se selected option ko reset kar do UI me
+                selectTFAMethod('email');
+            } else {
+                // Agar OFF kiya hai -> Box band karo aur DB me turant disable (false) karo
+                wrapper.slideUp();
+                $('#otpVerificationBox').hide();
+                $('#tfaSubmitBtn').text('Send OTP').css('background', '#00ff9d').css('color', '#000');
+
+                updateSecurityPreferences(false, currentMethod, alertsEnabled);
+            }
+        });
+
+        // 2FA Method Card Click Listener (Naya add kiya gaya taaki card click par save ho)
+        $('#tfaMobileCard').on('click', function () {
+            if ($('#tfaToggle').is(':checked')) {
+                updateSecurityPreferences(true, 'mobile', $('#loginAlertToggle').is(':checked'));
+            }
+        });
+
+        $('#tfaEmailCard').on('click', function () {
+            if ($('#tfaToggle').is(':checked')) {
+                updateSecurityPreferences(true, 'email', $('#loginAlertToggle').is(':checked'));
+            }
+        });
+
+        // Login Alerts Toggle listener
+        $('#loginAlertToggle').on('change', function () {
+            const alertsEnabled = $(this).is(':checked');
+            const is2faEnabled = $('#tfaToggle').is(':checked');
+
+            let currentMethod = 'email';
+            if ($('#tfaMobileCard').css('color') === 'rgb(0, 255, 157)') {
+                currentMethod = 'mobile';
+            }
+
+            updateSecurityPreferences(is2faEnabled, currentMethod, alertsEnabled);
+        });
+
+        // ==========================================
+        // 5. 2FA OTP SEND & VERIFY LOGIC
+        // ==========================================
+
+        function sendOtp() {
+            const targetValue = $('#tfaUserInput').val();
+            let method = 'email';
+            if ($('#tfaMobileCard').css('color') === 'rgb(0, 255, 157)') {
+                method = 'mobile';
+            }
+
+            if (!targetValue) {
+                showCustomAlert("Action Required", "Please enter your " + method + " details first.", "error");
+                return;
+            }
+
+            const btn = $('#tfaSubmitBtn');
+            btn.text('Sending...').prop('disabled', true);
+
+            $.ajax({
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/request-otp",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ method: method, target: targetValue }),
+                success: function (res) {
+                    btn.text('Resend OTP').prop('disabled', false);
+                    $('#otpVerificationBox').slideDown();
+                    showCustomAlert("OTP Sent", res.message || "OTP Sent Successfully!", "success");
+                },
+                error: function () {
+                    showCustomAlert("Error", "Error sending OTP. Please check backend.", "error");
+                    btn.text('Send OTP').prop('disabled', false);
+                }
+            });
+        }
+
+        function verifyOtp() {
+            const otpValue = $('#tfaOtpInput').val();
+            const targetValue = $('#tfaUserInput').val();
+            const email = localStorage.getItem("agencyEmail");
+
+            if (!otpValue || otpValue.length < 5) {
+                showCustomAlert("Invalid Input", "Please enter a valid OTP.", "error");
+                return;
+            }
+
+            const btn = $('#tfaVerifyBtn');
+            btn.text('Verifying...').prop('disabled', true);
+
+            $.ajax({
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/security/verify-2fa",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ target: targetValue, otp: otpValue, email: email }),
+                success: function (res) {
+                    btn.text('Verified!').css('background', '#28a745').css('color', '#fff');
+                    setTimeout(() => {
+                        $('#otpVerificationBox').slideUp();
+                        $('#tfaMethodsWrapper').slideUp();
+                        $('#tfaSubmitBtn').slideUp();
+                        showCustomAlert("2FA Enabled", "Two-Factor Authentication Enabled Successfully!", "success");
+                    }, 800);
+                },
+                error: function (xhr) {
+                    let errMsg = "Invalid OTP. Please try again.";
+                    if (xhr.responseJSON && xhr.responseJSON.message) errMsg = xhr.responseJSON.message;
+                    showCustomAlert("Verification Failed", errMsg, "error");
+                    btn.text('Verify').prop('disabled', false);
+                }
+            });
+        }
+
+        $('.tfa-method-card').on('click', function () {
+            $('#otpVerificationBox').hide();
+            $('#tfaSubmitBtn').text('Send OTP');
+            $('#tfaOtpInput').val('');
+            $('#tfaVerifyBtn').text('Verify').css('background', '#00ff9d').css('color', '#000');
+        });
+
+
+        // ----------------------------  Integrations SCRIPTS ---------------------------- //
+
+        const agencyEmailForInt = localStorage.getItem("agencyEmail");
+
+        // --- Helper: UI Update Function ---
+        function updateButtonUI(platform, isConnected) {
+            const btnId = platform === 'google' ? '#googleBtn' : '#fbBtn';
+            const btn = $(btnId);
+
+            // Safety ke liye HTML ka onclick remove kar rahe hain
+            btn.removeAttr('onclick');
+
+            if (isConnected) {
+                // Connected State: Show Disconnect Button (Red)
+                btn.text('Disconnect')
+                    .css({
+                        'background': 'rgba(255, 77, 77, 0.1)',
+                        'color': '#ff4d4d',
+                        'border-color': '#ff4d4d',
+                        'cursor': 'pointer',
+                        'pointer-events': 'auto'
+                    })
+                    .off('click').on('click', function () { disconnectPlatform(platform); });
+            } else {
+                // Disconnected State: Show Connect Button (Outline)
+                const text = platform === 'google' ? 'Connect Google Ads' : 'Connect Facebook';
+                btn.text(text)
+                    .css({
+                        'background': 'transparent',
+                        'color': '#00ff9d',
+                        'border-color': 'rgba(0, 255, 157, 0.5)',
+                        'cursor': 'pointer',
+                        'pointer-events': 'auto'
+                    })
+                    .off('click').on('click', function () {
+                        platform === 'google' ? connectGoogleAds() : connectFacebookAds();
+                    });
+            }
+        }
+
+        // --- Status Sync (Database se check karna) ---
+        function syncIntegrationStatus() {
+            if (!agencyEmailForInt) return;
+
+            // Button ko temporarily disable karo jab tak status aa raha hai
+            $('#googleBtn, #fbBtn').text('Checking status...').css('pointer-events', 'none');
+
+            $.ajax({
+                url: `https://quantifire-iris-backend.onrender.com/api/integration/status?email=${agencyEmailForInt}`,
+                type: "GET",
+                success: function (status) {
+                    updateButtonUI('google', status.google);
+                    updateButtonUI('facebook', status.facebook);
+                },
+                error: function () {
+                    console.error("Could not fetch integration status");
+                    // Fail hone par default connect buttons dikhao
+                    updateButtonUI('google', false);
+                    updateButtonUI('facebook', false);
+                }
+            });
+        }
+
+        // ==========================================
+        // PREMIUM DISCONNECT MODAL LOGIC
+        // ==========================================
+        let platformToDisconnect = "";
+
+        // 1. Box Open Karne ka function
+        function disconnectPlatform(platform) {
+            platformToDisconnect = platform;
+            
+            let displayPlatform = platform === 'google' ? 'Google Ads' : 'Facebook';
+            
+            // Text Set Karein
+            $('#disconnectConfirmTitle').text(`Disconnect ${displayPlatform}?`);
+            $('#disconnectConfirmMessage').text(`Are you sure you want to disconnect ${displayPlatform}? Your data sync will stop.`);
+            
+            // Box ko dikhayein (Add active class just like your custom alert)
+            $('#disconnectConfirmOverlay').addClass('active');
+        }
+
+        // 2. Box Close Karne ka function
+        function closeDisconnectModal() {
+            $('#disconnectConfirmOverlay').removeClass('active');
+            platformToDisconnect = "";
+        }
+
+        // 3. Asli Disconnect API Call (Jab lal wala Disconnect button dabega)
+        function confirmDisconnect() {
+            if (!platformToDisconnect) return;
+
+            // Backend ko sahi naam bhejne ka logic
+            const backendPlatformName = platformToDisconnect === 'google' ? 'GOOGLE' : 'FB';
+            let currentPlat = platformToDisconnect; 
+            
+            const btn = $('#confirmDisconnectBtn');
+            btn.text('Wait...').prop('disabled', true);
+
+            $.ajax({
+                url: `https://quantifire-iris-backend.onrender.com/api/integration/disconnect`,
+                type: "GET",
+                data: { email: agencyEmailForInt, platform: backendPlatformName }, 
+                success: function (res) {
+                    closeDisconnectModal(); // Confirmation box band karo
+                    btn.text('Disconnect').prop('disabled', false); // Button theek karo
+                    
+                    // Success ka Original Custom Alert dikhao
+                    showCustomAlert("Success", `${currentPlat} disconnected successfully!`, "success");
+                    updateButtonUI(currentPlat, false); // UI update kardo
+                },
+                error: function () {
+                    closeDisconnectModal();
+                    btn.text('Disconnect').prop('disabled', false); 
+                    showCustomAlert("Error", "Server error. Could not disconnect.", "error");
+                }
+            });
+        }
+
+        // --- Initialization ---
+        $(document).ready(function () {
+            // 1. Database se current status fetch karo
+            syncIntegrationStatus();
+
+            // 2. URL Parameters Check (Success Callback ke baad)
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('status') === 'google_success') {
+                showCustomAlert("Success!", "Google Ads Connected Successfully!", "success");
+                updateButtonUI('google', true);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            if (params.get('status') === 'fb_success') {
+                showCustomAlert("Success!", "Facebook Connected Successfully!", "success");
+                updateButtonUI('facebook', true);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+
+        // --- Auth Redirects ---
+        function connectGoogleAds() {
+            if (!agencyEmailForInt) return alert("Agency Email not found!");
+            window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/google/connect?email=${agencyEmailForInt}`;
+
+        }
+
+        function connectFacebookAds() {
+            if (!agencyEmailForInt) return alert("Agency Email not found!");
+            window.location.href = `https://quantifire-iris-backend.onrender.com/api/integration/facebook/connect?email=${agencyEmailForInt}`;
+        }
+
+        // --------- Modal show function (Redirect URL)  ----------------------------- //
+
+        function showCustomAlert(title, message, type, redirectUrl = null) {
+            $('#alertTitle').text(title);
+            $('#alertMessage').text(message);
+
+            // Type check karega: success hai ya error
+            if (type === 'success') {
+                $('#alertIconBox').html('<i class="fa-solid fa-check"></i>');
+                $('#alertIconBox').removeClass('alert-icon-error').addClass('alert-icon-success');
+            } else {
+                $('#alertIconBox').html('<i class="fa-solid fa-triangle-exclamation"></i>');
+                $('#alertIconBox').removeClass('alert-icon-success').addClass('alert-icon-error');
+            }
+
+            $('#customAlertOverlay').addClass('active');
+
+            // OK Button par click karne ka logic
+            $('.btn-alert-ok').off('click').on('click', function () {
+                closeCustomAlert();
+                // Agar redirect URL diya hai toh page change karo
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            });
+        }
+
+        // Modal band karne ka function
+        function closeCustomAlert() {
+            $('#customAlertOverlay').removeClass('active');
+        }
+
+        // ==========================================
+        // NOTIFICATIONS TAB SCRIPT (Dynamic & Auto-Save)
+        // ==========================================
+
+        // 1. Database se data lana
+        function loadNotificationSettings() {
+            const email = localStorage.getItem("agencyEmail");
+            if (!email) return;
+
+            $.ajax({
+                url: `https://quantifire-iris-backend.onrender.com/api/agency/notifications?email=${email}`,
+                type: "GET",
+                success: function (data) {
+                    if (!data) return;
+
+                    // Set Email Toggles
+                    $('#emailNotifNewReg').prop('checked', data.emailNotifNewReg);
+                    $('#emailNotifBilling').prop('checked', data.emailNotifBilling);
+                    $('#emailNotifAlerts').prop('checked', data.emailNotifAlerts);
+                    $('#emailNotifSysFail').prop('checked', data.emailNotifSysFail);
+                    $('#emailNotifSysReport').prop('checked', data.emailNotifSysReport);
+                    $('#emailNotifNewAgency').prop('checked', data.emailNotifNewAgency);
+
+                    // Set In-App Toggles
+                    $('#inAppNotifNewMsg').prop('checked', data.inAppNotifNewMsg);
+                    $('#inAppNotifCampStatus').prop('checked', data.inAppNotifCampStatus);
+                    $('#inAppNotifPush').prop('checked', data.inAppNotifPush);
+                    $('#inAppNotifMention').prop('checked', data.inAppNotifMention);
+                    $('#inAppNotifMsgCom').prop('checked', data.inAppNotifMsgCom);
+                    $('#inAppNotifDir').prop('checked', data.inAppNotifDir);
+                },
+                error: function () {
+                    console.error("Failed to load notification settings.");
+                }
+            });
+        }
+
+        // Jab user "Notifications" tab par click kare tab data load ho
+        $('button:contains("Notifications")').on('click', function () {
+            loadNotificationSettings();
+        });
+
+        // 2. Real-time Save (Jab bhi user koi Toggle ON/OFF kare)
+        $('#notifications input[type="checkbox"]').on('change', function () {
+            const email = localStorage.getItem("agencyEmail");
+            if (!email) return;
+
+            const requestData = {
+                email: email,
+                settings: {
+                    emailNotifNewReg: $('#emailNotifNewReg').prop('checked'),
+                    emailNotifBilling: $('#emailNotifBilling').prop('checked'),
+                    emailNotifAlerts: $('#emailNotifAlerts').prop('checked'),
+                    emailNotifSysFail: $('#emailNotifSysFail').prop('checked'),
+                    emailNotifSysReport: $('#emailNotifSysReport').prop('checked'),
+                    emailNotifNewAgency: $('#emailNotifNewAgency').prop('checked'),
+
+                    inAppNotifNewMsg: $('#inAppNotifNewMsg').prop('checked'),
+                    inAppNotifCampStatus: $('#inAppNotifCampStatus').prop('checked'),
+                    inAppNotifPush: $('#inAppNotifPush').prop('checked'),
+                    inAppNotifMention: $('#inAppNotifMention').prop('checked'),
+                    inAppNotifMsgCom: $('#inAppNotifMsgCom').prop('checked'),
+                    inAppNotifDir: $('#inAppNotifDir').prop('checked')
+                }
+            };
+
+            // Backend ko bhejo bina page refresh kiye
+            $.ajax({
+                url: "https://quantifire-iris-backend.onrender.com/api/agency/notifications/update",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(requestData),
+                success: function (res) {
+
+                },
+                error: function () {
+                    console.error("Error updating notifications in DB.");
+                }
+            });
+        });
+
     </script>
 
 </body>
