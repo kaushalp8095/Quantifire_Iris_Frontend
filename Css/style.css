@@ -1071,35 +1071,6 @@ input {caret-color: white;}
 .f-n-content p { color: #8b9c9c; margin: 0; font-size: 0.85rem; line-height: 1.4; }
 .f-n-time { color: #5a6a6e; font-size: 0.75rem; white-space: nowrap; }
 
-/* 1. Dropdown ki height aur scroll enable karna */
-.notif-list {
-    max-height: 150px; /* Lagbhag 3.5 notifications dikhayega */
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 5px; /* Scrollbar aur text ke beech thodi jagah */
-}
-
-/* 2. Scrollbar ki width (Patla dikhne ke liye) */
-.notif-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-/* 3. Track (Peeche ki dandi) - Isko transparent rakhenge */
-.notif-list::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-
-/* 4. Thumb (Jo chalta hai) - Isko Neon Green/Glassy look denge */
-.notif-list::-webkit-scrollbar-thumb {
-    background: rgba(0, 255, 157, 0.3); /* Aapka theme color thoda transparent */
-    border-radius: 10px;
-    transition: 0.3s;
-}
-
-.notif-list::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 255, 157, 0.6);
-}
 
 
 /* --- MOBILE RESPONSIVENESS MEDIA QUERIES (CLEANED) --- */
