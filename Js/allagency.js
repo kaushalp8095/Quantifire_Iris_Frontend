@@ -178,7 +178,7 @@ function loadTopBarNotifications() {
         }
 
         // 🟢 CHANGE 1: Slice badhakar 10 kar diya taki scrollbar use ho sake
-        res.notifications.slice(0, 10).forEach(log => {
+        res.notifications.slice(0, 5).forEach(log => {
             let iconClass = log.type.toLowerCase();
             let iconHtml = '<i class="fa-solid fa-bell"></i>';
 
@@ -213,7 +213,7 @@ $(document).on('click', '.mark-read, #markAllReadBtn', function () {
     if (typeof allNotifications !== 'undefined') {
         allNotifications.forEach(n => n.read = true);
     }
-    
+
 
     // 3. API Call
     $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
