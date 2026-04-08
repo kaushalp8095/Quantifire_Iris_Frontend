@@ -1073,7 +1073,7 @@ input {caret-color: white;}
 
 /* 1. Dropdown ki height aur scroll enable karna */
 .notif-list {
-    max-height: 200px; /* Lagbhag 3.5 notifications dikhayega */
+    max-height: 150px; /* Lagbhag 3.5 notifications dikhayega */
     overflow-y: auto;
     overflow-x: hidden;
     padding-right: 5px; /* Scrollbar aur text ke beech thodi jagah */
