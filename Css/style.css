@@ -1087,3 +1087,22 @@ input {caret-color: white;}
     .f-n-time { position: absolute; top: 12px; right: 12px; font-size: 0.7rem; }
     .f-n-content h4 { padding-right: 40px; }
 }
+
+ /* Edit Pencil Icon Button */
+.edit-trigger {
+    background: rgba(0, 255, 157, 0.1);
+    color: #00ff9d !important;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.edit-trigger:hover {
+    background: #00ff9d;
+    color: #000 !important;
+    box-shadow: 0 0 10px #00ff9d;
+}
