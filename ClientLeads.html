@@ -39,7 +39,13 @@
                     <li><a href="ClientDashboard.html"><img src="Images/Dashboard30x30.ico"> Dashboard</a></li>
                     <li><a href="ClientCampaigns.html"><img src="Images/Campaign30x30.ico"> Campaigns</a></li>
                     <li class="active"><a href="ClientLeads.html"><img src="Images/Leads30x30.ico"> Leads</a></li>
-                    <li><a href="Clientsetting.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                    <div class="mobile-only-menu">
+                        <li><a href="Clientsetting.html"><img src="Images/Setting30x30.ico"> Settings</a></li>
+                        <div class="dropdown-divider"
+                            style="margin: 10px 25px; border-bottom: 1px solid rgba(255,255,255,0.1);"></div>
+                        <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                    </div>
                 </ul>
             </nav>
         </aside>
