@@ -1089,30 +1089,10 @@ input {caret-color: white;}
 }
 
 /* Edit Pencil Icon Button Fix */
-.edit-trigger {
-    background: rgba(0, 255, 157, 0.1) !important; /* Background force karein */
-    color: #00ff9d !important;
-    width: 32px !important;
-    height: 32px !important;
-    display: inline-flex !important; /* inline-flex icons ke liye better hai */
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 50% !important;
-    transition: 0.3s all ease;
-    cursor: pointer;
-    font-size: 0.9rem !important; /* Pencil ka size control karne ke liye */
-    border: 1px solid rgba(0, 255, 157, 0.2); /* Thoda border elegant dikhega */
-}
 
-.edit-trigger:hover {
-    background: #00ff9d !important;
-    color: #000 !important;
-    box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
-    transform: scale(1.1); /* Hover par thoda bada hoga */
-}
+.edit-trigger { background: rgba(0, 255, 157, 0.1) !important; color: #00ff9d !important; width: 32px !important; height: 32px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; border-radius: 50% !important; transition: 0.3s all ease; cursor: pointer; font-size: 0.9rem !important; border: 1px solid rgba(0, 255, 157, 0.2); }
+
+.edit-trigger:hover { background: #00ff9d !important; color: #000 !important; box-shadow: 0 0 15px rgba(0, 255, 157, 0.5); transform: scale(1.1); }
 
 /* Ensure FontAwesome icon doesn't have extra margin */
-.edit-trigger.fa-pencil, .edit-trigger.fa-check {
-    margin: 0 !important;
-    padding: 0 !important;
-}
+.edit-trigger.fa-pencil, .edit-trigger.fa-check { margin: 0 !important; padding: 0 !important; }
