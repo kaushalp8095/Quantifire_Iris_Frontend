@@ -175,33 +175,16 @@
             </section>
 
             <section class="bottom-grid">
-                <div class="map-card glass-panel">
+                <div class="map-card">
                     <h3>Geofence Map</h3>
+
                     <div class="map-toolbar-inner">
-                        <div class="custom-dropdown" id="shapeDropdown">
-                            <div class="dropdown-trigger" onclick="toggleShapeDropdown(event)">
-                                <span id="selectedToolText"><i class="far fa-circle"></i> Circle</span>
-                                <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
-                            </div>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-item" onclick="selectTool('circle', 'Circle')"><i
-                                        class="far fa-circle"></i> Circle</li>
-                                <li class="dropdown-item" onclick="selectTool('rectangle', 'Rectangle')"><i
-                                        class="far fa-square"></i> Rectangle</li>
-                                <li class="dropdown-item" onclick="selectTool('polygon', 'Polygon')"><i
-                                        class="fas fa-draw-polygon"></i> Polygon</li>
-                            </ul>
-                        </div>
-                        <input type="text" id="customSearchInput" class="map-input" placeholder="City..."
+                        <input type="text" id="customSearchInput" class="map-input" placeholder="City name..."
                             onkeypress="handleEnter(event)">
                         <button class="btn-icon btn-search" id="searchBtn" onclick="performDirectSearch()"><i
                                 class="fas fa-search"></i></button>
-                        <input type="number" id="radiusInput" class="map-input" placeholder="Rad(m)"
-                            onkeypress="handleEnter(event)">
-                        <button class="btn-icon btn-check" onclick="applyFilter()"><i class="fas fa-check"></i></button>
-                        <button class="btn-icon btn-clear" onclick="clearMap()"><i
-                                class="fas fa-trash-alt"></i></button>
                     </div>
+
                     <div id="geofenceMap" class="dark-theme-map"></div>
                 </div>
 
