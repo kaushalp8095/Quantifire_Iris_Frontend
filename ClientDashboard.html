@@ -326,10 +326,12 @@
         function initMap() {
             // Map setup
             map = new google.maps.Map(document.getElementById("geofenceMap"), {
-                center: { lat: 22.5726, lng: 72.9327 }, // Gujarat Center
+                center: { lat: 20.5937, lng: 78.9629 }, // india Center
                 zoom: 5,
                 styles: [
-                    { elementType: "geometry", stylers: [{ color: "#091815" }] },
+                   { elementType: "geometry", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.stroke", stylers: [{ color: "#091815" }] },
+                    { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
                     { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] }
                 ]
             });
