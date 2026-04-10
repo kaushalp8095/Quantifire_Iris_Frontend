@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quantifyre Iris - Client Dashboard</title>
-
+    <link rel="icon" type="image/png" href="Images/QUANTIFYRE-IRIS-(256-x-256-px).png">
     <link rel="stylesheet" href="Css/client_style.css">
     <link rel="stylesheet" href="Css/client_sidebar.css">
 
     <link rel="stylesheet" href="Css/fontstyle.css">
     <link rel="stylesheet" href="Css/all.css">
-    </head>
+  
+</head>
 
 <body>
     <!-- <div class="sidebar-overlay" id="sidebarOverlay"></div> -->
@@ -323,12 +324,14 @@
         let map;
         let autocomplete;
         let currentMarker;
+        let drawingManager;
 
         function initMap() {
             // Map setup
             map = new google.maps.Map(document.getElementById("geofenceMap"), {
                 center: { lat: 20.5937, lng: 78.9629 }, // india Center
                 zoom: 5,
+                streetViewControl: true,
                 styles: [
                    { elementType: "geometry", stylers: [{ color: "#091815" }] },
                     { elementType: "labels.text.stroke", stylers: [{ color: "#091815" }] },
