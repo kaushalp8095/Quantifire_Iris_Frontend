@@ -11,8 +11,7 @@
 
     <link rel="stylesheet" href="Css/fontstyle.css">
     <link rel="stylesheet" href="Css/all.css">
-    <link rel="stylesheet" href="Css/leaflet.css">
-    <link rel="stylesheet" href="Css/leaflet.draw.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdoAp_bGW4T01O0KJNp-CfRr8geeuasOY&libraries=places,drawing&callback=initMap" async defer></script>
 </head>
 
 <body>
@@ -124,8 +123,8 @@
                             <li><a href="Clientsetting.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
                             <li><a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" ><i
-                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                             </li>
                         </ul>
                     </div>
@@ -316,37 +315,67 @@
     </div>
 
     <script src="Js/jquery-3.7.1.min.js"></script>
-    <script src="Js/leaflet.js"></script>
-    <script src="Js/leaflet.draw.js"></script>
     <script src="Js/allclient.js"></script>
 
     <script>
-        
-        $(document).ready(function () {
-            window.toggleShapeDropdown = function (event) {
-                event.stopPropagation();
-                $('#shapeDropdown').toggleClass('active');
-            };
-            window.selectTool = function (type, name) {
-                const icon = type === 'polygon' ? 'draw-polygon' : (type === 'circle' ? 'circle' : 'square');
-                $('#selectedToolText').html(`<i class="far fa-${icon}"></i> ${name}`);
-                $('#shapeDropdown').removeClass('active');
-            };
-            $(document).on('click', function (e) {
-                if (!$(e.target).closest('.custom-dropdown').length) {
-                    $('#shapeDropdown').removeClass('active');
-                }
+        // --- GLOBAL VARIABLES ---
+        let map;
+        let autocomplete;
+        let currentMarker;
+
+        function initMap() {
+            // Map setup
+            map = new google.maps.Map(document.getElementById("geofenceMap"), {
+                center: { lat: 22.5726, lng: 72.9327 }, // Gujarat Center
+                zoom: 7,
+                styles: [
+                    { elementType: "geometry", stylers: [{ color: "#091815" }] },
+                    { featureType: "water", elementType: "geometry", stylers: [{ color: "#17263c" }] }
+                ]
             });
-        });
-        // --- Map Initialization ---
-        var map = L.map('geofenceMap', { zoomControl: false }).setView([20.5937, 78.9629], 5);
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-        var drawnItems = new L.FeatureGroup().addTo(map);
-        function performDirectSearch() { console.log("Searching..."); }
-        function applyFilter() { console.log("Filtering..."); }
-        function clearMap() { drawnItems.clearLayers(); }
-        function handleEnter(e) { if (e.key === 'Enter') performDirectSearch(); }
+
+            // Autocomplete setup
+            const input = document.getElementById("customSearchInput");
+            autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo("bounds", map);
+
+            autocomplete.addListener("place_changed", () => {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) return;
+                updateMap(place);
+            });
+        }
+
+        // Enter dabane par search ho
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                performDirectSearch();
+            }
+        }
+
+        // Button click par search ho
+        function performDirectSearch() {
+            const place = autocomplete.getPlace();
+            if (place && place.geometry) {
+                updateMap(place);
+            }
+        }
+
+        function updateMap(place) {
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(15);
+            }
+
+            if (currentMarker) currentMarker.setMap(null);
+            currentMarker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                title: place.name
+            });
+        }
     </script>
 </body>
 

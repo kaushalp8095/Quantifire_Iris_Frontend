@@ -1010,7 +1010,7 @@ input[type=number] {-moz-appearance: textfield;}
 .personal-group[readonly]:hover, .address-group[readonly]:hover { border-color: rgba(255, 255, 255, 0.1) !important; background: transparent !important; }
 
 
-/*-----------------Add New Camapign/edit Campaign Page location search CSS -------------------------*/
+/*-----------------Geo Fence Map - Add New Camapign/edit Campaign Page location search CSS -------------------------*/
 .pac-container { background-color: rgba(10, 25, 25, 0.95) !important; backdrop-filter: blur(10px); border: 1px solid rgba(0, 255, 170, 0.2) !important; border-radius: 0 0 10px 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5) !important; font-family: inherit !important; margin-top: 5px; z-index: 9999 !important; }
 .pac-item { background: transparent !important; border-top: 1px solid rgba(255, 255, 255, 0.05) !important; padding: 10px 15px !important; color: #fff !important; cursor: pointer; font-size: 14px !important; line-height: 30px !important; }
 .pac-item:hover { background-color: rgba(0, 255, 170, 0.1) !important; }
