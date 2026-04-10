@@ -92,8 +92,8 @@ body{
 }
 /* ----Main Page Scrollbar---- */
 .main-content::-webkit-scrollbar {
-    width: 8px; 
-    height: 5px; 
+    width: 6px; 
+    height: 3px; 
 }
 
 /* Track */
@@ -183,126 +183,28 @@ body{
    ========================================= */
 
 @media screen and (max-width: 768px) {
-    
-    /* Body */
-    .lbody {
-        height: 100vh !important; 
-        display: flex;
-        flex-direction: column;
-        justify-content: center; 
-        align-items: center;
-        padding: 10px !important; 
-        overflow: hidden; 
-    }
-
-    .main-container {
-        width: 100%;
-        margin-top: -20px !important; 
-        padding: 0 !important;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    /* Logo Size */
-    .logo-placeholder img {
-        width: 90px !important; 
-        margin-top: 0 !important;
-        margin-bottom: 10px !important; 
-    }
-
-    /* Heading Compact */
-    .header-content {
-        margin-bottom: 20px !important; 
-    }
-
-    .gradient-text {
-        font-size: 24px !important; 
-        margin-bottom: 5px !important;
-    }
-
-    .subtitle {
-        font-size: 13px !important;
-    }
-
-    /*Cards Container Gap */
-    .cards-container {
-        flex-direction: column;
-        gap: 15px !important; 
-        margin-bottom: 0 !important;
-    }
-
-    /* Individual Card Compact */
-    .role-card {
-        width: 100%;
-        max-width: 280px !important; 
-        padding: 20px 15px !important;
-        height: auto !important;
-        min-height: auto !important;
-    }
-
-    .icon-box {
-        height: 50px !important;
-        margin-bottom: 5px !important;
-    }
-
-    .card-icon {
-        height: 40px !important;
-    }
-
-    .role-card h3 {
-        font-size: 18px !important;
-        margin-bottom: 5px !important;
-    }
-
-    .role-card p {
-        font-size: 12px !important;
-        line-height: 1.4;
-    }
+    .lbody { height: 100vh !important; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px !important; overflow: hidden; }
+    .main-container { width: 100%; margin-top: -20px !important; padding: 0 !important; display: flex; flex-direction: column; align-items: center; }
+    .logo-placeholder img { width: 90px !important; margin-top: 0 !important; margin-bottom: 10px !important; }
+    .header-content { margin-bottom: 20px !important; }
+    .gradient-text { font-size: 24px !important; margin-bottom: 5px !important; }
+    .subtitle { font-size: 13px !important; }
+    .cards-container { flex-direction: column; gap: 15px !important; margin-bottom: 0 !important; }
+    .role-card { width: 100%; max-width: 280px !important; padding: 20px 15px !important; height: auto !important; min-height: auto !important; }
+    .icon-box { height: 50px !important; margin-bottom: 5px !important; }
+    .card-icon { height: 40px !important; }
+    .role-card h3 { font-size: 18px !important; margin-bottom: 5px !important; }
+    .role-card p { font-size: 12px !important; line-height: 1.4; }
 }
-
 
        /* =========================================
    LOGIN PAGE RESPONSIVE FIX
    ========================================= */
 
 @media screen and (max-width: 768px) {
-    
-    /* Body */
-    .lbody {
-        height: auto !important;
-        min-height: 100vh;
-        padding: 20px 15px !important;
-        align-items: center; 
-        overflow-y: auto !important; 
-        display: flex;
-        justify-content: center;
-    }
-
-    /* Login Card Adjustment */
-    .login-card {
-        width: 100% !important;
-        max-width: 400px !important;
-        padding: 30px 20px !important;
-        margin: 20px 0; 
-    }
-
-    /* Title Font Size */
-    .form-title {
-        font-size: 1.5rem !important;
-        margin-bottom: 20px !important;
-    }
-
-    /* Input Fields Adjustment */
-    .input-wrapper input {
-        padding: 12px 35px 12px 15px !important;
-        font-size: 14px !important;
-    }
-
-    /* Logo Size */
-    .logo {
-        width: 80px !important;
-        margin-bottom: 5px !important;
-    }
+    .lbody { height: auto !important; min-height: 100vh; padding: 20px 15px !important; align-items: center; overflow-y: auto !important; display: flex; justify-content: center; }
+    .login-card { width: 100% !important; max-width: 400px !important; padding: 30px 20px !important; margin: 20px 0; }
+    .form-title { font-size: 1.5rem !important; margin-bottom: 20px !important; }
+    .input-wrapper input { padding: 12px 35px 12px 15px !important; font-size: 14px !important; }
+    .logo { width: 80px !important; margin-bottom: 5px !important; }
 }
-
