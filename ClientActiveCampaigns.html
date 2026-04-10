@@ -18,8 +18,6 @@
 </head>
 
 <body>
-    <!-- <div class="sidebar-overlay" id="sidebarOverlay"></div> -->
-
     <div class="dashboard-container">
 
         <aside class="sidebar">
@@ -122,9 +120,8 @@
                             <li><a href="Clientsetting.html"><i class="fa-solid fa-gear"></i> Settings</a></li>
                             <li><a href="#"><i class="fa-regular fa-circle-question"></i> Help Center</a></li>
                             <div class="dropdown-divider"></div>
-                            <li><a href="javascript:void(0)" onclick="openLogoutModal()" ><i
-                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
-                            </li>
+                            <li><a href="javascript:void(0)" onclick="openLogoutModal()"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -194,7 +191,6 @@
                     <table class="ac-table full-page-table">
                         <thead>
                             <tr>
-                                <th style="width: 50px;"><input type="checkbox"></th>
                                 <th>Campaign Name</th>
                                 <th>Location</th>
                                 <th>Status</th>
@@ -206,7 +202,6 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td>
                                     <div class="campaign-name-cell">
                                         <div><strong style="color: #fff;">Summer Sale 2025</strong><span
@@ -221,7 +216,6 @@
                                 <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td>
                                     <div class="campaign-name-cell">
                                         <div><strong style="color: #fff;">Eco-Friendly Initiative</strong><span
@@ -236,7 +230,6 @@
                                 <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td>
                                     <div class="campaign-name-cell">
                                         <div><strong style="color: #fff;">Loyalty Rewards Program</strong><span
@@ -252,7 +245,6 @@
                                 <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td>
                                     <div class="campaign-name-cell">
                                         <div><strong style="color: #fff;">Flash Weekend Deals</strong><span
@@ -267,7 +259,6 @@
                                 <td><a href="ClientCampaignReportDetails.html" class="btn-report">Report</a></td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox"></td>
                                 <td>
                                     <div class="campaign-name-cell">
                                         <div><strong style="color: #fff;">Eco-Friendly Initiative</strong><span
@@ -302,7 +293,6 @@
         </main>
     </div>
 
-    <!-- Logut Model Logic -->
     <div class="modal-overlay" id="logoutModal">
         <div class="modal-content">
             <div class="modal-icon-box2">
@@ -324,14 +314,22 @@
         // Dropdown Logic
         const dropdown = document.getElementById('campaignStatusDropdown');
         const selectedText = document.getElementById('selected-text');
-        dropdown.querySelector('.dropdown-selected').addEventListener('click', function (e) {
-            e.stopPropagation(); dropdown.classList.toggle('active');
-        });
-        function selectOption(text) {
-            selectedText.innerText = text; dropdown.classList.remove('active');
+        
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('active');
         }
+        
+        function selectItem(dropdownId, text) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.querySelector('.selected-text').innerText = text;
+            dropdown.classList.remove('active');
+        }
+
         document.addEventListener('click', function (e) {
-            if (!dropdown.contains(e.target)) dropdown.classList.remove('active');
+            if (!e.target.closest('.custom-dropdown')) {
+                document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('active'));
+            }
         });
 
 
@@ -375,12 +373,6 @@
             nextBtn.disabled = currentPage === totalPages;
         }
         window.onload = initPagination;
-
-        $('thead input[type="checkbox"]').on('change', function () {
-            var isChecked = $(this).prop('checked');
-
-            $('tbody tr:visible input[type="checkbox"]').prop('checked', isChecked);
-        });
     </script>
 
     <script src="Js/flatpickr.js"></script>
