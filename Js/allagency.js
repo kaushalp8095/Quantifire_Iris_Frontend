@@ -64,9 +64,34 @@ function closeLogoutModal() {
 }
 
 function confirmLogout() {
-    localStorage.clear();
-    document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = "AgencyLogin.html";
+    // 1. Button par loading dikhao (Optional but good)
+    const $btn = $(".btn-modal-delete1");
+    $btn.text("Logging out...").prop("disabled", true);
+
+    // 2. Backend ko request bhejo cookie expire karne ke liye
+    $.ajax({
+        url: "https://quantifire-iris-backend.onrender.com/api/agency/logout",
+        type: "POST",
+        xhrFields: {
+            withCredentials: true // 🔴 Ye sabse zaroori hai cookie delete karne ke liye
+        },
+        success: function (response) {
+            console.log("Session cleared on server");
+        },
+        error: function (xhr) {
+            console.error("Server logout failed, but clearing local session anyway.");
+        },
+        complete: function () {
+            // 3. Local data saaf karo chahe API chale ya na chale
+            localStorage.clear();
+            
+            // Agar koi normal JS cookie hai use bhi hatao
+            document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            
+            // 4. Redirect to Login
+            window.location.href = "AgencyLogin.html";
+        }
+    });
 }
 
 // ==========================================

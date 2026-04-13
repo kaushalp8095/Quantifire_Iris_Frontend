@@ -3,19 +3,19 @@
     const isLoggedIn = localStorage.getItem("isAgencyLoggedIn");
     const agencyEmail = localStorage.getItem("agencyEmail");
 
-    // --- CASE 1: AGAR USER LOGIN PAGE PAR HAI ---
-    if (path.includes("AgencyLogin.html") || path === "/AgencyLogin.html" || path.endsWith("AgencyLogin.html")) {
+    // Ye check karo ki kya hum login page par hain
+    const isLoginPage = path.includes("AgencyLogin.html") || path.endsWith("AgencyLogin.html") || path === "/";
+
+    if (isLoginPage) {
         if (isLoggedIn === "true" && agencyEmail) {
-            console.log("Already logged in. Redirecting to Dashboard...");
             window.location.replace("AgencyDashboard.html");
             return; 
         }
         return; 
     }
 
-    // --- CASE 2: AGAR BINA LOGIN KE DASHBOARD PAR HAI ---
-    if (!isLoggedIn || isLoggedIn !== "true" || !agencyEmail) {
-        console.warn("Session expired or not found. Redirecting to Login...");
+    // DASHBOARD PROTECTION
+    if (!isLoggedIn || isLoggedIn !== "true" || !agencyEmail) {    
         localStorage.clear();
         window.location.replace("AgencyLogin.html");
     }
