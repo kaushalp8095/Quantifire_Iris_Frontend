@@ -36,27 +36,25 @@
     // 4. 🔴 BACKEND SESSION VALIDATION (The Real Fix)
     // Hum profile API ko hit kar rahe hain jo ki ab SECURE hai
 
-    // 4. 🔴 BACKEND SESSION VALIDATION (With Timing Fix)
-if (!isLoginPage && isLoggedIn === "true") {
-    // ⏳ 500ms ka delay taaki browser cookie sahi se write kar le
-    setTimeout(() => {
+    // auth-guard.js ke end mein Section 4 ko aise update karein
+    const loginTime = localStorage.getItem("loginTime");
+    const timeSinceLogin = new Date().getTime() - parseInt(loginTime);
+
+    // Agar login kiye hue 4 seconds se kam waqt hua hai, toh validation skip karo
+    if (!isLoginPage && isLoggedIn === "true" && timeSinceLogin > 4000) {
         fetch(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${agencyEmail}`, {
             method: 'GET',
-            credentials: 'include',
-            headers: { 'Cache-Control': 'no-cache' }
+            credentials: 'include'
         })
-        .then(res => {
-            if (res.status === 401 || res.status === 403) {
-                throw new Error("UNAUTHORIZED");
-            }
-        })
-        .catch((err) => {
-            if (err.message === "UNAUTHORIZED") {
-                localStorage.clear();
-                window.location.replace("AgencyLogin.html?session=expired");
-            }
-        });
-    }, 500); // 👈 Ye delay loop ko rokega
-}
+            .then(res => {
+                if (res.status === 401 || res.status === 403) throw new Error("UNAUTHORIZED");
+            })
+            .catch((err) => {
+                if (err.message === "UNAUTHORIZED") {
+                    localStorage.clear();
+                    window.location.replace("AgencyLogin.html?session=invalid");
+                }
+            });
+    }
 
 })();
