@@ -22,16 +22,17 @@ $.ajaxPrefilter(function (options) {
 
 // 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
 $(document).ajaxError(function (event, jqXHR, settings) {
-    // 🟢 AGAR REQUEST LOGIN KI HAI, TOH REDIRECT MAT KARO
-    if (settings.url.includes("/api/agency/login")) {
+    // 🟢 AGAR REQUEST LOGIN KI HAI, TOH KUCH MAT KARO (Login.html khud handle karega)
+    if (settings.url.includes("/login")) {
         return; 
     }
 
+    // Sirf tab redirect karo agar status 401/403 ho AUR hum dashboard par honge
     if (jqXHR.status === 401 || jqXHR.status === 403) {
-        console.warn("Session Invalid. Redirecting...");
-        localStorage.clear();
-        // Sirf tab redirect karo agar hum pehle se login page par NA HO
         if (!window.location.pathname.includes("AgencyLogin.html")) {
+            console.warn("Session Expired. Redirecting...");
+            localStorage.clear();
+            sessionStorage.clear();
             window.location.replace("AgencyLogin.html?error=expired");
         }
     }

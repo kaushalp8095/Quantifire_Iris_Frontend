@@ -35,8 +35,9 @@
 
     // 4. 🔴 BACKEND SESSION VALIDATION (The Real Fix)
     // Hum profile API ko hit kar rahe hain jo ki ab SECURE hai
-    // 4. 🔴 BACKEND SESSION VALIDATION (Sirf Dashboard par chalega)
-    if (!isLoginPage && isLoggedIn === "true") { // 👈 Ye condition lagao
+
+    // 4. 🔴 BACKEND SESSION VALIDATION (Ab ye condition ke sath chalega)
+    if (!isLoginPage && isLoggedIn === "true") {
         fetch(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${agencyEmail}`, {
             method: 'GET',
             credentials: 'include',
