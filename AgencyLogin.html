@@ -102,6 +102,7 @@
                             localStorage.setItem("agencyId", response.agencyId);
                             localStorage.setItem("agencyName", response.agencyName);
                             localStorage.setItem("agencyEmail", response.agencyEmail);
+                            localStorage.setItem("loginTime", response.loginTime);
 
                             setTimeout(function () {
                                 window.location.href = "AgencyDashboard.html";
@@ -128,6 +129,9 @@
 
         });
     </script>
+     <script src="Js/jquery-3.7.1.min.js"></script>
+     <script src="Js/allagency.js"></script>
+     <script src="Js/auth-guard.js"></script>
 </body>
 
 </html>

@@ -9,6 +9,22 @@ $.ajaxPrefilter(function (options) {
         options.url = options.url.replace(oldBase, liveBase);
 
     }
+
+    options.crossDomain = true;
+    options.xhrFields = {
+        withCredentials: true
+    };
+
+    // 🔴 Global Error Handler: Agar Backend 401 (Unauthorized) bhejta hai
+    $(document).ajaxError(function (event, jqXHR) {
+        if (jqXHR.status === 401) {
+            console.warn("Agency Session Expired on Server.");
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("AgencyLogin.html?error=session_expired");
+        }
+    });
+
 });
 
 // ==========================================
@@ -84,10 +100,10 @@ function confirmLogout() {
         complete: function () {
             // 3. Local data saaf karo chahe API chale ya na chale
             localStorage.clear();
-            
+
             // Agar koi normal JS cookie hai use bhi hatao
             document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            
+
             // 4. Redirect to Login
             window.location.href = "AgencyLogin.html";
         }
