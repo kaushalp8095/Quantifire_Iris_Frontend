@@ -33,6 +33,13 @@
         return;
     }
 
+    // 🔴 GRACE PERIOD: Login ke turant baad 3 second tak validation skip karo
+    const timeSinceLogin = new Date().getTime() - parseInt(loginTime || 0);
+    if (timeSinceLogin < 3000) { 
+        console.log("Grace period active...");
+        return; 
+    }
+
     // 4. 🔴 BACKEND SESSION VALIDATION (The Real Fix)
     // Hum profile API ko hit kar rahe hain jo ki ab SECURE hai
 
