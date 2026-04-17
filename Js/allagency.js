@@ -22,18 +22,20 @@ $.ajaxPrefilter(function (options) {
 
 // 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
 $(document).ajaxError(function (event, jqXHR, settings) {
-    // 🟢 AGAR REQUEST LOGIN KI HAI, TOH KUCH MAT KARO (Login.html khud handle karega)
-    if (settings.url.includes("/login")) {
+    // 🟢 AGAR REQUEST LOGIN KI HAI, TOH IGNORE KARO
+    if (settings.url.includes("/api/agency/login")) {
         return; 
     }
 
-    // Sirf tab redirect karo agar status 401/403 ho AUR hum dashboard par honge
+    // 🔴 AGAR STATUS 401/403 HAI AUR HUM DASHBOARD PAR HAIN
     if (jqXHR.status === 401 || jqXHR.status === 403) {
-        if (!window.location.pathname.includes("AgencyLogin.html")) {
-            console.warn("Session Expired. Redirecting...");
+        const isLoginPage = window.location.pathname.toLowerCase().includes("agencylogin.html");
+        
+        if (!isLoginPage) {
+            console.warn("Session expired. Redirecting...");
             localStorage.clear();
             sessionStorage.clear();
-            window.location.replace("AgencyLogin.html?error=expired");
+            window.location.replace("AgencyLogin.html?error=session_expired");
         }
     }
 });
