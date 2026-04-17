@@ -1,3 +1,10 @@
+$.ajaxSetup({
+    xhrFields: {
+        withCredentials: true
+    },
+    crossDomain: true
+});
+
 // ==========================================
 // 1. AJAX PREFILTER (Localhost Fix)
 // ==========================================
