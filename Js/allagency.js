@@ -274,7 +274,6 @@ async function handleHealthCheck() {
 }
 
 
-
 // ==========================================
 // GLOBAL KEYBOARD SHORTCUTS (ENTER & ESCAPE KEYS)
 // ==========================================
