@@ -22,22 +22,11 @@ $.ajaxPrefilter(function (options) {
 
 // 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
 $(document).ajaxError(function (event, jqXHR, settings) {
-    // 🟢 Condition 1: Agar request login ki hai, toh redirect mat karo
-    if (settings.url.includes("/api/agency/login")) {
-        return;
-    }
+    // Agar hum login page par hain, toh kisi bhi error par redirect MAT karo
+    if (window.location.pathname.includes("AgencyLogin.html")) return;
 
-    // 🟢 Condition 2: Agar hum pehle se login page par hain, toh redirect mat karo
-    const isLoginPage = window.location.pathname.toLowerCase().includes("agencylogin.html");
-    if (isLoginPage) {
-        return;
-    }
-
-    // 🔴 AGAR STATUS 401/403 HAI (Sirf Dashboard ke liye)
     if (jqXHR.status === 401 || jqXHR.status === 403) {
-        console.warn("Session expired on server.");
         localStorage.clear();
-        sessionStorage.clear();
         window.location.replace("AgencyLogin.html?error=session_expired");
     }
 });
