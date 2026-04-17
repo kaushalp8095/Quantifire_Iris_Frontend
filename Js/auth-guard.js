@@ -35,27 +35,27 @@
 
     // 4. 🔴 BACKEND SESSION VALIDATION (The Real Fix)
     // Hum profile API ko hit kar rahe hain jo ki ab SECURE hai
-    // fetch(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${agencyEmail}`, {
-    //     method: 'GET',
-    //     priority: 'high',
-    //     credentials: 'include', // 🔴 YE LINE SABSE ZAROORI HAI (Cookie bhejne ke liye)
-    //     headers: { 
-    //         'Cache-Control': 'no-cache',
-    //         'Pragma': 'no-cache'
-    //     }
-    // })
-    // .then(res => {
-    //     // Agar Backend 401 bhejta hai (Cookie missing or invalid)
-    //     if (res.status === 401 || res.status === 403) {
-    //         console.warn("Unauthorized! Redirecting to login...");
-    //         throw new Error("UNAUTHORIZED");
-    //     }
-    // })
-    // .catch((err) => {
-    //     if (err.message === "UNAUTHORIZED") {
-    //         localStorage.clear();
-    //         sessionStorage.clear();
-    //         window.location.replace("AgencyLogin.html?session=invalid");
-    //     }
-    // });
+    fetch(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${agencyEmail}`, {
+        method: 'GET',
+        priority: 'high',
+        credentials: 'include', // 🔴 YE LINE SABSE ZAROORI HAI (Cookie bhejne ke liye)
+        headers: { 
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache'
+        }
+    })
+    .then(res => {
+        // Agar Backend 401 bhejta hai (Cookie missing or invalid)
+        if (res.status === 401 || res.status === 403) {
+            console.warn("Unauthorized! Redirecting to login...");
+            throw new Error("UNAUTHORIZED");
+        }
+    })
+    .catch((err) => {
+        if (err.message === "UNAUTHORIZED") {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("AgencyLogin.html?session=invalid");
+        }
+    });
 })();

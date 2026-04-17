@@ -1,3 +1,8 @@
+// ==========================================
+// 1. AJAX GLOBAL SETUP & ERROR HANDLER
+// ==========================================
+
+// 🟢 Sabse upar setup kar do taaki har request mein credentials jayein
 $.ajaxSetup({
     xhrFields: {
         withCredentials: true
@@ -5,33 +10,28 @@ $.ajaxSetup({
     crossDomain: true
 });
 
-// ==========================================
-// 1. AJAX PREFILTER (Localhost Fix)
-// ==========================================
+// URL replacement logic
 $.ajaxPrefilter(function (options) {
     var oldBase = "http://localhost:8080";
     var liveBase = "https://quantifire-iris-backend.onrender.com";
 
     if (options.url.indexOf(oldBase) !== -1) {
         options.url = options.url.replace(oldBase, liveBase);
-
     }
+});
 
-    options.crossDomain = true;
-    options.xhrFields = {
-        withCredentials: true
-    };
+// 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
+$(document).ajaxError(function (event, jqXHR) {
+    // 403 Forbidden (Jo aapko abhi mil raha hai) ya 401 Unauthorized
+    if (jqXHR.status === 401 || jqXHR.status === 403) {
+        console.warn("Agency Session Invalid or Expired.");
+        localStorage.clear();
+        sessionStorage.clear();
 
-    // 🔴 Global Error Handler: Agar Backend 401 (Unauthorized) bhejta hai
-    $(document).ajaxError(function (event, jqXHR) {
-        if (jqXHR.status === 401) {
-            console.warn("Agency Session Expired on Server.");
-            localStorage.clear();
-            sessionStorage.clear();
-            window.location.replace("AgencyLogin.html?error=session_expired");
-        }
-    });
-
+        // Chhota sa delay taaki user ko samajh aaye kya hua
+        alert("Your session has expired. Please login again.");
+        window.location.replace("AgencyLogin.html?error=session_expired");
+    }
 });
 
 // ==========================================
