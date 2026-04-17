@@ -21,16 +21,19 @@ $.ajaxPrefilter(function (options) {
 });
 
 // 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
-$(document).ajaxError(function (event, jqXHR) {
-    // 403 Forbidden (Jo aapko abhi mil raha hai) ya 401 Unauthorized
-    if (jqXHR.status === 401 || jqXHR.status === 403) {
-        console.warn("Agency Session Invalid or Expired.");
-        localStorage.clear();
-        sessionStorage.clear();
+$(document).ajaxError(function (event, jqXHR, settings) {
+    // 🟢 AGAR REQUEST LOGIN KI HAI, TOH REDIRECT MAT KARO
+    if (settings.url.includes("/api/agency/login")) {
+        return; 
+    }
 
-        // Chhota sa delay taaki user ko samajh aaye kya hua
-        alert("Your session has expired. Please login again.");
-        window.location.replace("AgencyLogin.html?error=session_expired");
+    if (jqXHR.status === 401 || jqXHR.status === 403) {
+        console.warn("Session Invalid. Redirecting...");
+        localStorage.clear();
+        // Sirf tab redirect karo agar hum pehle se login page par NA HO
+        if (!window.location.pathname.includes("AgencyLogin.html")) {
+            window.location.replace("AgencyLogin.html?error=expired");
+        }
     }
 });
 
