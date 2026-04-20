@@ -1,4 +1,12 @@
 (function () {
+    // ✅ JS-readable cookie reader
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+
     const path = window.location.pathname;
     const isLoginPage = path.toLowerCase().includes("agencylogin.html");
 
@@ -6,7 +14,17 @@
     const agencyId = localStorage.getItem("agencyId");
     const loginTime = localStorage.getItem("loginTime");
 
-    // 1. ⏰ SESSION EXPIRY (24 Hours Check)
+    // ✅ KEY FIX: Cookie delete hui? → Logout force karo
+    // isAgencyLoggedIn cookie NOT httpOnly, so JS padh sakta hai
+    const cookiePresent = getCookie("isAgencyLoggedIn");
+    if (isLoggedIn === "true" && !cookiePresent) {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("AgencyLogin.html");
+        return;
+    }
+
+    // 1. ⏰ SESSION EXPIRY (24 Hours)
     const ONE_DAY = 24 * 60 * 60 * 1000;
     if (isLoggedIn === "true" && loginTime) {
         if (new Date().getTime() - parseInt(loginTime) > ONE_DAY) {
@@ -19,7 +37,7 @@
 
     // 2. 🛡️ LOGIN PAGE REDIRECT
     if (isLoginPage) {
-        if (isLoggedIn === "true" && agencyId) {
+        if (isLoggedIn === "true" && agencyId && cookiePresent) {
             window.location.replace("AgencyDashboard.html");
         }
         return;
@@ -32,19 +50,4 @@
         return;
     }
 
-    // 4. 🔴 BACKEND SESSION VALIDATION (Ping)
-    // Ye check karega ki kya backend par session zinda hai
-    fetch(`https://quantifire-iris-backend.onrender.com/api/agency/profile?email=${localStorage.getItem("agencyEmail")}`, {
-        priority: 'high',
-        headers: { 'Cache-Control': 'no-cache' }
-    })
-    .then(res => {
-        if (res.status === 401 || res.status === 403) throw new Error("UNAUTHORIZED");
-    })
-    .catch((err) => {
-        if (err.message === "UNAUTHORIZED") {
-            localStorage.clear();
-            window.location.replace("AgencyLogin.html?session=invalid");
-        }
-    });
 })();
