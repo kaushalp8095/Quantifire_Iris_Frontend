@@ -104,6 +104,9 @@
                             localStorage.setItem("agencyEmail", response.agencyEmail);
                             localStorage.setItem("loginTime", response.loginTime);
 
+                             document.cookie = "isAgencyLoggedIn=true; path=/; max-age=86400; SameSite=Lax";
+
+
                             setTimeout(function () {
                                 window.location.href = "AgencyDashboard.html";
                             }, 500);

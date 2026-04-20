@@ -102,7 +102,7 @@ function confirmLogout() {
             localStorage.clear();
 
             // Agar koi normal JS cookie hai use bhi hatao
-            document.cookie = "isAgencyLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            document.cookie = "isAgencyLoggedIn=; path=/; max-age=0; SameSite=Lax";
 
             // 4. Redirect to Login
             window.location.href = "AgencyLogin.html";
