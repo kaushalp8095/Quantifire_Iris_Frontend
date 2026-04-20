@@ -1,47 +1,30 @@
 // ==========================================
-// 1. AJAX GLOBAL SETUP & ERROR HANDLER
+// 1. AJAX PREFILTER (Localhost Fix)
 // ==========================================
-
-// 🟢 Sabse upar setup kar do taaki har request mein credentials jayein
-$.ajaxSetup({
-    xhrFields: {
-        withCredentials: true
-    },
-    crossDomain: true
-});
-
-// URL replacement logic
 $.ajaxPrefilter(function (options) {
     var oldBase = "http://localhost:8080";
     var liveBase = "https://quantifire-iris-backend.onrender.com";
 
     if (options.url.indexOf(oldBase) !== -1) {
         options.url = options.url.replace(oldBase, liveBase);
+
     }
-});
 
-// 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
-$(document).ajaxError(function (event, jqXHR, settings) {
-    console.error("🚨 API Failed! URL: " + settings.url + " | Status: " + jqXHR.status);
+    options.crossDomain = true;
+    options.xhrFields = {
+        withCredentials: true
+    };
 
-    // 1. Agar login request fail ho, toh ignore karo
-    if (settings.url.includes("/api/agency/login")) return;
-
-    // 2. Agar 401/403 (Unauthorized) aaya
-    if (jqXHR.status === 401 || jqXHR.status === 403) {
-        
-        // 🟢 FIX: Agar ye profile ya notifications ki API hai, toh bas warning do, logout mat karo.
-        // Isse aapka 10 second wala logout loop toot jayega!
-        if (settings.url.includes("/api/agency/profile") || settings.url.includes("/api/top-notifications/")) {
-            console.warn("⚠️ Background API failed (403), but keeping session alive.");
-            return; 
+    // 🔴 Global Error Handler: Agar Backend 401 (Unauthorized) bhejta hai
+    $(document).ajaxError(function (event, jqXHR) {
+        if (jqXHR.status === 401) {
+            console.warn("Agency Session Expired on Server.");
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.replace("AgencyLogin.html?error=session_expired");
         }
+    });
 
-        console.warn("💀 CRITICAL: Session Expired! Redirecting...");
-        localStorage.clear();
-        sessionStorage.clear();
-        window.location.replace("AgencyLogin.html?error=session_expired");
-    }
 });
 
 // ==========================================
@@ -221,47 +204,39 @@ function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
 
-    // 🟢 $.get ki jagah $.ajax use karo
-    $.ajax({
-        url: `https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`,
-        type: "GET",
-        xhrFields: {
-            withCredentials: true // 🔴 Ye cookie bhejega
-        },
-        success: function (res) {
-            // Badge count update
-            if (res.unreadCount > 0) {
-                $('.notif-count').text(res.unreadCount).show();
-            } else {
-                $('.notif-count').hide();
-            }
-
-            const list = $('.notif-list').empty();
-            if (res.notifications.length === 0) {
-                list.append('<li style="padding:15px; text-align:center; color:#888;">No notifications</li>');
-                return;
-            }
-
-            res.notifications.slice(0, 5).forEach(log => {
-                let iconClass = log.type.toLowerCase();
-                let iconHtml = '<i class="fa-solid fa-bell"></i>';
-                if (log.type === "SUCCESS") iconHtml = '<i class="fa-solid fa-check"></i>';
-                else if (log.type === "WARNING" || log.type === "ERROR") iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
-
-                list.append(`
-                    <li class="notif-item ${log.read ? '' : 'unread'}">
-                        <div class="n-icon ${iconClass}">${iconHtml}</div>
-                        <div class="n-text">
-                            <p><strong>${log.title}</strong></p>
-                            <span>${log.message}</span>
-                        </div>
-                        <span class="n-time">${timeAgo(log.createdAt)}</span>
-                    </li>`);
-            });
-        },
-        error: function(xhr) {
-            console.error("Notifications fetch failed:", xhr.status);
+    $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
+        // Badge count update
+        if (res.unreadCount > 0) {
+            $('.notif-count').text(res.unreadCount).show();
+        } else {
+            $('.notif-count').hide();
         }
+
+        const list = $('.notif-list').empty();
+        if (res.notifications.length === 0) {
+            list.append('<li style="padding:15px; text-align:center; color:#888;">No notifications</li>');
+            return;
+        }
+
+        // 🟢 CHANGE 1: Slice badhakar 10 kar diya taki scrollbar use ho sake
+        res.notifications.slice(0, 5).forEach(log => {
+            let iconClass = log.type.toLowerCase();
+            let iconHtml = '<i class="fa-solid fa-bell"></i>';
+
+            // Icon logic according to type
+            if (log.type === "SUCCESS") iconHtml = '<i class="fa-solid fa-check"></i>';
+            else if (log.type === "WARNING" || log.type === "ERROR") iconHtml = '<i class="fa-solid fa-triangle-exclamation"></i>';
+
+            list.append(`
+                <li class="notif-item ${log.read ? '' : 'unread'}">
+                    <div class="n-icon ${iconClass}">${iconHtml}</div>
+                    <div class="n-text">
+                        <p><strong>${log.title}</strong></p>
+                        <span>${log.message}</span>
+                    </div>
+                    <span class="n-time">${timeAgo(log.createdAt)}</span>
+                </li>`);
+        });
     });
 }
 
