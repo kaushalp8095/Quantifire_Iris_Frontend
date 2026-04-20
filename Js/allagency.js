@@ -22,22 +22,17 @@ $.ajaxPrefilter(function (options) {
 
 // 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
 $(document).ajaxError(function (event, jqXHR, settings) {
-    // 1. Agar login request fail hui hai toh redirect mat karo
-    if (settings.url.includes("/login")) return;
+    // 🔍 DEBUG LOG: Yeh bataega ki kaunsi API logout kara rahi hai
+    console.error("🚨 API Failed! URL: " + settings.url);
+    console.error("🚨 Status: " + jqXHR.status);
 
-    // 2. Agar login page par pehle se hain toh kuch mat karo
-    if (window.location.pathname.includes("AgencyLogin.html")) return;
+    if (settings.url.includes("/api/agency/login")) return;
 
-    // 3. Status 401/403 par redirect (Sirf Dashboard ke liye)
     if (jqXHR.status === 401 || jqXHR.status === 403) {
-        const loginTime = localStorage.getItem("loginTime");
-        const timeGap = new Date().getTime() - parseInt(loginTime || 0);
-
-        // Agar login ko 3 second se zyada ho gaye hain, tabhi redirect karo
-        if (timeGap > 3000) {
-            localStorage.clear();
-            window.location.replace("AgencyLogin.html?error=session_expired");
-        }
+        console.warn("💀 Session Invalidated by: " + settings.url); // 👈 Yahan se pata chalega kaunsa API culprit hai
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("AgencyLogin.html?error=session_expired");
     }
 });
 
