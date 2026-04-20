@@ -22,14 +22,22 @@ $.ajaxPrefilter(function (options) {
 
 // 🔴 GLOBAL ERROR HANDLER (Isko Prefilter se BAHAR rakhein)
 $(document).ajaxError(function (event, jqXHR, settings) {
-    // 🔍 DEBUG LOG: Yeh bataega ki kaunsi API logout kara rahi hai
-    console.error("🚨 API Failed! URL: " + settings.url);
-    console.error("🚨 Status: " + jqXHR.status);
+    console.error("🚨 API Failed! URL: " + settings.url + " | Status: " + jqXHR.status);
 
+    // 1. Agar login request hai, toh ignore karo
     if (settings.url.includes("/api/agency/login")) return;
 
+    // 2. Sirf tabhi logout karo agar Status 401/403 ho
     if (jqXHR.status === 401 || jqXHR.status === 403) {
-        console.warn("💀 Session Invalidated by: " + settings.url); // 👈 Yahan se pata chalega kaunsa API culprit hai
+        
+        // 🛑 IMPORTANT: Agar hum notification API par hain, toh seedha logout mat karo
+        // Shayed notification call background mein retry ho jaye
+        if (settings.url.includes("/api/top-notifications/")) {
+            console.warn("Notification API failed, but keeping session alive...");
+            return;
+        }
+
+        console.warn("💀 Session Invalidated by: " + settings.url);
         localStorage.clear();
         sessionStorage.clear();
         window.location.replace("AgencyLogin.html?error=session_expired");
