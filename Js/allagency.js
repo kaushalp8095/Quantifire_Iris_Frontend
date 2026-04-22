@@ -3,7 +3,7 @@
 // ==========================================
 $.ajaxPrefilter(function (options) {
     var oldBase = "http://localhost:8080";
-    var liveBase = "https://quantifire-iris-backend.onrender.com";
+    var liveBase = "https://kaushalpatel-quantifyre-backend.hf.space";
 
     if (options.url.indexOf(oldBase) !== -1) {
         options.url = options.url.replace(oldBase, liveBase);
@@ -35,7 +35,7 @@ function syncGlobalAgencyUI() {
     if (!agencyEmail) return;
 
     $.ajax({
-        url: "https://quantifire-iris-backend.onrender.com/api/agency/profile",
+        url: "https://kaushalpatel-quantifyre-backend.hf.space/api/agency/profile",
         type: "GET",
         data: { email: agencyEmail },
         xhrFields: {
@@ -53,7 +53,7 @@ function syncGlobalAgencyUI() {
                     }
                 }
                 else if (!finalPath.startsWith('http')) {
-                    finalPath = "https://quantifire-iris-backend.onrender.com/uploads/logos/" + finalPath;
+                    finalPath = "https://kaushalpatel-quantifyre-backend.hf.space/uploads/logos/" + finalPath;
                 }
 
                 $("#sidebarAgencyLogo, #headerAgencyLogo, #leftAgencyLogo, .avatar-circle img").attr("src", finalPath);
@@ -86,7 +86,7 @@ function confirmLogout() {
 
     // 2. Backend ko request bhejo cookie expire karne ke liye
     $.ajax({
-        url: "https://quantifire-iris-backend.onrender.com/api/agency/logout",
+        url: "https://kaushalpatel-quantifyre-backend.hf.space/api/agency/logout",
         type: "POST",
         xhrFields: {
             withCredentials: true // 🔴 Ye sabse zaroori hai cookie delete karne ke liye
@@ -204,7 +204,7 @@ function loadTopBarNotifications() {
     const email = localStorage.getItem("agencyEmail");
     if (!email) return;
 
-    $.get(`https://quantifire-iris-backend.onrender.com/api/top-notifications/get?email=${email}`, function (res) {
+    $.get(`https://kaushalpatel-quantifyre-backend.hf.space/api/top-notifications/get?email=${email}`, function (res) {
         // Badge count update
         if (res.unreadCount > 0) {
             $('.notif-count').text(res.unreadCount).show();
@@ -257,14 +257,14 @@ $(document).on('click', '.mark-read, #markAllReadBtn', function () {
 
 
     // 3. API Call
-    $.post(`https://quantifire-iris-backend.onrender.com/api/top-notifications/mark-read?email=${email}`);
+    $.post(`https://kaushalpatel-quantifyre-backend.hf.space/api/top-notifications/mark-read?email=${email}`);
 });
 async function handleHealthCheck() {
     const statusText = document.getElementById('statusMessage');
     if (!statusText) return;
     statusText.innerText = "Checking...";
     try {
-        const response = await fetch('https://quantifire-iris-backend.onrender.com/api/health');
+        const response = await fetch('https://kaushalpatel-quantifyre-backend.hf.space/api/health');
         statusText.innerText = response.ok ? "✅ Server Online" : "❌ Server Error";
         statusText.style.color = response.ok ? "green" : "red";
     } catch (e) {
