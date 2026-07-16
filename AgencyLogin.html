@@ -88,9 +88,7 @@
                     url: "https://kaushalpatel-quantifyre-backend.hf.space/api/agency/login",
                     type: "POST",
                     contentType: "application/json",
-                    xhrFields: {
-                        withCredentials: true
-                    },
+                    
                     data: JSON.stringify({ email: userEmail, password: userPassword }),
                     success: function (response) {
                         if (response.status === "success") {

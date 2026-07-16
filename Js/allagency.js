@@ -11,9 +11,7 @@ $.ajaxPrefilter(function (options) {
     }
 
     options.crossDomain = true;
-    options.xhrFields = {
-        withCredentials: true
-    };
+    
 
     // 🔴 Global Error Handler: Agar Backend 401 (Unauthorized) bhejta hai
     $(document).ajaxError(function (event, jqXHR) {
@@ -88,9 +86,7 @@ function confirmLogout() {
     $.ajax({
         url: "https://kaushalpatel-quantifyre-backend.hf.space/api/agency/logout",
         type: "POST",
-        xhrFields: {
-            withCredentials: true // 🔴 Ye sabse zaroori hai cookie delete karne ke liye
-        },
+        
         success: function (response) {
             console.log("Session cleared on server");
         },
